@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Tonatiuh De Leon" />
+
+
+<title>Modeling a Beatiful Building</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Tonatiuh de Leon</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Regression Models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="DecibelRegression.html">Song Decibel Levels</a>
+    </li>
+    <li>
+      <a href="SpotifyRegression.html">Spotify Regression</a>
+    </li>
+    <li>
+      <a href="CarAnalysis.html">Selling my Car Regression</a>
+    </li>
+    <li>
+      <a href="HousePriceRegression.html">House Prices Predictions</a>
+    </li>
+    <li>
+      <a href="LogisticRegression325.html">Who's Getting Good Grades?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Modeling &amp; Simulations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Whale.html">Recreated the Milky Way, or a Whale?</a>
+    </li>
+    <li>
+      <a href="Temple.html">Modeled a Beatiful Building</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferential Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="StephApartment.html">Finding an Apartment</a>
+    </li>
+    <li>
+      <a href="TtestInternet.html">Boys or Girls; Who Uses More Internet?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Visualizations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="TimeSeries.html">Correlation</a>
+    </li>
+    <li>
+      <a href="Distributions.html">Distribution</a>
+    </li>
+    <li>
+      <a href="Maps.html">Spatial</a>
+    </li>
+    <li>
+      <a href="BarGraphs.html">Quick Comparison</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Machine Learning
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Time Series
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Modeling a Beatiful Building</h1>
+<h4 class="author">Tonatiuh De Leon</h4>
+
+</div>
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div id="section" class="section level1 tabset tabset-pills">
+<h1 class="tabset tabset-pills"></h1>
+<div id="instroduction" class="section level2">
+<h2>Instroduction</h2>
+<hr />
+<p><span class="math display">\[ \text{This section in my portfolio is
+to show my capabilities at statistical modeling} \\ \\ \text{(Monte
+Carlo Simulations) by using functional programming.} \\ \\
+\text{Simulations are useful when not enough data is available for
+a  specific scenario} \\ \\ \text{but you have parameters and an idea to
+infer about the variables&#39; behavior.} \\ \\ \text{Those inferetions
+can be used by modeling your data and then get an overall} \\ \\
+\text{idea on how to approach the data to get better understanding of
+its escence}\]</span></p>
+<hr />
+<p>When I learned about regression models, my teacher taught us by using
+simulation modeling. He made up a game for us to create a simulated data
+set with specific parameters to create any laws/models that we wanted.
+Then put us to compete against each other and see who could figure out
+the other student’s model by using regression techniques.</p>
+<p>Here I’ll show you one of my models, I did not compete with this
+model in the Regression Battleship game as I did with my other model
+shown in my portfolio. However this model was actually more complex to
+simulate.</p>
+</div>
+<div id="desmos-model" class="section level2">
+<h2>Desmos Model</h2>
+<p>We started the regression game by designing our model in Desmos as a
+drawing, each different color would represent a different regression
+line with change in intercepts and slope based on my programming.</p>
+<p><strong>Here is the blueprint of the building I tried modeling, it’s
+a Temple of The Church of Jesus Christ of Latter-day Saints</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;_site/images/Temple.png&quot;</span>)</span></code></pre></div>
+<p><img src="_site/Images/Temple.png" width="356" style="display: block; margin: auto;" /></p>
+</div>
+<div id="r-plot" class="section level2">
+<h2>R Plot</h2>
+<p>After designing it in Desmos, we had to re-create our models using
+functional programming for statistics in R. Check out the code in the
+<strong>Show</strong> button to the right. The output is then show as
+the graphs below with their respective regression lines which my peers
+had to figure out.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1500</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a> </span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n,<span class="sc">-</span><span class="dv">15</span>,<span class="dv">15</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="at">replace =</span> T)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="at">replace =</span> T)</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="at">replace =</span> T)</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="at">replace =</span> T)</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>x6 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="at">replace =</span> T)</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#tumpet /check</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">21</span> </span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">2</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#3D1 /check</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>b3 <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="co">#3D2 /check</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>b4 <span class="ot">&lt;-</span> <span class="dv">10</span> </span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>b5 <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>  ,<span class="dv">5</span> ,<span class="dv">7</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="co">#3D3 /check</span></span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>b6 <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a>b7 <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a>  ,<span class="dv">5</span> ,<span class="dv">7</span>)</span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a><span class="co">#Moroni 1</span></span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a>b8 <span class="ot">&lt;-</span> <span class="dv">22</span></span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a>b9 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a>b10 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">20</span></span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a></span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a>  ,<span class="sc">-</span>.<span class="dv">275</span> ,.<span class="dv">275</span>)</span>
+<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a></span>
+<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a><span class="co">#Moroni 2</span></span>
+<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a>b11 <span class="ot">&lt;-</span> <span class="dv">19</span></span>
+<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a>b12 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a>b13 <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> )</span>
+<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a>  ,<span class="sc">-</span>.<span class="dv">275</span> ,.<span class="dv">275</span>)</span>
+<span id="cb3-72"><a href="#cb3-72" tabindex="-1"></a></span>
+<span id="cb3-73"><a href="#cb3-73" tabindex="-1"></a><span class="co">#door</span></span>
+<span id="cb3-74"><a href="#cb3-74" tabindex="-1"></a>b14 <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb3-75"><a href="#cb3-75" tabindex="-1"></a>b15 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-76"><a href="#cb3-76" tabindex="-1"></a>b16 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-77"><a href="#cb3-77" tabindex="-1"></a>b17 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-78"><a href="#cb3-78" tabindex="-1"></a>b18 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb3-79"><a href="#cb3-79" tabindex="-1"></a></span>
+<span id="cb3-80"><a href="#cb3-80" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-81"><a href="#cb3-81" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-82"><a href="#cb3-82" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-83"><a href="#cb3-83" tabindex="-1"></a>  ,<span class="sc">-</span><span class="fl">1.56</span> ,<span class="fl">1.56</span>)</span>
+<span id="cb3-84"><a href="#cb3-84" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" tabindex="-1"></a><span class="co">#ceiling</span></span>
+<span id="cb3-86"><a href="#cb3-86" tabindex="-1"></a>b19 <span class="ot">&lt;-</span> <span class="dv">11</span></span>
+<span id="cb3-87"><a href="#cb3-87" tabindex="-1"></a>b20 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-88"><a href="#cb3-88" tabindex="-1"></a>b21 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-89"><a href="#cb3-89" tabindex="-1"></a>b22 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-90"><a href="#cb3-90" tabindex="-1"></a>b23 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#-.0001</span></span>
+<span id="cb3-91"><a href="#cb3-91" tabindex="-1"></a></span>
+<span id="cb3-92"><a href="#cb3-92" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-93"><a href="#cb3-93" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-94"><a href="#cb3-94" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-95"><a href="#cb3-95" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">5</span> ,<span class="dv">5</span>)</span>
+<span id="cb3-96"><a href="#cb3-96" tabindex="-1"></a></span>
+<span id="cb3-97"><a href="#cb3-97" tabindex="-1"></a><span class="co">#right wall</span></span>
+<span id="cb3-98"><a href="#cb3-98" tabindex="-1"></a>b24 <span class="ot">&lt;-</span> <span class="fl">11.5</span></span>
+<span id="cb3-99"><a href="#cb3-99" tabindex="-1"></a>b25 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-100"><a href="#cb3-100" tabindex="-1"></a>b26 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-101"><a href="#cb3-101" tabindex="-1"></a>b27 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-102"><a href="#cb3-102" tabindex="-1"></a>b28 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#-.00005</span></span>
+<span id="cb3-103"><a href="#cb3-103" tabindex="-1"></a></span>
+<span id="cb3-104"><a href="#cb3-104" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-105"><a href="#cb3-105" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-106"><a href="#cb3-106" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-107"><a href="#cb3-107" tabindex="-1"></a>  ,<span class="dv">2</span> ,<span class="dv">7</span>)</span>
+<span id="cb3-108"><a href="#cb3-108" tabindex="-1"></a></span>
+<span id="cb3-109"><a href="#cb3-109" tabindex="-1"></a><span class="co">#moroni&#39;s base</span></span>
+<span id="cb3-110"><a href="#cb3-110" tabindex="-1"></a>b29 <span class="ot">&lt;-</span> <span class="dv">19</span></span>
+<span id="cb3-111"><a href="#cb3-111" tabindex="-1"></a>b30 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-112"><a href="#cb3-112" tabindex="-1"></a>b31 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-113"><a href="#cb3-113" tabindex="-1"></a>b32 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-114"><a href="#cb3-114" tabindex="-1"></a>b33 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">20</span></span>
+<span id="cb3-115"><a href="#cb3-115" tabindex="-1"></a></span>
+<span id="cb3-116"><a href="#cb3-116" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-117"><a href="#cb3-117" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-118"><a href="#cb3-118" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> )</span>
+<span id="cb3-119"><a href="#cb3-119" tabindex="-1"></a>  ,<span class="sc">-</span>.<span class="dv">67</span> ,.<span class="dv">67</span>)</span>
+<span id="cb3-120"><a href="#cb3-120" tabindex="-1"></a></span>
+<span id="cb3-121"><a href="#cb3-121" tabindex="-1"></a><span class="co">#floor</span></span>
+<span id="cb3-122"><a href="#cb3-122" tabindex="-1"></a>b34 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-123"><a href="#cb3-123" tabindex="-1"></a>b35 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-124"><a href="#cb3-124" tabindex="-1"></a>b36 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-125"><a href="#cb3-125" tabindex="-1"></a>b37 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-126"><a href="#cb3-126" tabindex="-1"></a>b38 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#.0001</span></span>
+<span id="cb3-127"><a href="#cb3-127" tabindex="-1"></a></span>
+<span id="cb3-128"><a href="#cb3-128" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-129"><a href="#cb3-129" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-130"><a href="#cb3-130" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-131"><a href="#cb3-131" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">5</span> ,<span class="dv">5</span>)</span>
+<span id="cb3-132"><a href="#cb3-132" tabindex="-1"></a></span>
+<span id="cb3-133"><a href="#cb3-133" tabindex="-1"></a><span class="co">#house of the lord</span></span>
+<span id="cb3-134"><a href="#cb3-134" tabindex="-1"></a>b39 <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb3-135"><a href="#cb3-135" tabindex="-1"></a>b40 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-136"><a href="#cb3-136" tabindex="-1"></a>b41 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-137"><a href="#cb3-137" tabindex="-1"></a>b42 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-138"><a href="#cb3-138" tabindex="-1"></a>b43 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#-.0001</span></span>
+<span id="cb3-139"><a href="#cb3-139" tabindex="-1"></a></span>
+<span id="cb3-140"><a href="#cb3-140" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-141"><a href="#cb3-141" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-142"><a href="#cb3-142" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-143"><a href="#cb3-143" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">2</span> ,<span class="dv">2</span>)</span>
+<span id="cb3-144"><a href="#cb3-144" tabindex="-1"></a></span>
+<span id="cb3-145"><a href="#cb3-145" tabindex="-1"></a><span class="co">#house of the lord 2</span></span>
+<span id="cb3-146"><a href="#cb3-146" tabindex="-1"></a>b44 <span class="ot">&lt;-</span> <span class="fl">8.5</span></span>
+<span id="cb3-147"><a href="#cb3-147" tabindex="-1"></a>b45 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-148"><a href="#cb3-148" tabindex="-1"></a>b46 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-149"><a href="#cb3-149" tabindex="-1"></a>b47 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-150"><a href="#cb3-150" tabindex="-1"></a>b48 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#.0001</span></span>
+<span id="cb3-151"><a href="#cb3-151" tabindex="-1"></a></span>
+<span id="cb3-152"><a href="#cb3-152" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-153"><a href="#cb3-153" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-154"><a href="#cb3-154" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> )</span>
+<span id="cb3-155"><a href="#cb3-155" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">2</span> ,<span class="dv">2</span>)</span>
+<span id="cb3-156"><a href="#cb3-156" tabindex="-1"></a></span>
+<span id="cb3-157"><a href="#cb3-157" tabindex="-1"></a><span class="co">#ceiling base</span></span>
+<span id="cb3-158"><a href="#cb3-158" tabindex="-1"></a>b49 <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb3-159"><a href="#cb3-159" tabindex="-1"></a>b50 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-160"><a href="#cb3-160" tabindex="-1"></a>b51 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-161"><a href="#cb3-161" tabindex="-1"></a>b52 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-162"><a href="#cb3-162" tabindex="-1"></a>b53 <span class="ot">&lt;-</span> <span class="sc">-</span>.<span class="dv">2</span></span>
+<span id="cb3-163"><a href="#cb3-163" tabindex="-1"></a></span>
+<span id="cb3-164"><a href="#cb3-164" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-165"><a href="#cb3-165" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-166"><a href="#cb3-166" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> )</span>
+<span id="cb3-167"><a href="#cb3-167" tabindex="-1"></a>  ,<span class="sc">-</span><span class="fl">2.075</span> ,<span class="fl">2.075</span>)</span>
+<span id="cb3-168"><a href="#cb3-168" tabindex="-1"></a></span>
+<span id="cb3-169"><a href="#cb3-169" tabindex="-1"></a><span class="co">#grass</span></span>
+<span id="cb3-170"><a href="#cb3-170" tabindex="-1"></a>b54 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb3-171"><a href="#cb3-171" tabindex="-1"></a>b55 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-172"><a href="#cb3-172" tabindex="-1"></a>b56 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-173"><a href="#cb3-173" tabindex="-1"></a>b57 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-174"><a href="#cb3-174" tabindex="-1"></a>b58 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#-.00001</span></span>
+<span id="cb3-175"><a href="#cb3-175" tabindex="-1"></a></span>
+<span id="cb3-176"><a href="#cb3-176" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-177"><a href="#cb3-177" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-178"><a href="#cb3-178" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb3-179"><a href="#cb3-179" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">10</span> ,<span class="sc">-</span><span class="dv">5</span>)</span>
+<span id="cb3-180"><a href="#cb3-180" tabindex="-1"></a></span>
+<span id="cb3-181"><a href="#cb3-181" tabindex="-1"></a><span class="co">#grass 2</span></span>
+<span id="cb3-182"><a href="#cb3-182" tabindex="-1"></a>b54 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb3-183"><a href="#cb3-183" tabindex="-1"></a>b55 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-184"><a href="#cb3-184" tabindex="-1"></a>b56 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-185"><a href="#cb3-185" tabindex="-1"></a>b57 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-186"><a href="#cb3-186" tabindex="-1"></a>b58 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#-.00001</span></span>
+<span id="cb3-187"><a href="#cb3-187" tabindex="-1"></a></span>
+<span id="cb3-188"><a href="#cb3-188" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb3-189"><a href="#cb3-189" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-190"><a href="#cb3-190" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>  )</span>
+<span id="cb3-191"><a href="#cb3-191" tabindex="-1"></a>  ,<span class="dv">7</span> ,<span class="dv">10</span>)</span>
+<span id="cb3-192"><a href="#cb3-192" tabindex="-1"></a></span>
+<span id="cb3-193"><a href="#cb3-193" tabindex="-1"></a><span class="co">#left wall</span></span>
+<span id="cb3-194"><a href="#cb3-194" tabindex="-1"></a>b59 <span class="ot">&lt;-</span> <span class="dv">1500</span></span>
+<span id="cb3-195"><a href="#cb3-195" tabindex="-1"></a>b60 <span class="ot">&lt;-</span> <span class="dv">300</span></span>
+<span id="cb3-196"><a href="#cb3-196" tabindex="-1"></a></span>
+<span id="cb3-197"><a href="#cb3-197" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span></span>
+<span id="cb3-198"><a href="#cb3-198" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-199"><a href="#cb3-199" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb3-200"><a href="#cb3-200" tabindex="-1"></a>  ,<span class="sc">-</span><span class="fl">4.998</span>,<span class="sc">-</span><span class="fl">4.965</span>)</span>
+<span id="cb3-201"><a href="#cb3-201" tabindex="-1"></a></span>
+<span id="cb3-202"><a href="#cb3-202" tabindex="-1"></a><span class="co">#right wall 1</span></span>
+<span id="cb3-203"><a href="#cb3-203" tabindex="-1"></a>b61 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1500</span></span>
+<span id="cb3-204"><a href="#cb3-204" tabindex="-1"></a>b62 <span class="ot">&lt;-</span> <span class="dv">300</span></span>
+<span id="cb3-205"><a href="#cb3-205" tabindex="-1"></a></span>
+<span id="cb3-206"><a href="#cb3-206" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span></span>
+<span id="cb3-207"><a href="#cb3-207" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-208"><a href="#cb3-208" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb3-209"><a href="#cb3-209" tabindex="-1"></a>  ,<span class="fl">5.004</span>,<span class="fl">5.036</span>)</span>
+<span id="cb3-210"><a href="#cb3-210" tabindex="-1"></a></span>
+<span id="cb3-211"><a href="#cb3-211" tabindex="-1"></a><span class="co">#right wall 2</span></span>
+<span id="cb3-212"><a href="#cb3-212" tabindex="-1"></a>b63 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2400</span></span>
+<span id="cb3-213"><a href="#cb3-213" tabindex="-1"></a>b64 <span class="ot">&lt;-</span> <span class="dv">350</span></span>
+<span id="cb3-214"><a href="#cb3-214" tabindex="-1"></a></span>
+<span id="cb3-215"><a href="#cb3-215" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span></span>
+<span id="cb3-216"><a href="#cb3-216" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb3-217"><a href="#cb3-217" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb3-218"><a href="#cb3-218" tabindex="-1"></a>  ,<span class="fl">6.861</span>,<span class="fl">6.89</span>)</span>
+<span id="cb3-219"><a href="#cb3-219" tabindex="-1"></a></span>
+<span id="cb3-220"><a href="#cb3-220" tabindex="-1"></a><span class="do">## sigma</span></span>
+<span id="cb3-221"><a href="#cb3-221" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fl">0.001</span></span>
+<span id="cb3-222"><a href="#cb3-222" tabindex="-1"></a>epsilon_i <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sigma) </span>
+<span id="cb3-223"><a href="#cb3-223" tabindex="-1"></a></span>
+<span id="cb3-224"><a href="#cb3-224" tabindex="-1"></a> y <span class="ot">&lt;-</span></span>
+<span id="cb3-225"><a href="#cb3-225" tabindex="-1"></a>   b19<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int</span></span>
+<span id="cb3-226"><a href="#cb3-226" tabindex="-1"></a>   </span>
+<span id="cb3-227"><a href="#cb3-227" tabindex="-1"></a>   b24<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int</span></span>
+<span id="cb3-228"><a href="#cb3-228" tabindex="-1"></a>  </span>
+<span id="cb3-229"><a href="#cb3-229" tabindex="-1"></a>   b34<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int</span></span>
+<span id="cb3-230"><a href="#cb3-230" tabindex="-1"></a>   </span>
+<span id="cb3-231"><a href="#cb3-231" tabindex="-1"></a>   b39<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int</span></span>
+<span id="cb3-232"><a href="#cb3-232" tabindex="-1"></a>   </span>
+<span id="cb3-233"><a href="#cb3-233" tabindex="-1"></a>   b44<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span> <span class="co">#int</span></span>
+<span id="cb3-234"><a href="#cb3-234" tabindex="-1"></a>  </span>
+<span id="cb3-235"><a href="#cb3-235" tabindex="-1"></a>   b54<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> </span>
+<span id="cb3-236"><a href="#cb3-236" tabindex="-1"></a></span>
+<span id="cb3-237"><a href="#cb3-237" tabindex="-1"></a>   b54<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> </span>
+<span id="cb3-238"><a href="#cb3-238" tabindex="-1"></a>   </span>
+<span id="cb3-239"><a href="#cb3-239" tabindex="-1"></a>   b59<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span> b60<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-240"><a href="#cb3-240" tabindex="-1"></a>   </span>
+<span id="cb3-241"><a href="#cb3-241" tabindex="-1"></a>   b61<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span> b62<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-242"><a href="#cb3-242" tabindex="-1"></a>   </span>
+<span id="cb3-243"><a href="#cb3-243" tabindex="-1"></a>   b63<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">+</span> b64<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb3-244"><a href="#cb3-244" tabindex="-1"></a>  </span>
+<span id="cb3-245"><a href="#cb3-245" tabindex="-1"></a>   b0<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> b1<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int+slope</span></span>
+<span id="cb3-246"><a href="#cb3-246" tabindex="-1"></a></span>
+<span id="cb3-247"><a href="#cb3-247" tabindex="-1"></a>   b2<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> b3<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int+slope</span></span>
+<span id="cb3-248"><a href="#cb3-248" tabindex="-1"></a></span>
+<span id="cb3-249"><a href="#cb3-249" tabindex="-1"></a>   b4<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> b5<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int+slope</span></span>
+<span id="cb3-250"><a href="#cb3-250" tabindex="-1"></a></span>
+<span id="cb3-251"><a href="#cb3-251" tabindex="-1"></a>   b6<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> b7<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int+slope</span></span>
+<span id="cb3-252"><a href="#cb3-252" tabindex="-1"></a>   </span>
+<span id="cb3-253"><a href="#cb3-253" tabindex="-1"></a>   b8<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">+</span> b10<span class="sc">*</span>(x1<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int+x2</span></span>
+<span id="cb3-254"><a href="#cb3-254" tabindex="-1"></a>   </span>
+<span id="cb3-255"><a href="#cb3-255" tabindex="-1"></a>   b11<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span> b13<span class="sc">*</span>(x1<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span> <span class="co">#int+x2</span></span>
+<span id="cb3-256"><a href="#cb3-256" tabindex="-1"></a>   </span>
+<span id="cb3-257"><a href="#cb3-257" tabindex="-1"></a>   b14<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> </span>
+<span id="cb3-258"><a href="#cb3-258" tabindex="-1"></a>b18<span class="sc">*</span>(x1<span class="sc">^</span><span class="dv">4</span>)<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int +x4</span></span>
+<span id="cb3-259"><a href="#cb3-259" tabindex="-1"></a></span>
+<span id="cb3-260"><a href="#cb3-260" tabindex="-1"></a></span>
+<span id="cb3-261"><a href="#cb3-261" tabindex="-1"></a>   b29<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span> <span class="co">#x4</span></span>
+<span id="cb3-262"><a href="#cb3-262" tabindex="-1"></a>b33<span class="sc">*</span>(x1<span class="sc">^</span><span class="dv">4</span>)<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span></span>
+<span id="cb3-263"><a href="#cb3-263" tabindex="-1"></a>   </span>
+<span id="cb3-264"><a href="#cb3-264" tabindex="-1"></a>   </span>
+<span id="cb3-265"><a href="#cb3-265" tabindex="-1"></a>   b49<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span> </span>
+<span id="cb3-266"><a href="#cb3-266" tabindex="-1"></a>b53<span class="sc">*</span>(x1<span class="sc">^</span><span class="dv">4</span>)<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span></span>
+<span id="cb3-267"><a href="#cb3-267" tabindex="-1"></a>   </span>
+<span id="cb3-268"><a href="#cb3-268" tabindex="-1"></a></span>
+<span id="cb3-269"><a href="#cb3-269" tabindex="-1"></a>   epsilon_i</span>
+<span id="cb3-270"><a href="#cb3-270" tabindex="-1"></a> </span>
+<span id="cb3-271"><a href="#cb3-271" tabindex="-1"></a>x7 <span class="ot">&lt;-</span> <span class="st">&quot;The House Of The Lord&quot;</span></span>
+<span id="cb3-272"><a href="#cb3-272" tabindex="-1"></a>   </span>
+<span id="cb3-273"><a href="#cb3-273" tabindex="-1"></a>x8 <span class="ot">&lt;-</span> (x4<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span>(x3<span class="sc">+</span><span class="dv">4</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb3-274"><a href="#cb3-274" tabindex="-1"></a></span>
+<span id="cb3-275"><a href="#cb3-275" tabindex="-1"></a>x9 <span class="ot">&lt;-</span> (x8<span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>y<span class="sc">/</span>n</span>
+<span id="cb3-276"><a href="#cb3-276" tabindex="-1"></a></span>
+<span id="cb3-277"><a href="#cb3-277" tabindex="-1"></a>x10 <span class="ot">&lt;-</span> (x6<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span>(x5<span class="sc">+</span><span class="dv">4</span>)</span>
+<span id="cb3-278"><a href="#cb3-278" tabindex="-1"></a></span>
+<span id="cb3-279"><a href="#cb3-279" tabindex="-1"></a>temple <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(y, x1, x2, x3, x4, x5, x6, <span class="at">x7 =</span> <span class="fu">as.factor</span>(x7), <span class="at">x8 =</span> <span class="fu">as.factor</span>(x8), <span class="at">x9 =</span> <span class="fu">as.factor</span>(x9), <span class="at">x10 =</span> <span class="fu">as.factor</span>(x10)) <span class="sc">|&gt;</span> <span class="fu">filter</span>(y <span class="sc">&gt;</span> .<span class="dv">5</span>)</span>
+<span id="cb3-280"><a href="#cb3-280" tabindex="-1"></a></span>
+<span id="cb3-281"><a href="#cb3-281" tabindex="-1"></a>templelm <span class="ot">&lt;-</span> temple <span class="sc">|&gt;</span> </span>
+<span id="cb3-282"><a href="#cb3-282" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-283"><a href="#cb3-283" tabindex="-1"></a>    <span class="at">trmp =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-284"><a href="#cb3-284" tabindex="-1"></a>         <span class="at">temple1 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-285"><a href="#cb3-285" tabindex="-1"></a>         <span class="at">temple2 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-286"><a href="#cb3-286" tabindex="-1"></a>         <span class="at">door =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-287"><a href="#cb3-287" tabindex="-1"></a>         <span class="at">temple3 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-288"><a href="#cb3-288" tabindex="-1"></a>         <span class="at">temple4 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-289"><a href="#cb3-289" tabindex="-1"></a>         <span class="at">temple5 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-290"><a href="#cb3-290" tabindex="-1"></a>         <span class="at">temple6 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-291"><a href="#cb3-291" tabindex="-1"></a>         <span class="at">moroni1 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-292"><a href="#cb3-292" tabindex="-1"></a>         <span class="at">temple7 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-293"><a href="#cb3-293" tabindex="-1"></a>         <span class="at">grass1 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-294"><a href="#cb3-294" tabindex="-1"></a>         <span class="at">temple8 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-295"><a href="#cb3-295" tabindex="-1"></a>         <span class="at">grass2 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-296"><a href="#cb3-296" tabindex="-1"></a>         <span class="at">moroni2 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-297"><a href="#cb3-297" tabindex="-1"></a>         <span class="at">hof =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-298"><a href="#cb3-298" tabindex="-1"></a>         <span class="at">base1 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-299"><a href="#cb3-299" tabindex="-1"></a>         <span class="at">temple9 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-300"><a href="#cb3-300" tabindex="-1"></a>         <span class="at">base2 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-301"><a href="#cb3-301" tabindex="-1"></a>         <span class="at">temple10 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb3-302"><a href="#cb3-302" tabindex="-1"></a></span>
+<span id="cb3-303"><a href="#cb3-303" tabindex="-1"></a>mylm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> trmp<span class="sc">:</span>x1 <span class="sc">+</span> </span>
+<span id="cb3-304"><a href="#cb3-304" tabindex="-1"></a>            temple1 <span class="sc">+</span> temple1<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb3-305"><a href="#cb3-305" tabindex="-1"></a>            temple2 <span class="sc">+</span> temple2<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb3-306"><a href="#cb3-306" tabindex="-1"></a>            temple3 <span class="sc">+</span> temple3<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb3-307"><a href="#cb3-307" tabindex="-1"></a>            temple4 <span class="sc">+</span></span>
+<span id="cb3-308"><a href="#cb3-308" tabindex="-1"></a>            temple5 <span class="sc">+</span></span>
+<span id="cb3-309"><a href="#cb3-309" tabindex="-1"></a>            temple6 <span class="sc">+</span> temple6<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb3-310"><a href="#cb3-310" tabindex="-1"></a>            temple7 <span class="sc">+</span> </span>
+<span id="cb3-311"><a href="#cb3-311" tabindex="-1"></a>            temple8 <span class="sc">+</span> </span>
+<span id="cb3-312"><a href="#cb3-312" tabindex="-1"></a>            temple9 <span class="sc">+</span> temple9<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb3-313"><a href="#cb3-313" tabindex="-1"></a>            temple10 <span class="sc">+</span> temple10<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb3-314"><a href="#cb3-314" tabindex="-1"></a>            hof <span class="sc">+</span></span>
+<span id="cb3-315"><a href="#cb3-315" tabindex="-1"></a>            grass1 <span class="sc">+</span></span>
+<span id="cb3-316"><a href="#cb3-316" tabindex="-1"></a>            grass2 <span class="sc">+</span></span>
+<span id="cb3-317"><a href="#cb3-317" tabindex="-1"></a>            moroni1 <span class="sc">+</span> moroni1<span class="sc">:</span><span class="fu">I</span>(x1<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb3-318"><a href="#cb3-318" tabindex="-1"></a>            moroni2 <span class="sc">+</span> moroni2<span class="sc">:</span><span class="fu">I</span>(x1<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb3-319"><a href="#cb3-319" tabindex="-1"></a>            door <span class="sc">+</span> door<span class="sc">:</span><span class="fu">I</span>(x1<span class="sc">^</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb3-320"><a href="#cb3-320" tabindex="-1"></a>            base1 <span class="sc">+</span> base1<span class="sc">:</span><span class="fu">I</span>(x1<span class="sc">^</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb3-321"><a href="#cb3-321" tabindex="-1"></a>            base2 <span class="sc">+</span> base2<span class="sc">:</span><span class="fu">I</span>(x1<span class="sc">^</span><span class="dv">4</span>) , templelm</span>
+<span id="cb3-322"><a href="#cb3-322" tabindex="-1"></a>            )</span>
+<span id="cb3-323"><a href="#cb3-323" tabindex="-1"></a></span>
+<span id="cb3-324"><a href="#cb3-324" tabindex="-1"></a><span class="co">#summary(mylm)</span></span>
+<span id="cb3-325"><a href="#cb3-325" tabindex="-1"></a></span>
+<span id="cb3-326"><a href="#cb3-326" tabindex="-1"></a> <span class="co"># par(mfrow=c(1,3))</span></span>
+<span id="cb3-327"><a href="#cb3-327" tabindex="-1"></a> <span class="co"># plot(mylm,which=1:2)</span></span>
+<span id="cb3-328"><a href="#cb3-328" tabindex="-1"></a> <span class="co"># plot(mylm$residuals)</span></span>
+<span id="cb3-329"><a href="#cb3-329" tabindex="-1"></a> </span>
+<span id="cb3-330"><a href="#cb3-330" tabindex="-1"></a>rbdata <span class="ot">&lt;-</span> temple <span class="sc">|&gt;</span> </span>
+<span id="cb3-331"><a href="#cb3-331" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-332"><a href="#cb3-332" tabindex="-1"></a>    <span class="at">y =</span> temple<span class="sc">$</span>y,</span>
+<span id="cb3-333"><a href="#cb3-333" tabindex="-1"></a>    <span class="at">x1 =</span> temple<span class="sc">$</span>x1, <span class="co">#</span></span>
+<span id="cb3-334"><a href="#cb3-334" tabindex="-1"></a>    <span class="at">x2 =</span> temple<span class="sc">$</span>x10,<span class="co">#</span></span>
+<span id="cb3-335"><a href="#cb3-335" tabindex="-1"></a>    <span class="at">x3 =</span> temple<span class="sc">$</span>x3,<span class="co">#</span></span>
+<span id="cb3-336"><a href="#cb3-336" tabindex="-1"></a>    <span class="at">x4 =</span> temple<span class="sc">$</span>x9,<span class="co">#</span></span>
+<span id="cb3-337"><a href="#cb3-337" tabindex="-1"></a>    <span class="at">x5 =</span> temple<span class="sc">$</span>x5,<span class="co">#</span></span>
+<span id="cb3-338"><a href="#cb3-338" tabindex="-1"></a>    <span class="at">x6 =</span> temple<span class="sc">$</span>x7,<span class="co">#</span></span>
+<span id="cb3-339"><a href="#cb3-339" tabindex="-1"></a>    <span class="at">x7 =</span> temple<span class="sc">$</span>x2,<span class="co">#</span></span>
+<span id="cb3-340"><a href="#cb3-340" tabindex="-1"></a>    <span class="at">x8 =</span> temple<span class="sc">$</span>x4,<span class="co">#</span></span>
+<span id="cb3-341"><a href="#cb3-341" tabindex="-1"></a>    <span class="at">x9 =</span> temple<span class="sc">$</span>x8,<span class="co">#</span></span>
+<span id="cb3-342"><a href="#cb3-342" tabindex="-1"></a>    <span class="at">x10 =</span> temple<span class="sc">$</span>x6<span class="co">#</span></span>
+<span id="cb3-343"><a href="#cb3-343" tabindex="-1"></a>  )</span>
+<span id="cb3-344"><a href="#cb3-344" tabindex="-1"></a></span>
+<span id="cb3-345"><a href="#cb3-345" tabindex="-1"></a><span class="co">#pairs(rbdata, pane=panel.smooth)</span></span>
+<span id="cb3-346"><a href="#cb3-346" tabindex="-1"></a></span>
+<span id="cb3-347"><a href="#cb3-347" tabindex="-1"></a> <span class="co">#write.csv(rbdata, &quot;rbdata.csv&quot;, row.names=FALSE)</span></span>
+<span id="cb3-348"><a href="#cb3-348" tabindex="-1"></a></span>
+<span id="cb3-349"><a href="#cb3-349" tabindex="-1"></a></span>
+<span id="cb3-350"><a href="#cb3-350" tabindex="-1"></a><span class="fu">ggplot</span>(templelm, <span class="fu">aes</span>(x1, y, <span class="at">col=</span> <span class="fu">interaction</span>(x2,x3,x4,x5,x6))) <span class="sc">+</span></span>
+<span id="cb3-351"><a href="#cb3-351" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb3-352"><a href="#cb3-352" tabindex="-1"></a>    <span class="st">&quot;gold3&quot;</span>, <span class="co">#moroni</span></span>
+<span id="cb3-353"><a href="#cb3-353" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>, <span class="st">&quot;grey50&quot;</span>,</span>
+<span id="cb3-354"><a href="#cb3-354" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>, <span class="co">#door</span></span>
+<span id="cb3-355"><a href="#cb3-355" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>, <span class="st">&quot;grey50&quot;</span>, <span class="st">&quot;grey50&quot;</span>, <span class="st">&quot;grey50&quot;</span>,</span>
+<span id="cb3-356"><a href="#cb3-356" tabindex="-1"></a>    <span class="st">&quot;gold3&quot;</span>, <span class="co">#moroni</span></span>
+<span id="cb3-357"><a href="#cb3-357" tabindex="-1"></a>    <span class="st">&quot;grey65&quot;</span>, <span class="co">#hof</span></span>
+<span id="cb3-358"><a href="#cb3-358" tabindex="-1"></a>    <span class="st">&quot;green4&quot;</span>, <span class="st">&quot;grey50&quot;</span>,</span>
+<span id="cb3-359"><a href="#cb3-359" tabindex="-1"></a>    <span class="st">&quot;green4&quot;</span>,</span>
+<span id="cb3-360"><a href="#cb3-360" tabindex="-1"></a>    <span class="st">&quot;gold3&quot;</span>, <span class="st">&quot;grey65&quot;</span>, <span class="co">#moroni, hof</span></span>
+<span id="cb3-361"><a href="#cb3-361" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>, <span class="co">#base base</span></span>
+<span id="cb3-362"><a href="#cb3-362" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>, <span class="st">&quot;grey50&quot;</span>, <span class="co">#moroni&#39;s base</span></span>
+<span id="cb3-363"><a href="#cb3-363" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb3-364"><a href="#cb3-364" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">show.legend =</span> F)<span class="sc">+</span></span>
+<span id="cb3-365"><a href="#cb3-365" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">&quot;The House Of The Lord&quot;</span>)<span class="sc">+</span></span>
+<span id="cb3-366"><a href="#cb3-366" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">vjust =</span> <span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb3-367"><a href="#cb3-367" tabindex="-1"></a>  <span class="co">#geom_point(show.legend = F, pch=1, alpha=.5) +</span></span>
+<span id="cb3-368"><a href="#cb3-368" tabindex="-1"></a>  <span class="co">#geom_point(aes(y=mylm$fit), cex=1) +</span></span>
+<span id="cb3-369"><a href="#cb3-369" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code></pre></div>
+<p><img src="Temple_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><br></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">ggplot</span>(templelm, <span class="fu">aes</span>(x1, y, <span class="at">col=</span> <span class="fu">interaction</span>(x2,x3,x4,x5,x6))) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="st">&quot;gold3&quot;</span>, <span class="co">#moroni</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>, <span class="st">&quot;grey50&quot;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>, <span class="co">#door</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>, <span class="st">&quot;grey50&quot;</span>, <span class="st">&quot;grey50&quot;</span>, <span class="st">&quot;grey50&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="st">&quot;gold3&quot;</span>, <span class="co">#moroni</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>    <span class="st">&quot;grey65&quot;</span>, <span class="co">#hof</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>    <span class="st">&quot;green4&quot;</span>, <span class="st">&quot;grey50&quot;</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>    <span class="st">&quot;green4&quot;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>    <span class="st">&quot;gold3&quot;</span>, <span class="st">&quot;grey65&quot;</span>, <span class="co">#moroni, hof</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>, <span class="co">#base base</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>, <span class="st">&quot;grey50&quot;</span>, <span class="co">#moroni&#39;s base</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>    <span class="st">&quot;grey50&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">show.legend =</span> F)<span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">&quot;The House Of The Lord&quot;</span>)<span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">vjust =</span> <span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>  <span class="co">#geom_point(show.legend = F, pch=1, alpha=.5) +</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>  <span class="co">#geom_point(aes(y=mylm$fit), cex=1) +</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>  </span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x) </span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>    </span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>    b0 <span class="sc">+</span> b1<span class="sc">*</span>x, <span class="at">color=</span><span class="st">&quot;gold3&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>  </span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>    b2 <span class="sc">+</span> b3<span class="sc">*</span>x, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>  </span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>    b4 <span class="sc">+</span> b5<span class="sc">*</span>x, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>  </span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>    b6 <span class="sc">+</span> b7<span class="sc">*</span>x, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a>  </span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a>    b8 <span class="sc">+</span> b9<span class="sc">*</span>x <span class="sc">+</span> b10<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span>, <span class="at">color=</span><span class="st">&quot;gold3&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a>  </span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a>    b11 <span class="sc">+</span> b12<span class="sc">*</span>x <span class="sc">+</span> b13<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span>, <span class="at">color=</span><span class="st">&quot;gold3&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a>  </span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a>    b14 <span class="sc">+</span> b15<span class="sc">*</span>x <span class="sc">+</span> b16<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> b17<span class="sc">*</span>x<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> b18<span class="sc">*</span>x<span class="sc">^</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a>  </span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a>    b19 <span class="sc">+</span> b20<span class="sc">*</span>x <span class="sc">+</span> b21<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> b22<span class="sc">*</span>x<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> b23<span class="sc">*</span>x<span class="sc">^</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a>  </span>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a>    b24 <span class="sc">+</span> b25<span class="sc">*</span>x <span class="sc">+</span> b26<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> b27<span class="sc">*</span>x<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> b28<span class="sc">*</span>x<span class="sc">^</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a>  </span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a>    b29 <span class="sc">+</span> b30<span class="sc">*</span>x <span class="sc">+</span> b31<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> b32<span class="sc">*</span>x<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> b33<span class="sc">*</span>x<span class="sc">^</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a>  </span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a>    b34 <span class="sc">+</span> b35<span class="sc">*</span>x <span class="sc">+</span> b36<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> b37<span class="sc">*</span>x<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> b38<span class="sc">*</span>x<span class="sc">^</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a>  </span>
+<span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a>    b39 <span class="sc">+</span> b40<span class="sc">*</span>x <span class="sc">+</span> b41<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> b42<span class="sc">*</span>x<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> b43<span class="sc">*</span>x<span class="sc">^</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a>  </span>
+<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a>    b44 <span class="sc">+</span> b45<span class="sc">*</span>x <span class="sc">+</span> b46<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> b47<span class="sc">*</span>x<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> b48<span class="sc">*</span>x<span class="sc">^</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-61"><a href="#cb4-61" tabindex="-1"></a>  </span>
+<span id="cb4-62"><a href="#cb4-62" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-63"><a href="#cb4-63" tabindex="-1"></a>    b49 <span class="sc">+</span> b50<span class="sc">*</span>x <span class="sc">+</span> b51<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> b52<span class="sc">*</span>x<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> b53<span class="sc">*</span>x<span class="sc">^</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-64"><a href="#cb4-64" tabindex="-1"></a>  </span>
+<span id="cb4-65"><a href="#cb4-65" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-66"><a href="#cb4-66" tabindex="-1"></a>    b54 <span class="sc">+</span> b55<span class="sc">*</span>x <span class="sc">+</span> b56<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> b57<span class="sc">*</span>x<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> b58<span class="sc">*</span>x<span class="sc">^</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;green4&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-67"><a href="#cb4-67" tabindex="-1"></a>  </span>
+<span id="cb4-68"><a href="#cb4-68" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-69"><a href="#cb4-69" tabindex="-1"></a>    b59 <span class="sc">+</span> b60<span class="sc">*</span>x, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-70"><a href="#cb4-70" tabindex="-1"></a>  </span>
+<span id="cb4-71"><a href="#cb4-71" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-72"><a href="#cb4-72" tabindex="-1"></a>    b61 <span class="sc">+</span> b62<span class="sc">*</span>x, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-73"><a href="#cb4-73" tabindex="-1"></a>  </span>
+<span id="cb4-74"><a href="#cb4-74" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x)</span>
+<span id="cb4-75"><a href="#cb4-75" tabindex="-1"></a>    b63 <span class="sc">+</span> b64<span class="sc">*</span>x, <span class="at">color=</span><span class="st">&quot;grey45&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-76"><a href="#cb4-76" tabindex="-1"></a>  </span>
+<span id="cb4-77"><a href="#cb4-77" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">10</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25</span>))</span></code></pre></div>
+<p><img src="Temple_files/figure-html/model-1.png" width="672" /></p>
+</div>
+<div id="code" class="section level2">
+<h2>Code</h2>
+<p>Here is the code again, and the summary output showing that after
+created, all terms are significant even at the <strong>.01</strong>
+level.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1500</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a> </span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n,<span class="sc">-</span><span class="dv">15</span>,<span class="dv">15</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="at">replace =</span> T)</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="at">replace =</span> T)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="at">replace =</span> T)</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="at">replace =</span> T)</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>x6 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="at">replace =</span> T)</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#tumpet /check</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">21</span> </span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">2</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#3D1 /check</span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>b3 <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="co">#3D2 /check</span></span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a>b4 <span class="ot">&lt;-</span> <span class="dv">10</span> </span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a>b5 <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a>  ,<span class="dv">5</span> ,<span class="dv">7</span>)</span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a><span class="co">#3D3 /check</span></span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a>b6 <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a>b7 <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a></span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a>  ,<span class="dv">5</span> ,<span class="dv">7</span>)</span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a><span class="co">#Moroni 1</span></span>
+<span id="cb5-54"><a href="#cb5-54" tabindex="-1"></a>b8 <span class="ot">&lt;-</span> <span class="dv">22</span></span>
+<span id="cb5-55"><a href="#cb5-55" tabindex="-1"></a>b9 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-56"><a href="#cb5-56" tabindex="-1"></a>b10 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">20</span></span>
+<span id="cb5-57"><a href="#cb5-57" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-59"><a href="#cb5-59" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-60"><a href="#cb5-60" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-61"><a href="#cb5-61" tabindex="-1"></a>  ,<span class="sc">-</span>.<span class="dv">275</span> ,.<span class="dv">275</span>)</span>
+<span id="cb5-62"><a href="#cb5-62" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" tabindex="-1"></a><span class="co">#Moroni 2</span></span>
+<span id="cb5-64"><a href="#cb5-64" tabindex="-1"></a>b11 <span class="ot">&lt;-</span> <span class="dv">19</span></span>
+<span id="cb5-65"><a href="#cb5-65" tabindex="-1"></a>b12 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-66"><a href="#cb5-66" tabindex="-1"></a>b13 <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb5-67"><a href="#cb5-67" tabindex="-1"></a></span>
+<span id="cb5-68"><a href="#cb5-68" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-69"><a href="#cb5-69" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-70"><a href="#cb5-70" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> )</span>
+<span id="cb5-71"><a href="#cb5-71" tabindex="-1"></a>  ,<span class="sc">-</span>.<span class="dv">275</span> ,.<span class="dv">275</span>)</span>
+<span id="cb5-72"><a href="#cb5-72" tabindex="-1"></a></span>
+<span id="cb5-73"><a href="#cb5-73" tabindex="-1"></a><span class="co">#door</span></span>
+<span id="cb5-74"><a href="#cb5-74" tabindex="-1"></a>b14 <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb5-75"><a href="#cb5-75" tabindex="-1"></a>b15 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-76"><a href="#cb5-76" tabindex="-1"></a>b16 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-77"><a href="#cb5-77" tabindex="-1"></a>b17 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-78"><a href="#cb5-78" tabindex="-1"></a>b18 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb5-79"><a href="#cb5-79" tabindex="-1"></a></span>
+<span id="cb5-80"><a href="#cb5-80" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-81"><a href="#cb5-81" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-82"><a href="#cb5-82" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-83"><a href="#cb5-83" tabindex="-1"></a>  ,<span class="sc">-</span><span class="fl">1.56</span> ,<span class="fl">1.56</span>)</span>
+<span id="cb5-84"><a href="#cb5-84" tabindex="-1"></a></span>
+<span id="cb5-85"><a href="#cb5-85" tabindex="-1"></a><span class="co">#ceiling</span></span>
+<span id="cb5-86"><a href="#cb5-86" tabindex="-1"></a>b19 <span class="ot">&lt;-</span> <span class="dv">11</span></span>
+<span id="cb5-87"><a href="#cb5-87" tabindex="-1"></a>b20 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-88"><a href="#cb5-88" tabindex="-1"></a>b21 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-89"><a href="#cb5-89" tabindex="-1"></a>b22 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-90"><a href="#cb5-90" tabindex="-1"></a>b23 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#-.0001</span></span>
+<span id="cb5-91"><a href="#cb5-91" tabindex="-1"></a></span>
+<span id="cb5-92"><a href="#cb5-92" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-93"><a href="#cb5-93" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-94"><a href="#cb5-94" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-95"><a href="#cb5-95" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">5</span> ,<span class="dv">5</span>)</span>
+<span id="cb5-96"><a href="#cb5-96" tabindex="-1"></a></span>
+<span id="cb5-97"><a href="#cb5-97" tabindex="-1"></a><span class="co">#right wall</span></span>
+<span id="cb5-98"><a href="#cb5-98" tabindex="-1"></a>b24 <span class="ot">&lt;-</span> <span class="fl">11.5</span></span>
+<span id="cb5-99"><a href="#cb5-99" tabindex="-1"></a>b25 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-100"><a href="#cb5-100" tabindex="-1"></a>b26 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-101"><a href="#cb5-101" tabindex="-1"></a>b27 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-102"><a href="#cb5-102" tabindex="-1"></a>b28 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#-.00005</span></span>
+<span id="cb5-103"><a href="#cb5-103" tabindex="-1"></a></span>
+<span id="cb5-104"><a href="#cb5-104" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-105"><a href="#cb5-105" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-106"><a href="#cb5-106" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-107"><a href="#cb5-107" tabindex="-1"></a>  ,<span class="dv">2</span> ,<span class="dv">7</span>)</span>
+<span id="cb5-108"><a href="#cb5-108" tabindex="-1"></a></span>
+<span id="cb5-109"><a href="#cb5-109" tabindex="-1"></a><span class="co">#moroni&#39;s base</span></span>
+<span id="cb5-110"><a href="#cb5-110" tabindex="-1"></a>b29 <span class="ot">&lt;-</span> <span class="dv">19</span></span>
+<span id="cb5-111"><a href="#cb5-111" tabindex="-1"></a>b30 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-112"><a href="#cb5-112" tabindex="-1"></a>b31 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-113"><a href="#cb5-113" tabindex="-1"></a>b32 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-114"><a href="#cb5-114" tabindex="-1"></a>b33 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">20</span></span>
+<span id="cb5-115"><a href="#cb5-115" tabindex="-1"></a></span>
+<span id="cb5-116"><a href="#cb5-116" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-117"><a href="#cb5-117" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-118"><a href="#cb5-118" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> )</span>
+<span id="cb5-119"><a href="#cb5-119" tabindex="-1"></a>  ,<span class="sc">-</span>.<span class="dv">67</span> ,.<span class="dv">67</span>)</span>
+<span id="cb5-120"><a href="#cb5-120" tabindex="-1"></a></span>
+<span id="cb5-121"><a href="#cb5-121" tabindex="-1"></a><span class="co">#floor</span></span>
+<span id="cb5-122"><a href="#cb5-122" tabindex="-1"></a>b34 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-123"><a href="#cb5-123" tabindex="-1"></a>b35 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-124"><a href="#cb5-124" tabindex="-1"></a>b36 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-125"><a href="#cb5-125" tabindex="-1"></a>b37 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-126"><a href="#cb5-126" tabindex="-1"></a>b38 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#.0001</span></span>
+<span id="cb5-127"><a href="#cb5-127" tabindex="-1"></a></span>
+<span id="cb5-128"><a href="#cb5-128" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-129"><a href="#cb5-129" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-130"><a href="#cb5-130" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-131"><a href="#cb5-131" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">5</span> ,<span class="dv">5</span>)</span>
+<span id="cb5-132"><a href="#cb5-132" tabindex="-1"></a></span>
+<span id="cb5-133"><a href="#cb5-133" tabindex="-1"></a><span class="co">#house of the lord</span></span>
+<span id="cb5-134"><a href="#cb5-134" tabindex="-1"></a>b39 <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb5-135"><a href="#cb5-135" tabindex="-1"></a>b40 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-136"><a href="#cb5-136" tabindex="-1"></a>b41 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-137"><a href="#cb5-137" tabindex="-1"></a>b42 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-138"><a href="#cb5-138" tabindex="-1"></a>b43 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#-.0001</span></span>
+<span id="cb5-139"><a href="#cb5-139" tabindex="-1"></a></span>
+<span id="cb5-140"><a href="#cb5-140" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-141"><a href="#cb5-141" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-142"><a href="#cb5-142" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-143"><a href="#cb5-143" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">2</span> ,<span class="dv">2</span>)</span>
+<span id="cb5-144"><a href="#cb5-144" tabindex="-1"></a></span>
+<span id="cb5-145"><a href="#cb5-145" tabindex="-1"></a><span class="co">#house of the lord 2</span></span>
+<span id="cb5-146"><a href="#cb5-146" tabindex="-1"></a>b44 <span class="ot">&lt;-</span> <span class="fl">8.5</span></span>
+<span id="cb5-147"><a href="#cb5-147" tabindex="-1"></a>b45 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-148"><a href="#cb5-148" tabindex="-1"></a>b46 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-149"><a href="#cb5-149" tabindex="-1"></a>b47 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-150"><a href="#cb5-150" tabindex="-1"></a>b48 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#.0001</span></span>
+<span id="cb5-151"><a href="#cb5-151" tabindex="-1"></a></span>
+<span id="cb5-152"><a href="#cb5-152" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-153"><a href="#cb5-153" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-154"><a href="#cb5-154" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> )</span>
+<span id="cb5-155"><a href="#cb5-155" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">2</span> ,<span class="dv">2</span>)</span>
+<span id="cb5-156"><a href="#cb5-156" tabindex="-1"></a></span>
+<span id="cb5-157"><a href="#cb5-157" tabindex="-1"></a><span class="co">#ceiling base</span></span>
+<span id="cb5-158"><a href="#cb5-158" tabindex="-1"></a>b49 <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb5-159"><a href="#cb5-159" tabindex="-1"></a>b50 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-160"><a href="#cb5-160" tabindex="-1"></a>b51 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-161"><a href="#cb5-161" tabindex="-1"></a>b52 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-162"><a href="#cb5-162" tabindex="-1"></a>b53 <span class="ot">&lt;-</span> <span class="sc">-</span>.<span class="dv">2</span></span>
+<span id="cb5-163"><a href="#cb5-163" tabindex="-1"></a></span>
+<span id="cb5-164"><a href="#cb5-164" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-165"><a href="#cb5-165" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-166"><a href="#cb5-166" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span> )</span>
+<span id="cb5-167"><a href="#cb5-167" tabindex="-1"></a>  ,<span class="sc">-</span><span class="fl">2.075</span> ,<span class="fl">2.075</span>)</span>
+<span id="cb5-168"><a href="#cb5-168" tabindex="-1"></a></span>
+<span id="cb5-169"><a href="#cb5-169" tabindex="-1"></a><span class="co">#grass</span></span>
+<span id="cb5-170"><a href="#cb5-170" tabindex="-1"></a>b54 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb5-171"><a href="#cb5-171" tabindex="-1"></a>b55 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-172"><a href="#cb5-172" tabindex="-1"></a>b56 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-173"><a href="#cb5-173" tabindex="-1"></a>b57 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-174"><a href="#cb5-174" tabindex="-1"></a>b58 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#-.00001</span></span>
+<span id="cb5-175"><a href="#cb5-175" tabindex="-1"></a></span>
+<span id="cb5-176"><a href="#cb5-176" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-177"><a href="#cb5-177" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-178"><a href="#cb5-178" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> )</span>
+<span id="cb5-179"><a href="#cb5-179" tabindex="-1"></a>  ,<span class="sc">-</span><span class="dv">10</span> ,<span class="sc">-</span><span class="dv">5</span>)</span>
+<span id="cb5-180"><a href="#cb5-180" tabindex="-1"></a></span>
+<span id="cb5-181"><a href="#cb5-181" tabindex="-1"></a><span class="co">#grass 2</span></span>
+<span id="cb5-182"><a href="#cb5-182" tabindex="-1"></a>b54 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb5-183"><a href="#cb5-183" tabindex="-1"></a>b55 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-184"><a href="#cb5-184" tabindex="-1"></a>b56 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-185"><a href="#cb5-185" tabindex="-1"></a>b57 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-186"><a href="#cb5-186" tabindex="-1"></a>b58 <span class="ot">&lt;-</span> <span class="dv">0</span><span class="co">#-.00001</span></span>
+<span id="cb5-187"><a href="#cb5-187" tabindex="-1"></a></span>
+<span id="cb5-188"><a href="#cb5-188" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span> ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-189"><a href="#cb5-189" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-190"><a href="#cb5-190" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>  )</span>
+<span id="cb5-191"><a href="#cb5-191" tabindex="-1"></a>  ,<span class="dv">7</span> ,<span class="dv">10</span>)</span>
+<span id="cb5-192"><a href="#cb5-192" tabindex="-1"></a></span>
+<span id="cb5-193"><a href="#cb5-193" tabindex="-1"></a><span class="co">#left wall</span></span>
+<span id="cb5-194"><a href="#cb5-194" tabindex="-1"></a>b59 <span class="ot">&lt;-</span> <span class="dv">1500</span></span>
+<span id="cb5-195"><a href="#cb5-195" tabindex="-1"></a>b60 <span class="ot">&lt;-</span> <span class="dv">300</span></span>
+<span id="cb5-196"><a href="#cb5-196" tabindex="-1"></a></span>
+<span id="cb5-197"><a href="#cb5-197" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span></span>
+<span id="cb5-198"><a href="#cb5-198" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-199"><a href="#cb5-199" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb5-200"><a href="#cb5-200" tabindex="-1"></a>  ,<span class="sc">-</span><span class="fl">4.998</span>,<span class="sc">-</span><span class="fl">4.965</span>)</span>
+<span id="cb5-201"><a href="#cb5-201" tabindex="-1"></a></span>
+<span id="cb5-202"><a href="#cb5-202" tabindex="-1"></a><span class="co">#right wall 1</span></span>
+<span id="cb5-203"><a href="#cb5-203" tabindex="-1"></a>b61 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1500</span></span>
+<span id="cb5-204"><a href="#cb5-204" tabindex="-1"></a>b62 <span class="ot">&lt;-</span> <span class="dv">300</span></span>
+<span id="cb5-205"><a href="#cb5-205" tabindex="-1"></a></span>
+<span id="cb5-206"><a href="#cb5-206" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span></span>
+<span id="cb5-207"><a href="#cb5-207" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-208"><a href="#cb5-208" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb5-209"><a href="#cb5-209" tabindex="-1"></a>  ,<span class="fl">5.004</span>,<span class="fl">5.036</span>)</span>
+<span id="cb5-210"><a href="#cb5-210" tabindex="-1"></a></span>
+<span id="cb5-211"><a href="#cb5-211" tabindex="-1"></a><span class="co">#right wall 2</span></span>
+<span id="cb5-212"><a href="#cb5-212" tabindex="-1"></a>b63 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2400</span></span>
+<span id="cb5-213"><a href="#cb5-213" tabindex="-1"></a>b64 <span class="ot">&lt;-</span> <span class="dv">350</span></span>
+<span id="cb5-214"><a href="#cb5-214" tabindex="-1"></a></span>
+<span id="cb5-215"><a href="#cb5-215" tabindex="-1"></a>x1[x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span></span>
+<span id="cb5-216"><a href="#cb5-216" tabindex="-1"></a>  <span class="fu">runif</span>(</span>
+<span id="cb5-217"><a href="#cb5-217" tabindex="-1"></a>  <span class="fu">sum</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb5-218"><a href="#cb5-218" tabindex="-1"></a>  ,<span class="fl">6.861</span>,<span class="fl">6.89</span>)</span>
+<span id="cb5-219"><a href="#cb5-219" tabindex="-1"></a></span>
+<span id="cb5-220"><a href="#cb5-220" tabindex="-1"></a><span class="do">## sigma</span></span>
+<span id="cb5-221"><a href="#cb5-221" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fl">0.001</span></span>
+<span id="cb5-222"><a href="#cb5-222" tabindex="-1"></a>epsilon_i <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sigma) </span>
+<span id="cb5-223"><a href="#cb5-223" tabindex="-1"></a></span>
+<span id="cb5-224"><a href="#cb5-224" tabindex="-1"></a> y <span class="ot">&lt;-</span></span>
+<span id="cb5-225"><a href="#cb5-225" tabindex="-1"></a>   b19<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int</span></span>
+<span id="cb5-226"><a href="#cb5-226" tabindex="-1"></a>   </span>
+<span id="cb5-227"><a href="#cb5-227" tabindex="-1"></a>   b24<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int</span></span>
+<span id="cb5-228"><a href="#cb5-228" tabindex="-1"></a>  </span>
+<span id="cb5-229"><a href="#cb5-229" tabindex="-1"></a>   b34<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int</span></span>
+<span id="cb5-230"><a href="#cb5-230" tabindex="-1"></a>   </span>
+<span id="cb5-231"><a href="#cb5-231" tabindex="-1"></a>   b39<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int</span></span>
+<span id="cb5-232"><a href="#cb5-232" tabindex="-1"></a>   </span>
+<span id="cb5-233"><a href="#cb5-233" tabindex="-1"></a>   b44<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span> <span class="co">#int</span></span>
+<span id="cb5-234"><a href="#cb5-234" tabindex="-1"></a>  </span>
+<span id="cb5-235"><a href="#cb5-235" tabindex="-1"></a>   b54<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> </span>
+<span id="cb5-236"><a href="#cb5-236" tabindex="-1"></a></span>
+<span id="cb5-237"><a href="#cb5-237" tabindex="-1"></a>   b54<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> </span>
+<span id="cb5-238"><a href="#cb5-238" tabindex="-1"></a>   </span>
+<span id="cb5-239"><a href="#cb5-239" tabindex="-1"></a>   b59<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span> b60<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-240"><a href="#cb5-240" tabindex="-1"></a>   </span>
+<span id="cb5-241"><a href="#cb5-241" tabindex="-1"></a>   b61<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span> b62<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-242"><a href="#cb5-242" tabindex="-1"></a>   </span>
+<span id="cb5-243"><a href="#cb5-243" tabindex="-1"></a>   b63<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">+</span> b64<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb5-244"><a href="#cb5-244" tabindex="-1"></a>  </span>
+<span id="cb5-245"><a href="#cb5-245" tabindex="-1"></a>   b0<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> b1<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int+slope</span></span>
+<span id="cb5-246"><a href="#cb5-246" tabindex="-1"></a></span>
+<span id="cb5-247"><a href="#cb5-247" tabindex="-1"></a>   b2<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> b3<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int+slope</span></span>
+<span id="cb5-248"><a href="#cb5-248" tabindex="-1"></a></span>
+<span id="cb5-249"><a href="#cb5-249" tabindex="-1"></a>   b4<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> b5<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int+slope</span></span>
+<span id="cb5-250"><a href="#cb5-250" tabindex="-1"></a></span>
+<span id="cb5-251"><a href="#cb5-251" tabindex="-1"></a>   b6<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> b7<span class="sc">*</span>x1<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int+slope</span></span>
+<span id="cb5-252"><a href="#cb5-252" tabindex="-1"></a>   </span>
+<span id="cb5-253"><a href="#cb5-253" tabindex="-1"></a>   b8<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">+</span> b10<span class="sc">*</span>(x1<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int+x2</span></span>
+<span id="cb5-254"><a href="#cb5-254" tabindex="-1"></a>   </span>
+<span id="cb5-255"><a href="#cb5-255" tabindex="-1"></a>   b11<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span> b13<span class="sc">*</span>(x1<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span> <span class="co">#int+x2</span></span>
+<span id="cb5-256"><a href="#cb5-256" tabindex="-1"></a>   </span>
+<span id="cb5-257"><a href="#cb5-257" tabindex="-1"></a>   b14<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> </span>
+<span id="cb5-258"><a href="#cb5-258" tabindex="-1"></a>b18<span class="sc">*</span>(x1<span class="sc">^</span><span class="dv">4</span>)<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">0</span>)  <span class="sc">+</span> <span class="co">#int +x4</span></span>
+<span id="cb5-259"><a href="#cb5-259" tabindex="-1"></a></span>
+<span id="cb5-260"><a href="#cb5-260" tabindex="-1"></a></span>
+<span id="cb5-261"><a href="#cb5-261" tabindex="-1"></a>   b29<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span> <span class="co">#x4</span></span>
+<span id="cb5-262"><a href="#cb5-262" tabindex="-1"></a>b33<span class="sc">*</span>(x1<span class="sc">^</span><span class="dv">4</span>)<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span></span>
+<span id="cb5-263"><a href="#cb5-263" tabindex="-1"></a>   </span>
+<span id="cb5-264"><a href="#cb5-264" tabindex="-1"></a>   </span>
+<span id="cb5-265"><a href="#cb5-265" tabindex="-1"></a>   b49<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span> </span>
+<span id="cb5-266"><a href="#cb5-266" tabindex="-1"></a>b53<span class="sc">*</span>(x1<span class="sc">^</span><span class="dv">4</span>)<span class="sc">*</span>(x2 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x3 <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">*</span>(x4 <span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>(x5 <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">*</span>(x6 <span class="sc">==</span> <span class="dv">1</span>)  <span class="sc">+</span></span>
+<span id="cb5-267"><a href="#cb5-267" tabindex="-1"></a>   </span>
+<span id="cb5-268"><a href="#cb5-268" tabindex="-1"></a></span>
+<span id="cb5-269"><a href="#cb5-269" tabindex="-1"></a>   epsilon_i</span>
+<span id="cb5-270"><a href="#cb5-270" tabindex="-1"></a> </span>
+<span id="cb5-271"><a href="#cb5-271" tabindex="-1"></a>x7 <span class="ot">&lt;-</span> <span class="st">&quot;The House Of The Lord&quot;</span></span>
+<span id="cb5-272"><a href="#cb5-272" tabindex="-1"></a>   </span>
+<span id="cb5-273"><a href="#cb5-273" tabindex="-1"></a>x8 <span class="ot">&lt;-</span> (x4<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span>(x3<span class="sc">+</span><span class="dv">4</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb5-274"><a href="#cb5-274" tabindex="-1"></a></span>
+<span id="cb5-275"><a href="#cb5-275" tabindex="-1"></a>x9 <span class="ot">&lt;-</span> (x8<span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>y<span class="sc">/</span>n</span>
+<span id="cb5-276"><a href="#cb5-276" tabindex="-1"></a></span>
+<span id="cb5-277"><a href="#cb5-277" tabindex="-1"></a>x10 <span class="ot">&lt;-</span> (x6<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span>(x5<span class="sc">+</span><span class="dv">4</span>)</span>
+<span id="cb5-278"><a href="#cb5-278" tabindex="-1"></a></span>
+<span id="cb5-279"><a href="#cb5-279" tabindex="-1"></a>temple <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(y, x1, x2, x3, x4, x5, x6, <span class="at">x7 =</span> <span class="fu">as.factor</span>(x7), <span class="at">x8 =</span> <span class="fu">as.factor</span>(x8), <span class="at">x9 =</span> <span class="fu">as.factor</span>(x9), <span class="at">x10 =</span> <span class="fu">as.factor</span>(x10)) <span class="sc">|&gt;</span> <span class="fu">filter</span>(y <span class="sc">&gt;</span> .<span class="dv">5</span>)</span>
+<span id="cb5-280"><a href="#cb5-280" tabindex="-1"></a></span>
+<span id="cb5-281"><a href="#cb5-281" tabindex="-1"></a>templelm <span class="ot">&lt;-</span> temple <span class="sc">|&gt;</span> </span>
+<span id="cb5-282"><a href="#cb5-282" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-283"><a href="#cb5-283" tabindex="-1"></a>    <span class="at">trmp =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-284"><a href="#cb5-284" tabindex="-1"></a>         <span class="at">temple1 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-285"><a href="#cb5-285" tabindex="-1"></a>         <span class="at">temple2 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-286"><a href="#cb5-286" tabindex="-1"></a>         <span class="at">door =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-287"><a href="#cb5-287" tabindex="-1"></a>         <span class="at">temple3 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-288"><a href="#cb5-288" tabindex="-1"></a>         <span class="at">temple4 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-289"><a href="#cb5-289" tabindex="-1"></a>         <span class="at">temple5 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-290"><a href="#cb5-290" tabindex="-1"></a>         <span class="at">temple6 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-291"><a href="#cb5-291" tabindex="-1"></a>         <span class="at">moroni1 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-292"><a href="#cb5-292" tabindex="-1"></a>         <span class="at">temple7 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-293"><a href="#cb5-293" tabindex="-1"></a>         <span class="at">grass1 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-294"><a href="#cb5-294" tabindex="-1"></a>         <span class="at">temple8 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-295"><a href="#cb5-295" tabindex="-1"></a>         <span class="at">grass2 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-296"><a href="#cb5-296" tabindex="-1"></a>         <span class="at">moroni2 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-297"><a href="#cb5-297" tabindex="-1"></a>         <span class="at">hof =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-298"><a href="#cb5-298" tabindex="-1"></a>         <span class="at">base1 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-299"><a href="#cb5-299" tabindex="-1"></a>         <span class="at">temple9 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-300"><a href="#cb5-300" tabindex="-1"></a>         <span class="at">base2 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb5-301"><a href="#cb5-301" tabindex="-1"></a>         <span class="at">temple10 =</span> <span class="fu">if_else</span>(x2 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x3 <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> x4 <span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> x5 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> x6 <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb5-302"><a href="#cb5-302" tabindex="-1"></a></span>
+<span id="cb5-303"><a href="#cb5-303" tabindex="-1"></a>mylm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> trmp<span class="sc">:</span>x1 <span class="sc">+</span> </span>
+<span id="cb5-304"><a href="#cb5-304" tabindex="-1"></a>            temple1 <span class="sc">+</span> temple1<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb5-305"><a href="#cb5-305" tabindex="-1"></a>            temple2 <span class="sc">+</span> temple2<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb5-306"><a href="#cb5-306" tabindex="-1"></a>            temple3 <span class="sc">+</span> temple3<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb5-307"><a href="#cb5-307" tabindex="-1"></a>            temple4 <span class="sc">+</span></span>
+<span id="cb5-308"><a href="#cb5-308" tabindex="-1"></a>            temple5 <span class="sc">+</span></span>
+<span id="cb5-309"><a href="#cb5-309" tabindex="-1"></a>            temple6 <span class="sc">+</span> temple6<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb5-310"><a href="#cb5-310" tabindex="-1"></a>            temple7 <span class="sc">+</span> </span>
+<span id="cb5-311"><a href="#cb5-311" tabindex="-1"></a>            temple8 <span class="sc">+</span> </span>
+<span id="cb5-312"><a href="#cb5-312" tabindex="-1"></a>            temple9 <span class="sc">+</span> temple9<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb5-313"><a href="#cb5-313" tabindex="-1"></a>            temple10 <span class="sc">+</span> temple10<span class="sc">:</span>x1 <span class="sc">+</span></span>
+<span id="cb5-314"><a href="#cb5-314" tabindex="-1"></a>            hof <span class="sc">+</span></span>
+<span id="cb5-315"><a href="#cb5-315" tabindex="-1"></a>            grass1 <span class="sc">+</span></span>
+<span id="cb5-316"><a href="#cb5-316" tabindex="-1"></a>            grass2 <span class="sc">+</span></span>
+<span id="cb5-317"><a href="#cb5-317" tabindex="-1"></a>            moroni1 <span class="sc">+</span> moroni1<span class="sc">:</span><span class="fu">I</span>(x1<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb5-318"><a href="#cb5-318" tabindex="-1"></a>            moroni2 <span class="sc">+</span> moroni2<span class="sc">:</span><span class="fu">I</span>(x1<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb5-319"><a href="#cb5-319" tabindex="-1"></a>            door <span class="sc">+</span> door<span class="sc">:</span><span class="fu">I</span>(x1<span class="sc">^</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-320"><a href="#cb5-320" tabindex="-1"></a>            base1 <span class="sc">+</span> base1<span class="sc">:</span><span class="fu">I</span>(x1<span class="sc">^</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-321"><a href="#cb5-321" tabindex="-1"></a>            base2 <span class="sc">+</span> base2<span class="sc">:</span><span class="fu">I</span>(x1<span class="sc">^</span><span class="dv">4</span>) , templelm</span>
+<span id="cb5-322"><a href="#cb5-322" tabindex="-1"></a>            )</span>
+<span id="cb5-323"><a href="#cb5-323" tabindex="-1"></a></span>
+<span id="cb5-324"><a href="#cb5-324" tabindex="-1"></a><span class="fu">summary</span>(mylm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ trmp:x1 + temple1 + temple1:x1 + temple2 + temple2:x1 + 
+##     temple3 + temple3:x1 + temple4 + temple5 + temple6 + temple6:x1 + 
+##     temple7 + temple8 + temple9 + temple9:x1 + temple10 + temple10:x1 + 
+##     hof + grass1 + grass2 + moroni1 + moroni1:I(x1^2) + moroni2 + 
+##     moroni2:I(x1^2) + door + door:I(x1^4) + base1 + base1:I(x1^4) + 
+##     base2 + base2:I(x1^4), data = templelm)
+## 
+## Residuals:
+##        Min         1Q     Median         3Q        Max 
+## -2.949e-03 -6.688e-04  1.035e-05  6.031e-04  2.801e-03 
+## 
+## Coefficients:
+##                   Estimate Std. Error  t value Pr(&gt;|t|)    
+## (Intercept)      2.100e+01  3.764e-04  55793.8   &lt;2e-16 ***
+## temple1         -9.000e+00  6.445e-04 -13965.1   &lt;2e-16 ***
+## temple2         -1.100e+01  1.779e-03  -6186.5   &lt;2e-16 ***
+## temple3         -2.100e+01  1.788e-03 -11743.0   &lt;2e-16 ***
+## temple4         -2.000e+01  4.044e-04 -49449.6   &lt;2e-16 ***
+## temple5         -1.000e+01  4.027e-04 -24833.4   &lt;2e-16 ***
+## temple6         -2.421e+03  1.094e-01 -22137.2   &lt;2e-16 ***
+## temple7         -1.200e+01  4.097e-04 -29290.8   &lt;2e-16 ***
+## temple8         -9.500e+00  4.002e-04 -23739.5   &lt;2e-16 ***
+## temple9          1.479e+03  8.145e-02  18156.4   &lt;2e-16 ***
+## temple10        -1.521e+03  6.626e-02 -22952.6   &lt;2e-16 ***
+## hof             -1.250e+01  4.044e-04 -30905.1   &lt;2e-16 ***
+## grass1          -1.900e+01  4.002e-04 -47478.6   &lt;2e-16 ***
+## grass2          -1.900e+01  3.993e-04 -47582.3   &lt;2e-16 ***
+## moroni1          1.000e+00  4.332e-04   2308.6   &lt;2e-16 ***
+## moroni2         -1.999e+00  4.448e-04  -4495.0   &lt;2e-16 ***
+## door            -1.400e+01  4.050e-04 -34567.2   &lt;2e-16 ***
+## base1           -6.000e+00  4.126e-04 -14542.7   &lt;2e-16 ***
+## base2           -2.000e+00  4.231e-04  -4727.3   &lt;2e-16 ***
+## trmp:x1         -1.000e+00  6.015e-04  -1662.9   &lt;2e-16 ***
+## x1:temple1       2.001e-01  1.401e-04   1428.4   &lt;2e-16 ***
+## x1:temple2       2.005e-01  2.855e-04    702.2   &lt;2e-16 ***
+## x1:temple3       1.997e-01  2.893e-04    690.3   &lt;2e-16 ***
+## x1:temple6       3.500e+02  1.591e-02  22001.6   &lt;2e-16 ***
+## x1:temple9       3.000e+02  1.635e-02  18351.2   &lt;2e-16 ***
+## x1:temple10      3.000e+02  1.320e-02  22727.1   &lt;2e-16 ***
+## moroni1:I(x1^2) -2.000e+01  6.577e-03  -3041.0   &lt;2e-16 ***
+## I(x1^2):moroni2  1.998e+01  6.957e-03   2872.2   &lt;2e-16 ***
+## door:I(x1^4)    -9.999e-01  7.826e-05 -12776.4   &lt;2e-16 ***
+## I(x1^4):base1   -2.000e-01  2.832e-05  -7062.1   &lt;2e-16 ***
+## I(x1^4):base2   -2.000e+01  2.349e-03  -8515.0   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.0009707 on 858 degrees of freedom
+## Multiple R-squared:      1,  Adjusted R-squared:      1 
+## F-statistic: 1.362e+09 on 30 and 858 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a> <span class="co"># par(mfrow=c(1,3))</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a> <span class="co"># plot(mylm,which=1:2)</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a> <span class="co"># plot(mylm$residuals)</span></span></code></pre></div>
+<p><br><br></p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Since I did not compete in regression Battleship with this model I
+have no game results here. However, I enjoyed simulating this regression
+model that looks like a temple, it was my own project and enhanced my
+programming / simulation skills.</p>
+<p><br></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+---
+title: "Week 9 Task 2"
+date: "March 9, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+
+#reading
+
+
+```{r}
+
+library(tidyverse)
+
+library(sf)
+
+library(ggrepel)
+
+library(USAboundaries)
+
+# Read in all four of the necessary SHP file datasets.
+
+pacman::p_load(downloader, sf, fs, tidyverse)
+
+wellspath <- "https://byuistats.github.io/M335/data/Wells.zip"
+
+df <- tempfile(); uf <- tempfile()
+
+download(wellspath, df, mode = "wb")
+
+unzip(df, exdir = uf)
+
+wells <- read_sf(uf)
+
+file_delete(df); dir_delete(uf)
+
+damspath <- "https://byuistats.github.io/M335/data/Idaho_Dams.zip"
+
+df2 <- tempfile(); uf2 <- tempfile()
+
+download(damspath, df2, mode = "wb")
+
+unzip(df2, exdir = uf2)
+
+dams <- read_sf(uf2)
+
+file_delete(df2); dir_delete(uf2)
+
+waterpath <- "https://byuistats.github.io/M335/data/water.zip"
+
+df3 <- tempfile(); uf3 <- tempfile()
+
+download(waterpath, df3, mode = "wb")
+
+unzip(df3, exdir = uf3)
+
+water <- read_sf(uf3)
+
+file_delete(df3); dir_delete(uf3)
+
+stateshapepath <- "https://byuistats.github.io/M335/data/shp.zip"
+
+df4 <- tempfile(); uf4 <- tempfile()
+
+download(stateshapepath, df4, mode = "wb")
+
+unzip(df4, exdir = uf4)
+
+stateshape <- read_sf(uf4)
+
+file_delete(df4); dir_delete(uf4)
+
+
+ID_counties <- USAboundaries::us_counties(states = "ID")
+
+wellsfiltered <- wells |> 
+
+group_by(WellID) |> 
+
+filter(Production >= 5000)
+
+damsfiltered <- dams |>
+
+filter(SurfaceAre >= 50)
+
+waterfiltered <- water |>
+
+filter(FEAT_NAME %in% c('Snake River', 'Henrys Fork'))
+
+
+ggplot() +
+
+  geom_sf(data = ID_counties, 
+          fill = "grey99") +
+  
+  geom_sf(data = damsfiltered, 
+          aes(color = "Dams"), 
+          show.legend = TRUE) +
+  
+  geom_sf(data = waterfiltered, 
+          aes(color = "Rivers"), 
+          linewidth = 1, 
+          show.legend = TRUE) +
+  
+  geom_sf(data = wellsfiltered, 
+          aes(color = "Wells"), 
+          show.legend = TRUE) +
+  
+  theme_bw() +
+  
+  coord_sf(crs = st_crs(4267)) +
+  
+  scale_color_manual(
+    name = "Features",
+    values = c(
+      "Rivers" = "steelblue1", 
+      "Dams" = "chocolate", 
+      "Wells" = "darkseagreen4"),
+    labels = c("Rivers", 
+               "Dams", 
+               "Wells")) +
+  
+  theme_minimal() +
+  
+  labs(
+    title = "Idaho's Dams, Wells, and Rivers"
+  ) +
+  
+  theme(
+    
+    panel.grid = element_blank(), 
+    
+    axis.text = element_blank(),  
+    
+    axis.ticks = element_blank(),  
+    
+    legend.position = "right",  
+    
+    plot.title = element_text(hjust = 0.5, 
+                              size = 18, 
+                              face = "bold", 
+                              color = "grey5"),
+    
+    plot.subtitle = element_text(hjust = 0.5, 
+                                 size = 16, 
+                                 color = "grey30"),
+    
+    legend.title = element_text(size = 12, 
+                                color = "grey15"),
+    
+    legend.text = element_text(size = 11, 
+                               color = "grey25")) +
+  
+  guides(
+    color = guide_legend(override.aes = list(size = 4, 
+                                             shape = 16, 
+                                             linetype = NA)))
+
+  
+```
+
+

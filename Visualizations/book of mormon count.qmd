@@ -1,0 +1,110 @@
+---
+title: "task2"
+date: "March 20, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+---
+
+```{r}
+library(tidyverse)
+library(ggrepel)
+library(scales)
+```
+
+
+```{r}
+dt <- rio::import("http://scriptures.nephi.org/downloads/lds-scriptures.csv.zip") |> 
+  as_tibble() |> 
+  rename( title = volume_title,
+          text = scripture_text,
+          book = book_title ) |> 
+  mutate(count = str_count(text, "\\S+"))
+
+nt <- dt |> 
+  filter(title == "New Testament")
+
+bm <- dt |> 
+  filter(title == "Book of Mormon")
+
+```
+
+
+## Word counts and averages
+
+
+```{r}
+ntmn <- mean(nchar(nt$text))
+bmmn <- mean(nchar(bm$text))
+
+ntcnt <- sum(grepl("Jesus", nt$text))
+bmcnt <- sum(grepl("Jesus", bm$text))
+
+dt2 <- matrix(
+  c(round(ntmn), round(ntcnt), round(bmmn), round(bmcnt)),
+  nrow = 2,
+  ncol = 2,
+  dimnames = list(c("Mean Verse Length", "Jesus Word Count"), c("New Testament", "Book of Mormon"))
+)
+
+pander::pander(dt2, caption = "This is the word count and averages per book")
+
+```
+
+## Word count per book in the book of mormon
+
+```{r, fig.width=10}
+
+bm1 <- bm |> 
+  group_by(book) |> 
+  summarise( count = sum(count)) |> 
+  mutate(highbar = case_when(book == "Alma" ~ 1, TRUE ~ 0))
+
+max_count <- max(bm1$count)
+min_count <- min(bm1$count)
+mean_count <- mean(bm1$count)
+
+ggplot(bm1, aes(reorder(book, -count), count, fill = highbar)) + 
+  geom_col(col = "black", show.legend = F) +
+  scale_y_continuous(labels = comma_format(accuracy = 1)) +  # Remove decimals from y-axis
+  geom_label_repel(
+    data = subset(bm1, count == max_count), 
+    aes(label = paste("Max Word Count:", formatC(count, format = "f", big.mark = ",", digits = 0))),  # Corrected formatting
+    color = "black", size = 4.5, box.padding = 0.5, 
+    fill = "white", nudge_x = 3
+  ) +
+  geom_label_repel(
+    data = subset(bm1, count == min_count), 
+    aes(label = paste("Min Word Count:", formatC(count, format = "f", big.mark = ",", digits = 0))),  # Corrected formatting
+    color = "black", size = 4.5, box.padding = 0.5, 
+    fill = "white", nudge_y = 3000 
+  ) +
+  # Add horizontal mean line
+  geom_hline(yintercept = mean_count, linetype = "dotted", color = "orange", size = 1.5) +
+  # Add annotation for the mean line
+  annotate(
+    "text", x = Inf, y = mean_count, label = paste("Average Word Count", formatC(mean_count, format = "f", big.mark = ",", digits = 0) ), 
+    hjust = 1.1, vjust = -.75, color = "grey25", size = 4
+  ) +
+  theme_minimal() +
+  labs(
+    title = "Word Count per Book in B.O.M.",
+    x = "Book",
+    y = "Word Count (Thousands)"
+  ) +
+  theme(
+    plot.margin = margin(.5, 0, 0, .5, "cm"),
+    plot.title = element_text(hjust = .5, size = 14, colour = "grey5"),
+    axis.title = element_text(size = 12, colour = "grey15"),
+    axis.text.x = element_text(size = 10, angle = 35),
+    axis.text.y = element_text(size = 10)
+  )
+
+
+  
+```
+
+We see that Alma being the longest book in the book of mormon has the largest count, abd that Jarom being the shortest book in length, has the fewest words. So this makes sense

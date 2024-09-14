@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Tonatiuh De Leon" />
+
+
+<title>Finding an Apartment in Rexburg</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Tonatiuh de Leon</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Regression Models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="DecibelRegression.html">Song Decibel Levels</a>
+    </li>
+    <li>
+      <a href="SpotifyRegression.html">Spotify Regression</a>
+    </li>
+    <li>
+      <a href="CarAnalysis.html">Selling my Car Regression</a>
+    </li>
+    <li>
+      <a href="HousePriceRegression.html">House Prices Predictions</a>
+    </li>
+    <li>
+      <a href="LogisticRegression325.html">Who's Getting Good Grades?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Modeling &amp; Simulations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Whale.html">Recreated the Milky Way, or a Whale?</a>
+    </li>
+    <li>
+      <a href="Temple.html">Modeled a Beatiful Building</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferential Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="StephApartment.html">Finding an Apartment</a>
+    </li>
+    <li>
+      <a href="TtestInternet.html">Boys or Girls; Who Uses More Internet?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Visualizations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="TimeSeries.html">Correlation</a>
+    </li>
+    <li>
+      <a href="Distributions.html">Distribution</a>
+    </li>
+    <li>
+      <a href="Maps.html">Spatial</a>
+    </li>
+    <li>
+      <a href="BarGraphs.html">Quick Comparison</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Machine Learning
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Time Series
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Finding an Apartment in Rexburg</h1>
+<h4 class="author">Tonatiuh De Leon</h4>
+
+</div>
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(DT) </span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(formattable)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>            <span class="co"># If you get an error stating: </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>            <span class="co"># Error in library(DT): there is no package called &#39;DT&#39;</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>            <span class="co"># You will need to run: install.packages(&quot;DT&quot;) </span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>            <span class="co"># in your Console, then try &quot;Knit HTML&quot; again.</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>Rent <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Rent.csv&quot;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>Steph_apt <span class="ot">&lt;-</span> Rent <span class="sc">%&gt;%</span> <span class="fu">filter</span>(AvgFloorPlanCost<span class="sc">/</span><span class="dv">4</span> <span class="sc">&lt;</span> <span class="dv">300</span> <span class="sc">&amp;</span> Residents <span class="sc">&gt;</span> <span class="dv">75</span> <span class="sc">&amp;</span> Gender <span class="sc">==</span> <span class="st">&quot;F&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Price =</span> AvgFloorPlanCost<span class="sc">/</span><span class="dv">4</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>StephanieRent <span class="ot">&lt;-</span> Rent <span class="sc">|&gt;</span> </span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>    Gender<span class="sc">==</span><span class="st">&quot;F&quot;</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>    AvgFloorPlanCost <span class="sc">&lt;</span> <span class="dv">1050</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>    Residents <span class="sc">&gt;</span> <span class="dv">140</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>    CrowFlyMetersToMC <span class="sc">&lt;</span> <span class="dv">630</span>)</span></code></pre></div>
+<p><br></p>
+<div id="section"
+class="section level1 tabset tabset-fade tabset-pills">
+<h1 class="tabset tabset-fade tabset-pills"></h1>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<hr />
+<p>A friend wanted to learn about what housing options she had for
+living at BYU-Idaho. She was trying to find something that is close to
+campus and around $300 a month in rent. I’m good making friends with
+roommates, but I would like somewhere that has a lot of people around so
+I can get to know as many people as possible.</p>
+<p>I’ll use a dataset provided at my school with housing data on Rexburg
+to find out my best options.</p>
+<hr />
+<p><strong>Toggle between tabs to see the analysis</strong></p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p><br></p>
+<p>Friend, in order to analyze all the women apartments in Rexburg. We
+will consider how they are distributed by price, number of students, and
+closeness to Campus. Play Around with the graph below. It has all Women
+apartments in Rexburg. Then continue reading to find the best option for
+you</p>
+<p><br></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>Housing <span class="ot">&lt;-</span> Rent <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">==</span> <span class="st">&#39;F&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CrowFlyMetersToCenter =</span> <span class="fu">round</span>((CrowFlyMetersToMC <span class="sc">+</span> CrowFlyMetersToRicks)<span class="sc">/</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="fu">filter</span>(CrowFlyMetersToCenter <span class="sc">&lt;=</span> <span class="dv">805</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AvgCostByMonth =</span> <span class="fu">round</span>(AvgFloorPlanCost<span class="sc">/</span><span class="fl">3.22</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="fu">filter</span>(AvgCostByMonth <span class="sc">&lt;=</span> <span class="dv">350</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Apartment =</span> Name) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="fu">select</span>(Apartment, Residents, ParkingSpaces, Deposit, CrowFlyMetersToCenter, AvgCostByMonth)  </span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#favstats(Housing$CrowFlyMetersToCenter)</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>HousingTable <span class="ot">&lt;-</span> Housing <span class="sc">%&gt;%</span> </span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">distance =</span> <span class="fu">paste</span>(<span class="st">&#39;Distance:&#39;</span>, CrowFlyMetersToCenter, <span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MRent =</span> <span class="fu">paste</span>(<span class="st">&#39;MonthlyRent:&#39;</span>, AvgCostByMonth, <span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">RCount =</span> <span class="fu">paste</span>(<span class="st">&#39;ResidentCount:&#39;</span>, Residents)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">apt =</span> <span class="fu">paste</span>(Apartment, <span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">HData =</span> <span class="fu">paste</span>(apt, distance, MRent, RCount))</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co"># plot_ly(</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#   HousingTable,</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#   y= ~AvgCostByMonth, </span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#   x= ~CrowFlyMetersToCenter, </span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#   color= ~-Residents, </span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#   colorscale=&#39;viridis&#39;,</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#   hovertemplate = paste(</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#     &quot;&lt;b&gt;Housing Information&lt;/b&gt;&lt;br&gt;&quot;,</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#     &quot;Apartment: &quot;, HousingTable$Apartment, &quot;&lt;br&gt;&quot;,</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#     &quot;Distance To Campus: &quot;, HousingTable$CrowFlyMetersToCenter, &quot; meters&lt;br&gt;&quot;,</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#     &quot;Monthly Rent: &quot;, HousingTable$AvgCostByMonth, &quot;&lt;br&gt;&quot;,</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="co">#     &quot;Resident Count: &quot;, HousingTable$Residents</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="co">#   ),</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="co">#   hoverinfo = &quot;text&quot;</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="co"># ) %&gt;%</span></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a><span class="co"># layout(</span></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a><span class="co">#   title=&quot;Housing Options within Stephanie&#39;s Criteria&quot;,</span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a><span class="co">#   xaxis=list(title=&quot;Distance from the center of Campus (meters)&quot;),</span></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a><span class="co">#   yaxis=list(title=&quot;Average Cost per Month&quot;)</span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a>Rent <span class="ot">&lt;-</span> Rent <span class="sc">|&gt;</span> </span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">!=</span> <span class="st">&quot;M&quot;</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a><span class="fu">plot_ly</span>(</span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a>  <span class="at">data =</span> Rent, </span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a>  <span class="at">x =</span> <span class="sc">~</span>AvgFloorPlanCost, </span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a>  <span class="at">y =</span> <span class="sc">~</span>Residents, </span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a>  <span class="at">z =</span> <span class="sc">~</span>CrowFlyMetersToMC, </span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;scatter3d&quot;</span>, </span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;markers&quot;</span>, </span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a>  <span class="at">marker =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>), </span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a>  <span class="at">hovertemplate =</span> <span class="fu">paste</span>(</span>
+<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a>    <span class="st">&#39;Apartment complex: &#39;</span>, Rent<span class="sc">$</span>Name, <span class="st">&#39;&lt;br&gt;&#39;</span>,</span>
+<span id="cb2-54"><a href="#cb2-54" tabindex="-1"></a>    <span class="st">&#39;Price: &#39;</span>, <span class="fu">dollar</span>(Rent<span class="sc">$</span>AvgFloorPlanCost), <span class="st">&#39;&lt;br&gt;&#39;</span>,</span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1"></a>    <span class="st">&#39;Students: &#39;</span>, Rent<span class="sc">$</span>Residents, <span class="st">&#39;&lt;br&gt;&#39;</span>,</span>
+<span id="cb2-56"><a href="#cb2-56" tabindex="-1"></a>    <span class="st">&#39;Distance: &#39;</span>, <span class="fu">round</span>(Rent<span class="sc">$</span>CrowFlyMetersToMC)),</span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a>  <span class="at">color =</span> <span class="fu">I</span>(<span class="st">&quot;steelblue&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-58"><a href="#cb2-58" tabindex="-1"></a>  <span class="fu">layout</span>(</span>
+<span id="cb2-59"><a href="#cb2-59" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Rexburg Women&#39;s Apartments Comparison&quot;</span>,</span>
+<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a>    <span class="at">scene =</span> <span class="fu">list</span>(</span>
+<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a>      <span class="at">xaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">&quot;Price&quot;</span>),</span>
+<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a>      <span class="at">yaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">&quot;Capacity&quot;</span>),</span>
+<span id="cb2-63"><a href="#cb2-63" tabindex="-1"></a>      <span class="at">zaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">&quot;Walking Minutes&quot;</span>))</span>
+<span id="cb2-64"><a href="#cb2-64" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-283f3fa64dd66538bf76" style="width:768px;height:768px;"></div>
+<script type="application/json" data-for="htmlwidget-283f3fa64dd66538bf76">{"x":{"visdat":{"70dc13975168":["function () ","plotlyVisDat"]},"cur_data":"70dc13975168","attrs":{"70dc13975168":{"x":{},"y":{},"z":{},"mode":"markers","marker":{"color":"steelblue"},"hovertemplate":["Apartment complex:  ABBY LANE MANOR <br> Price:  $1,200.00 <br> Students:  42 <br> Distance:  1013","Apartment complex:  ABRI APARTMENTS - WOMEN <br> Price:  $1,660.00 <br> Students:  144 <br> Distance:  686","Apartment complex:  ALLEN'S SUNRISE VILLAGE - WOMEN <br> Price:  $1,225.00 <br> Students:  144 <br> Distance:  548","Apartment complex:  AMERICAN AVENUE - WOMEN <br> Price:  $1,225.00 <br> Students:  138 <br> Distance:  526","Apartment complex:  AT THE GROVE <br> Price:  $1,250.00 <br> Students:  6 <br> Distance:  497","Apartment complex:  AUTUMN WINDS - WOMEN <br> Price:  $1,725.00 <br> Students:  96 <br> Distance:  554","Apartment complex:  AVONLEA - WOMEN <br> Price:  $1,398.33 <br> Students:  66 <br> Distance:  553","Apartment complex:  BAYSIDE MANOR <br> Price:  $985.00 <br> Students:  8 <br> Distance:  325","Apartment complex:  BIRCH PLAZA - WOMEN <br> Price:  $1,352.50 <br> Students:  173 <br> Distance:  536","Apartment complex:  BIRCH WOOD I <br> Price:  $1,370.00 <br> Students:  65 <br> Distance:  578","Apartment complex:  BIRCH WOOD II <br> Price:  $1,425.00 <br> Students:  24 <br> Distance:  578","Apartment complex:  BLUE DOOR, THE - WOMEN <br> Price:  $997.50 <br> Students:  24 <br> Distance:  619","Apartment complex:  BRIGHTON APARTMENTS - WOMEN <br> Price:  $1,400.00 <br> Students:  60 <br> Distance:  886","Apartment complex:  BROOKLYN APARTMENTS <br> Price:  $995.00 <br> Students:  144 <br> Distance:  525","Apartment complex:  BROOKSIDE VILLAGE - WOMEN <br> Price:  $1,650.00 <br> Students:  86 <br> Distance:  789","Apartment complex:  BUENA VISTA <br> Price:  $900.00 <br> Students:  21 <br> Distance:  576","Apartment complex:  CAMDEN APARTMENTS - WOMEN <br> Price:  $1,616.67 <br> Students:  53 <br> Distance:  700","Apartment complex:  CARRIAGE HOUSE <br> Price:  $1,256.67 <br> Students:  234 <br> Distance:  477","Apartment complex:  CARRIAGE HOUSE TOWNHOUSE <br> Price:  $1,285.00 <br> Students:  8 <br> Distance:  429","Apartment complex:  CEDARS, THE - WOMEN <br> Price:  $1,695.00 <br> Students:  444 <br> Distance:  507","Apartment complex:  CENTRE SQUARE - WOMEN <br> Price:  $1,449.00 <br> Students:  546 <br> Distance:  851","Apartment complex:  CHAPMAN HOUSE <br> Price:  $1,435.00 <br> Students:  7 <br> Distance:  524","Apartment complex:  COLLEGE AVENUE APARTMENTS <br> Price:  $1,200.00 <br> Students:  8 <br> Distance:  507","Apartment complex:  COLONIAL HOUSE - WOMEN <br> Price:  $1,415.00 <br> Students:  192 <br> Distance:  559","Apartment complex:  COTTONWOOD - WOMEN <br> Price:  $995.00 <br> Students:  84 <br> Distance:  788","Apartment complex:  COVE, THE - WOMEN <br> Price:  $1,599.00 <br> Students:  342 <br> Distance:  734","Apartment complex:  CREEKSIDE COTTAGES - WOMEN <br> Price:  $1,366.67 <br> Students:  24 <br> Distance:  964","Apartment complex:  CRESTWOOD COTTAGE <br> Price:  $995.00 <br> Students:  10 <br> Distance:  344","Apartment complex:  DAVENPORT APARTMENTS <br> Price:  $895.00 <br> Students:  71 <br> Distance:  471","Apartment complex:  GATES, THE - WOMEN <br> Price:  $1,752.50 <br> Students:  300 <br> Distance:  1041","Apartment complex:  GREENBRIER - WOMEN <br> Price:  $1,216.67 <br> Students:  92 <br> Distance:  576","Apartment complex:  HERITAGE - WOMEN <br> Price:  $1,300.00 <br> Students:  192 <br> Distance:  452","Apartment complex:  HILLCREST TOWNHOUSES - WOMEN <br> Price:  $1,425.00 <br> Students:  76 <br> Distance:  495","Apartment complex:  HILL'S COLLEGE AVE APTS <br> Price:  $880.00 <br> Students:  8 <br> Distance:  475","Apartment complex:  KENSINGTON MANOR - WOMEN <br> Price:  $1,300.00 <br> Students:  108 <br> Distance:  390","Apartment complex:  LA JOLLA - WOMEN <br> Price:  $1,179.00 <br> Students:  210 <br> Distance:  731","Apartment complex:  LANDING, THE - WOMEN <br> Price:  $1,640.00 <br> Students:  166 <br> Distance:  969","Apartment complex:  LEGACY RIDGE <br> Price:  $1,574.00 <br> Students:  288 <br> Distance:  820","Apartment complex:  LODGE, THE - WOMEN <br> Price:  $1,675.67 <br> Students:  550 <br> Distance:  836","Apartment complex:  MILANO FLATS - WOMEN <br> Price:  $1,790.00 <br> Students:  142 <br> Distance:  619","Apartment complex:  NAUVOO HOUSE II <br> Price:  $1,450.00 <br> Students:  338 <br> Distance:  678","Apartment complex:  NORTHPOINT - WOMEN <br> Price:  $1,599.00 <br> Students:  548 <br> Distance:  514","Apartment complex:  PARK VIEW APTS - WOMEN <br> Price:  $1,333.33 <br> Students:  40 <br> Distance:  962","Apartment complex:  PINES, THE - WOMEN <br> Price:  $894.33 <br> Students:  126 <br> Distance:  610","Apartment complex:  RIVIERA APARTMENTS <br> Price:  $975.00 <br> Students:  82 <br> Distance:  248","Apartment complex:  ROYAL CREST <br> Price:  $995.00 <br> Students:  342 <br> Distance:  427","Apartment complex:  SNOWVIEW APARTMENTS <br> Price:  $1,345.00 <br> Students:  64 <br> Distance:  441","Apartment complex:  SOMERSET APARTMENTS - WOMEN <br> Price:  $1,200.00 <br> Students:  180 <br> Distance:  467","Apartment complex:  SUNDANCE - WOMEN <br> Price:  $1,645.00 <br> Students:  152 <br> Distance:  787","Apartment complex:  SUNSET HALL <br> Price:  $1,027.50 <br> Students:  14 <br> Distance:  499","Apartment complex:  TOWERS II <br> Price:  $1,645.00 <br> Students:  248 <br> Distance:  954","Apartment complex:  UNIVERSITY VIEW - WOMEN <br> Price:  $1,350.00 <br> Students:  450 <br> Distance:  800","Apartment complex:  WHITFIELD HOUSE <br> Price:  $1,432.50 <br> Students:  7 <br> Distance:  509","Apartment complex:  WINDSOR MANOR - WOMEN <br> Price:  $1,749.00 <br> Students:  208 <br> Distance:  439"],"color":["steelblue"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Rexburg Women's Apartments Comparison","scene":{"xaxis":{"title":"Price"},"yaxis":{"title":"Capacity"},"zaxis":{"title":"Walking Minutes"}},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[1200,1660,1225,1225,1250,1725,1398.3299999999999,985,1352.5,1370,1425,997.5,1400,995,1650,900,1616.6700000000001,1256.6700000000001,1285,1695,1449,1435,1200,1415,995,1599,1366.6700000000001,995,895,1752.5,1216.6700000000001,1300,1425,880,1300,1179,1640,1574,1675.6700000000001,1790,1450,1599,1333.3299999999999,894.33000000000004,975,995,1345,1200,1645,1027.5,1645,1350,1432.5,1749],"y":[42,144,144,138,6,96,66,8,173,65,24,24,60,144,86,21,53,234,8,444,546,7,8,192,84,342,24,10,71,300,92,192,76,8,108,210,166,288,550,142,338,548,40,126,82,342,64,180,152,14,248,450,7,208],"z":[1013.45250687716,685.71942190785501,547.940773576173,525.53499551820198,496.66257726120898,553.88203992513502,553.36742658312403,325.11132509443598,535.85381301069106,577.85502480530499,577.85502480530499,618.73859810004899,885.67983495554995,525.42330302100595,788.86239338520204,576.18724726852702,700.18809340708401,477.25021182691899,428.54443886843899,507.49583622170201,851.25580175681796,524.06484573667501,507.19225541482501,558.76657545742398,788.30661937543005,733.79657813837298,964.39969179241405,344.06265027860098,470.77983382770702,1041.07202554385,575.50706332925904,451.55676420563202,495.31570780381202,475.23815824152803,389.895119413494,730.83881238873005,968.72939099658299,820.44799989542798,836.08937816129196,618.86450565893699,677.98367676939597,513.96805742780202,961.77205008454598,610.16990735706497,248.457548925814,427.49571568078397,440.77199966058498,467.43595978857297,787.41191923180497,498.90872832443,954.02062727661496,800.29646606677295,508.843804686461,438.58547514664599],"mode":"markers","marker":{"color":"steelblue","line":{"color":"rgba(70,130,180,1)"}},"hovertemplate":["Apartment complex:  ABBY LANE MANOR <br> Price:  $1,200.00 <br> Students:  42 <br> Distance:  1013","Apartment complex:  ABRI APARTMENTS - WOMEN <br> Price:  $1,660.00 <br> Students:  144 <br> Distance:  686","Apartment complex:  ALLEN'S SUNRISE VILLAGE - WOMEN <br> Price:  $1,225.00 <br> Students:  144 <br> Distance:  548","Apartment complex:  AMERICAN AVENUE - WOMEN <br> Price:  $1,225.00 <br> Students:  138 <br> Distance:  526","Apartment complex:  AT THE GROVE <br> Price:  $1,250.00 <br> Students:  6 <br> Distance:  497","Apartment complex:  AUTUMN WINDS - WOMEN <br> Price:  $1,725.00 <br> Students:  96 <br> Distance:  554","Apartment complex:  AVONLEA - WOMEN <br> Price:  $1,398.33 <br> Students:  66 <br> Distance:  553","Apartment complex:  BAYSIDE MANOR <br> Price:  $985.00 <br> Students:  8 <br> Distance:  325","Apartment complex:  BIRCH PLAZA - WOMEN <br> Price:  $1,352.50 <br> Students:  173 <br> Distance:  536","Apartment complex:  BIRCH WOOD I <br> Price:  $1,370.00 <br> Students:  65 <br> Distance:  578","Apartment complex:  BIRCH WOOD II <br> Price:  $1,425.00 <br> Students:  24 <br> Distance:  578","Apartment complex:  BLUE DOOR, THE - WOMEN <br> Price:  $997.50 <br> Students:  24 <br> Distance:  619","Apartment complex:  BRIGHTON APARTMENTS - WOMEN <br> Price:  $1,400.00 <br> Students:  60 <br> Distance:  886","Apartment complex:  BROOKLYN APARTMENTS <br> Price:  $995.00 <br> Students:  144 <br> Distance:  525","Apartment complex:  BROOKSIDE VILLAGE - WOMEN <br> Price:  $1,650.00 <br> Students:  86 <br> Distance:  789","Apartment complex:  BUENA VISTA <br> Price:  $900.00 <br> Students:  21 <br> Distance:  576","Apartment complex:  CAMDEN APARTMENTS - WOMEN <br> Price:  $1,616.67 <br> Students:  53 <br> Distance:  700","Apartment complex:  CARRIAGE HOUSE <br> Price:  $1,256.67 <br> Students:  234 <br> Distance:  477","Apartment complex:  CARRIAGE HOUSE TOWNHOUSE <br> Price:  $1,285.00 <br> Students:  8 <br> Distance:  429","Apartment complex:  CEDARS, THE - WOMEN <br> Price:  $1,695.00 <br> Students:  444 <br> Distance:  507","Apartment complex:  CENTRE SQUARE - WOMEN <br> Price:  $1,449.00 <br> Students:  546 <br> Distance:  851","Apartment complex:  CHAPMAN HOUSE <br> Price:  $1,435.00 <br> Students:  7 <br> Distance:  524","Apartment complex:  COLLEGE AVENUE APARTMENTS <br> Price:  $1,200.00 <br> Students:  8 <br> Distance:  507","Apartment complex:  COLONIAL HOUSE - WOMEN <br> Price:  $1,415.00 <br> Students:  192 <br> Distance:  559","Apartment complex:  COTTONWOOD - WOMEN <br> Price:  $995.00 <br> Students:  84 <br> Distance:  788","Apartment complex:  COVE, THE - WOMEN <br> Price:  $1,599.00 <br> Students:  342 <br> Distance:  734","Apartment complex:  CREEKSIDE COTTAGES - WOMEN <br> Price:  $1,366.67 <br> Students:  24 <br> Distance:  964","Apartment complex:  CRESTWOOD COTTAGE <br> Price:  $995.00 <br> Students:  10 <br> Distance:  344","Apartment complex:  DAVENPORT APARTMENTS <br> Price:  $895.00 <br> Students:  71 <br> Distance:  471","Apartment complex:  GATES, THE - WOMEN <br> Price:  $1,752.50 <br> Students:  300 <br> Distance:  1041","Apartment complex:  GREENBRIER - WOMEN <br> Price:  $1,216.67 <br> Students:  92 <br> Distance:  576","Apartment complex:  HERITAGE - WOMEN <br> Price:  $1,300.00 <br> Students:  192 <br> Distance:  452","Apartment complex:  HILLCREST TOWNHOUSES - WOMEN <br> Price:  $1,425.00 <br> Students:  76 <br> Distance:  495","Apartment complex:  HILL'S COLLEGE AVE APTS <br> Price:  $880.00 <br> Students:  8 <br> Distance:  475","Apartment complex:  KENSINGTON MANOR - WOMEN <br> Price:  $1,300.00 <br> Students:  108 <br> Distance:  390","Apartment complex:  LA JOLLA - WOMEN <br> Price:  $1,179.00 <br> Students:  210 <br> Distance:  731","Apartment complex:  LANDING, THE - WOMEN <br> Price:  $1,640.00 <br> Students:  166 <br> Distance:  969","Apartment complex:  LEGACY RIDGE <br> Price:  $1,574.00 <br> Students:  288 <br> Distance:  820","Apartment complex:  LODGE, THE - WOMEN <br> Price:  $1,675.67 <br> Students:  550 <br> Distance:  836","Apartment complex:  MILANO FLATS - WOMEN <br> Price:  $1,790.00 <br> Students:  142 <br> Distance:  619","Apartment complex:  NAUVOO HOUSE II <br> Price:  $1,450.00 <br> Students:  338 <br> Distance:  678","Apartment complex:  NORTHPOINT - WOMEN <br> Price:  $1,599.00 <br> Students:  548 <br> Distance:  514","Apartment complex:  PARK VIEW APTS - WOMEN <br> Price:  $1,333.33 <br> Students:  40 <br> Distance:  962","Apartment complex:  PINES, THE - WOMEN <br> Price:  $894.33 <br> Students:  126 <br> Distance:  610","Apartment complex:  RIVIERA APARTMENTS <br> Price:  $975.00 <br> Students:  82 <br> Distance:  248","Apartment complex:  ROYAL CREST <br> Price:  $995.00 <br> Students:  342 <br> Distance:  427","Apartment complex:  SNOWVIEW APARTMENTS <br> Price:  $1,345.00 <br> Students:  64 <br> Distance:  441","Apartment complex:  SOMERSET APARTMENTS - WOMEN <br> Price:  $1,200.00 <br> Students:  180 <br> Distance:  467","Apartment complex:  SUNDANCE - WOMEN <br> Price:  $1,645.00 <br> Students:  152 <br> Distance:  787","Apartment complex:  SUNSET HALL <br> Price:  $1,027.50 <br> Students:  14 <br> Distance:  499","Apartment complex:  TOWERS II <br> Price:  $1,645.00 <br> Students:  248 <br> Distance:  954","Apartment complex:  UNIVERSITY VIEW - WOMEN <br> Price:  $1,350.00 <br> Students:  450 <br> Distance:  800","Apartment complex:  WHITFIELD HOUSE <br> Price:  $1,432.50 <br> Students:  7 <br> Distance:  509","Apartment complex:  WINDSOR MANOR - WOMEN <br> Price:  $1,749.00 <br> Students:  208 <br> Distance:  439"],"type":"scatter3d","textfont":{"color":"rgba(70,130,180,1)"},"error_y":{"color":"rgba(70,130,180,1)"},"error_x":{"color":"rgba(70,130,180,1)"},"line":{"color":"rgba(70,130,180,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p><br><br></p>
+</div>
+<div id="statistical-description" class="section level2">
+<h2>Statistical Description</h2>
+<p><br></p>
+<p>To continue finding the best option for you, here is table with the
+statistics of all Rexburg apartments so that you can see what the mean
+is and see a more realistic approach to your needs.</p>
+<table style="width:64%;">
+<colgroup>
+<col width="30%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">min</th>
+<th align="center">mean</th>
+<th align="center">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Price</strong></td>
+<td align="center">880</td>
+<td align="center">1340</td>
+<td align="center">1790</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Capacity</strong></td>
+<td align="center">6</td>
+<td align="center">151.8</td>
+<td align="center">550</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Walking Minutes</strong></td>
+<td align="center">248.5</td>
+<td align="center">618.2</td>
+<td align="center">1041</td>
+</tr>
+</tbody>
+</table>
+<p><br><br></p>
+</div>
+<div id="analysis-on-price-vs.-residents" class="section level2">
+<h2>Analysis on Price vs. Residents</h2>
+<p><br></p>
+<p>Now, let us only consider those apartments with a price between 800
+and 1050, also all those who are below the mean in walking time to
+campus, and finally those who are above the mean in resident
+capacity.</p>
+<p><br></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">ggplot</span>(Rent, <span class="fu">aes</span>(AvgFloorPlanCost , Residents)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">col=</span><span class="st">&quot;steelblue&quot;</span>, <span class="at">alpha=</span>.<span class="dv">5</span>)<span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_label_repel</span>(<span class="at">data=</span>StephanieRent, <span class="fu">aes</span>(<span class="at">label =</span> Name), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">nudge_y =</span> <span class="dv">50</span>, <span class="at">nudge_x =</span> <span class="dv">50</span> ) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> StephanieRent, <span class="fu">aes</span>(AvgFloorPlanCost, Residents), <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">fill=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="fl">3.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Possible Housing For You&quot;</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;These apartments are closest to your likes&quot;</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="at">x=</span><span class="st">&quot;Price ($)&quot;</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="at">y=</span><span class="st">&quot;Max Number of Students per Semester&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="StephApartment_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p>These apartments are the ones that relate the most to your likes.
+Here are their statistics, and their information. Please note that there
+are many other apartments that either have more people, or are closer to
+campus, however those have been filtered so that only the aprtments with
+a monthly price of <strong>$250 - $350</strong> monthly, <strong>with
+the most students as residents,</strong> and <strong>closest to
+campus</strong> show.</p>
+<p>There are no apartments with exactly $900 rent per semester that meet
+all the requirements used. However, let me know if you need broader
+thresholds for any of these requirements (Price, Capacity, Distance),
+and I’ll help you find which apartments fit your needs.</p>
+<p><br></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>Steph <span class="ot">&lt;-</span> StephanieRent <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">select</span>(Name, AvgFloorPlanCost, Residents, CrowFlyMetersToMC, Address, Phone) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="at">by=</span>CrowFlyMetersToMC) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Price =</span> <span class="fu">dollar</span>(AvgFloorPlanCost),</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>         <span class="at">Distance =</span> CrowFlyMetersToMC) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="fu">select</span>(Name, Price, Residents, CrowFlyMetersToMC, Address, Phone)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">kable</span>(Steph)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="7%" />
+<col width="12%" />
+<col width="22%" />
+<col width="15%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Price</th>
+<th align="right">Residents</th>
+<th align="right">CrowFlyMetersToMC</th>
+<th align="left">Address</th>
+<th align="left">Phone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ROYAL CREST</td>
+<td align="left">$995</td>
+<td align="right">342</td>
+<td align="right">427.4957</td>
+<td align="left">340 S 1ST W</td>
+<td align="left">208-356-7778</td>
+</tr>
+<tr class="even">
+<td align="left">BROOKLYN APARTMENTS</td>
+<td align="left">$995</td>
+<td align="right">144</td>
+<td align="right">525.4233</td>
+<td align="left">345 S 2ND W</td>
+<td align="left">208-356-9500</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>It’s your time to make a choice! I hope you enjoy your time at BYUI
+friend. Play with the graph below to check out the other apartments!</p>
+<p><br></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Note that this is a hypothetical situation but served to show basic
+analytical skills</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

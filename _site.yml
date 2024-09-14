@@ -1,0 +1,53 @@
+name: "Portfolio"
+navbar:
+  title: "Tonatiuh de Leon"
+  left:
+    - text: "Regression Models"
+      menu:
+        - text: "Song Decibel Levels"
+          href: DecibelRegression.html
+        - text: "Spotify Regression"
+          href: SpotifyRegression.html
+        - text: "Selling my Car Regression"
+          href: CarAnalysis.html
+        - text: "House Prices Predictions"
+          href: HousePriceRegression.html
+        - text: "Who's Getting Good Grades?"
+          href: LogisticRegression325.html
+    - text: "Modeling & Simulations"
+      menu:
+        - text: "Recreated the Milky Way, or a Whale?"
+          href: Whale.html
+        - text: "Modeled a Beatiful Building"
+          href: Temple.html
+    - text: "Inferential Statistics"
+      menu:
+        - text: "Finding an Apartment"
+          href: StephApartment.html
+        - text: "Boys or Girls; Who Uses More Internet?"
+          href: TtestInternet.html
+    - text: "Visualizations"
+      menu:
+        - text: "Correlation"
+          href: TimeSeries.html
+        - text: "Distribution"
+          href: Distributions.html
+        - text: "Spatial"
+          href: Maps.html
+        - text: "Quick Comparison"
+          href: BarGraphs.html
+    - text: "Machine Learning"
+      menu:
+        - text: "Coming Soon"
+    - text: "Time Series"
+      menu:
+        - text: "Coming Soon"
+
+output_dir: '.'
+
+output: 
+  html_document:
+    theme: flatly
+    css: styles.css
+    highlight: tango
+  

@@ -1,0 +1,49 @@
+---
+title: "Case Study"
+author: "Tona"
+date: "2024-03-12"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(leaflet)
+
+enuse <- read_csv("enuse.csv") |> 
+  rename(enused = `Primary energy consumption per capita (kWh/person)`, 
+         region = Entity, 
+         year = Year, 
+         code = Code ) |> 
+  filter(year == 2021 ) |> 
+  mutate(region = case_when(
+  #region == "United States" ~ "USA",
+  region == "Democratic Republic of Congo" ~ "Democratic Republic of the Congo" ,
+  region == "Congo" ~ "Republic of Congo",
+  region == "Cote d'Ivoire" ~ "Ivory Coast",
+  TRUE ~ region )) |> 
+  mutate(enused = enused / 1000 ) |> 
+  drop_na()
+
+coord <- read_csv("coord.csv")|> 
+  inner_join(enuse, by="region")
+
+
+coord$enused <- round(coord$enused, 2)
+
+write_csv(coord, "coords.csv")
+
+
+leaflet(coord) |> 
+  addTiles() |> 
+  addMarkers(lat=~lat, lng= ~long, 
+             popup = ~paste("Region:", 
+                            region, "<br>", 
+                            "Energy consumption:", 
+                            enused, "thousands of Kw/h per capita"))
+
+```
+
+
+

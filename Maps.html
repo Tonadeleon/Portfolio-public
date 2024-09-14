@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Tonatiuh De Leon" />
+
+
+<title>Maps Visuals</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-binding-2.2.2/leaflet.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Tonatiuh de Leon</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Regression Models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="DecibelRegression.html">Song Decibel Levels</a>
+    </li>
+    <li>
+      <a href="SpotifyRegression.html">Spotify Regression</a>
+    </li>
+    <li>
+      <a href="CarAnalysis.html">Selling my Car Regression</a>
+    </li>
+    <li>
+      <a href="HousePriceRegression.html">House Prices Predictions</a>
+    </li>
+    <li>
+      <a href="LogisticRegression325.html">Who's Getting Good Grades?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Modeling &amp; Simulations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Whale.html">Recreated the Milky Way, or a Whale?</a>
+    </li>
+    <li>
+      <a href="Temple.html">Modeled a Beatiful Building</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferential Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="StephApartment.html">Finding an Apartment</a>
+    </li>
+    <li>
+      <a href="TtestInternet.html">Boys or Girls; Who Uses More Internet?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Visualizations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="TimeSeries.html">Correlation</a>
+    </li>
+    <li>
+      <a href="Distributions.html">Distribution</a>
+    </li>
+    <li>
+      <a href="Maps.html">Spatial</a>
+    </li>
+    <li>
+      <a href="BarGraphs.html">Quick Comparison</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Machine Learning
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Time Series
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Maps Visuals</h1>
+<h4 class="author">Tonatiuh De Leon</h4>
+
+</div>
+
+
+<p>This section of my portfolio contains many <strong>Maps
+Visualizations</strong> I’ve graphed throughout the years. Take a look
+at them! I created each graph from scratch in R, check out the code with
+the <code>show</code> buttons to the top right of each graph.</p>
+<div id="section"
+class="section level1 tabset tabset-fade tabset-pills">
+<h1 class="tabset tabset-fade tabset-pills"></h1>
+<div id="kwhcapita-static" class="section level2">
+<h2>Kwh/Capita Static</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>enuse <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;enuse.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">enused =</span> <span class="st">`</span><span class="at">Primary energy consumption per capita (kWh/person)</span><span class="st">`</span>, <span class="at">region =</span> Entity, <span class="at">year =</span> Year, <span class="at">code =</span> Code) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">region =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  region <span class="sc">==</span> <span class="st">&quot;United States&quot;</span> <span class="sc">~</span> <span class="st">&quot;USA&quot;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  region <span class="sc">==</span> <span class="st">&quot;Democratic Republic of Congo&quot;</span> <span class="sc">~</span> <span class="st">&quot;Democratic Republic of the Congo&quot;</span> ,</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  region <span class="sc">==</span> <span class="st">&quot;Congo&quot;</span> <span class="sc">~</span> <span class="st">&quot;Republic of Congo&quot;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  region <span class="sc">==</span> <span class="st">&quot;Cote d&#39;Ivoire&quot;</span> <span class="sc">~</span> <span class="st">&quot;Ivory Coast&quot;</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  region <span class="sc">==</span> <span class="st">&quot;United Kingdom&quot;</span> <span class="sc">~</span> <span class="st">&quot;UK&quot;</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  <span class="cn">TRUE</span> <span class="sc">~</span> region))</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>enuse<span class="sc">$</span>enused <span class="ot">&lt;-</span> <span class="fu">log</span>(enuse<span class="sc">$</span>enused)</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">as.character</span>(breaks)</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>world_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">&quot;world&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;French Southern and Antarctic Lands&quot;</span>, <span class="st">&quot;Antarctica&quot;</span>)))</span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>world_map <span class="ot">&lt;-</span> <span class="fu">left_join</span>(world_map, enuse, <span class="at">by =</span> <span class="st">&quot;region&quot;</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="fu">ggplot</span>(world_map, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">group =</span> group)) <span class="sc">+</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="fu">aes</span>(<span class="at">fill =</span> enused), <span class="at">color =</span> <span class="st">&quot;grey25&quot;</span>)<span class="sc">+</span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>  </span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">aesthetics =</span> <span class="st">&quot;fill&quot;</span>,</span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>                       <span class="at">colors =</span> <span class="fu">c</span>(</span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>                         <span class="st">&quot;#e0f3dd&quot;</span>, </span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a>                         <span class="st">&quot;#f0f0d9&quot;</span>, </span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a>                         <span class="st">&quot;#fee090&quot;</span>, </span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a>                         <span class="st">&quot;#fdae61&quot;</span>, </span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a>                         <span class="st">&quot;#f46d43&quot;</span>, </span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a>                         <span class="st">&quot;#a50026&quot;</span>),</span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a>                       </span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a>                       <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="fl">12.3</span>),</span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0 kWh&quot;</span>, <span class="st">&quot;1,000 kWh&quot;</span>, <span class="st">&quot;3,000 kWh&quot;</span>, <span class="st">&quot;10,000 kWh&quot;</span>, <span class="st">&quot;30,000 kWh&quot;</span>, <span class="st">&quot;100,000 kWh&quot;</span>),</span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="fl">9.5</span>,<span class="dv">11</span>,<span class="fl">12.3</span>),</span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a>                       <span class="at">guide =</span> <span class="fu">guide_colorbar</span>(</span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a>                         <span class="at">barwidth =</span> <span class="dv">20</span>, </span>
+<span id="cb1-46"><a href="#cb1-46" tabindex="-1"></a>                         <span class="at">barheight =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb1-47"><a href="#cb1-47" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-48"><a href="#cb1-48" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;kWh Per Capita&quot;</span></span>
+<span id="cb1-49"><a href="#cb1-49" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-50"><a href="#cb1-50" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-54"><a href="#cb1-54" tabindex="-1"></a>    <span class="at">axis.line =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-55"><a href="#cb1-55" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-56"><a href="#cb1-56" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-57"><a href="#cb1-57" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb1-58"><a href="#cb1-58" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">color =</span> <span class="st">&quot;grey5&quot;</span>),</span>
+<span id="cb1-59"><a href="#cb1-59" tabindex="-1"></a>    <span class="at">legend.title.position =</span> <span class="st">&quot;top&quot;</span>,</span>
+<span id="cb1-60"><a href="#cb1-60" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">color =</span> <span class="st">&quot;grey25&quot;</span>, <span class="at">vjust =</span> <span class="dv">3</span>)</span>
+<span id="cb1-61"><a href="#cb1-61" tabindex="-1"></a>  ) </span></code></pre></div>
+<p><img src="Maps_files/figure-html/unnamed-chunk-1-1.png" width="960" /></p>
+<p>This map portrays the energy used in Kw/h per Capita Worldwide.
+Darker colored countries are the ones with the highest rating.</p>
+<p><br></p>
+</div>
+<div id="kwhcapita-interactive" class="section level2">
+<h2>Kwh/Capita Interactive</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>enuse <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;enuse.csv&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">enused =</span> <span class="st">`</span><span class="at">Primary energy consumption per capita (kWh/person)</span><span class="st">`</span>, </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>         <span class="at">region =</span> Entity, </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>         <span class="at">year =</span> Year, </span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>         <span class="at">code =</span> Code ) <span class="sc">|&gt;</span> </span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span> ) <span class="sc">|&gt;</span> </span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">region =</span> <span class="fu">case_when</span>(</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  <span class="co">#region == &quot;United States&quot; ~ &quot;USA&quot;,</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  region <span class="sc">==</span> <span class="st">&quot;Democratic Republic of Congo&quot;</span> <span class="sc">~</span> <span class="st">&quot;Democratic Republic of the Congo&quot;</span> ,</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  region <span class="sc">==</span> <span class="st">&quot;Congo&quot;</span> <span class="sc">~</span> <span class="st">&quot;Republic of Congo&quot;</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  region <span class="sc">==</span> <span class="st">&quot;Cote d&#39;Ivoire&quot;</span> <span class="sc">~</span> <span class="st">&quot;Ivory Coast&quot;</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  <span class="cn">TRUE</span> <span class="sc">~</span> region )) <span class="sc">|&gt;</span> </span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">enused =</span> enused <span class="sc">/</span> <span class="dv">1000</span> ) <span class="sc">|&gt;</span> </span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>coord <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;coord.csv&quot;</span>)<span class="sc">|&gt;</span> </span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>  <span class="fu">inner_join</span>(enuse, <span class="at">by=</span><span class="st">&quot;region&quot;</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>coord<span class="sc">$</span>enused <span class="ot">&lt;-</span> <span class="fu">round</span>(coord<span class="sc">$</span>enused, <span class="dv">2</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="fu">write_csv</span>(coord, <span class="st">&quot;coords.csv&quot;</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="fu">leaflet</span>(coord) <span class="sc">|&gt;</span> </span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>  <span class="fu">addMarkers</span>(<span class="at">lat=</span><span class="sc">~</span>lat, <span class="at">lng=</span> <span class="sc">~</span>long, </span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a>             <span class="at">popup =</span> <span class="sc">~</span><span class="fu">paste</span>(<span class="st">&quot;Region:&quot;</span>, </span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>                            region, <span class="st">&quot;&lt;br&gt;&quot;</span>, </span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>                            <span class="st">&quot;Energy consumption:&quot;</span>, </span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a>                            enused, <span class="st">&quot;thousands of Kw/h per capita&quot;</span>))</span></code></pre></div>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-b9ad27644b1df4b1767e" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-b9ad27644b1df4b1767e">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[[23.424076,33.93911,17.060816,41.153332,40.069099,-11.202692,-38.416097,-14.270972,47.516231,-25.274398,12.52111,40.143105,43.915886,13.193887,23.684994,50.503887,12.238333,42.733883,25.930414,-3.373056,9.307689999999999,32.321384,4.535277,-16.290154,-14.235004,25.03428,27.514162,-22.328474,53.709807,17.189877,56.130366,6.611111,46.818188,-21.236736,-35.675147,7.369722,35.86166,4.570868,9.748917,21.521757,16.002082,35.126413,51.165691,11.825138,56.26392,15.414999,18.735693,28.033886,-1.831239,58.595272,26.820553,24.215527,15.179384,40.463667,9.145,61.92411,-16.578193,61.892635,46.227638,-0.803689,55.378051,12.262776,42.315407,3.933889,7.946527,71.706936,13.443182,9.945587,16.995971,1.650801,39.074208,15.783471,13.444304,11.803749,4.860416,22.396428,15.199999,45.1,18.971187,47.162494,-0.7892749999999999,53.41291,31.046051,20.593684,33.223191,32.427908,64.96305099999999,41.87194,18.109581,30.585164,36.204824,-0.023559,41.20438,12.565679,-3.370417,-11.875001,17.357822,40.339852,35.907757,29.31166,19.513469,48.019573,19.85627,33.854721,13.909444,7.873054,6.428055,-29.609988,55.169438,49.815273,56.879635,26.3351,31.791702,47.411631,42.708678,-18.766947,17.570692,46.862496,17.33083,14.641528,21.00789,16.742498,35.937496,-20.348404,3.202778,-13.254308,23.634501,4.210484,-18.665695,-22.95764,-20.904305,17.607789,9.081999,12.865416,52.132633,60.472024,28.394857,-0.522778,-19.054445,-40.900557,21.512583,8.537981,-9.189966999999999,-17.679742,-6.314993,12.879721,30.375321,51.919438,46.941936,18.220833,39.399872,-23.442503,25.354826,45.943161,44.016521,61.52401,-1.940278,23.885942,-9.645709999999999,-4.679574,12.862807,60.128161,1.352083,-24.143474,46.151241,48.669026,8.460554999999999,14.497401,5.152149,3.919305,13.794185,34.802075,21.694025,15.454166,8.619543,15.870032,38.861034,38.969719,33.886917,-21.178986,38.963745,10.691803,-7.109535,23.69781,-6.369028,48.379433,1.373333,37.09024,-32.522779,41.377491,12.984305,6.42375,18.420695,14.058324,-15.376706,-13.759029,42.602636,15.552727,-30.559482,-13.133897,-19.015438],[53.847818,67.709953,-61.796428,20.168331,45.038189,17.873887,-63.616672,-170.132217,14.550072,133.775136,-69.968338,47.576927,17.679076,-59.543198,90.356331,4.469936,-1.561593,25.48583,50.637772,29.918886,2.315834,-64.75736999999999,114.727669,-63.588653,-51.92528,-77.39628,90.433601,24.684866,27.953389,-88.49764999999999,-106.346771,20.939444,8.227512000000001,-159.777671,-71.542969,12.354722,104.195397,-74.29733299999999,-83.753428,-77.781167,-24.013197,33.429859,10.451526,42.590275,9.501785,-61.370976,-70.162651,1.659626,-78.18340600000001,25.013607,30.802498,-12.885834,39.782334,-3.74922,40.489673,25.748151,179.414413,-6.911806,2.213749,11.609444,-3.435973,-61.604171,43.356892,-53.125782,-1.023194,-42.604303,-15.310139,-9.696645,-62.067641,10.267895,21.824312,-90.23075900000001,144.793731,-15.180413,-58.93018,114.109497,-86.241905,15.2,-72.28521499999999,19.503304,113.921327,-8.24389,34.851612,78.96288,43.679291,53.688046,-19.020835,12.56738,-77.29750799999999,36.238414,138.252924,37.906193,74.766098,104.990963,-168.734039,43.872219,-62.782998,127.510093,127.766922,47.481766,-80.566956,66.92368399999999,102.495496,35.862285,-60.978893,80.77179700000001,-9.429499,28.233608,23.881275,6.129583,24.603189,17.228331,-7.09262,28.369885,19.37439,46.869107,-3.996166,103.846656,145.38469,-61.024174,-10.940835,-62.187366,14.375416,57.552152,73.22068,34.301525,-102.552784,101.975766,35.529562,18.49041,165.618042,8.081666,8.675276999999999,-85.207229,5.291266,8.468946000000001,84.124008,166.931503,-169.867233,174.885971,55.923255,-80.782127,-75.015152,-149.406843,143.95555,121.774017,69.345116,19.145136,-56.27111,-66.590149,-8.224454,-58.443832,51.183884,24.96676,21.005859,105.318756,29.873888,45.079162,160.156194,55.491977,30.217636,18.643501,103.819836,-10.030696,14.995463,19.699024,-11.779889,-14.452362,46.199616,-56.027783,-88.89653,38.996815,-71.797928,18.732207,0.824782,100.992541,71.276093,59.556278,9.537499,-175.198242,35.243322,-61.222503,177.64933,120.960515,34.888822,31.16558,32.290275,-95.712891,-55.765835,64.585262,-61.287228,-66.58973,-64.639968,108.277199,166.959158,-172.104629,20.902977,48.516388,22.937506,27.849332,29.154857],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Region: United Arab Emirates <br> Energy consumption: 139.83 thousands of Kw/h per capita","Region: Afghanistan <br> Energy consumption: 0.68 thousands of Kw/h per capita","Region: Antigua and Barbuda <br> Energy consumption: 29.46 thousands of Kw/h per capita","Region: Albania <br> Energy consumption: 14.1 thousands of Kw/h per capita","Region: Armenia <br> Energy consumption: 17.68 thousands of Kw/h per capita","Region: Angola <br> Energy consumption: 2.79 thousands of Kw/h per capita","Region: Argentina <br> Energy consumption: 21.33 thousands of Kw/h per capita","Region: American Samoa <br> Energy consumption: 35.43 thousands of Kw/h per capita","Region: Austria <br> Energy consumption: 45.24 thousands of Kw/h per capita","Region: Australia <br> Energy consumption: 61.44 thousands of Kw/h per capita","Region: Aruba <br> Energy consumption: 46.09 thousands of Kw/h per capita","Region: Azerbaijan <br> Energy consumption: 18.97 thousands of Kw/h per capita","Region: Bosnia and Herzegovina <br> Energy consumption: 23.01 thousands of Kw/h per capita","Region: Barbados <br> Energy consumption: 23.03 thousands of Kw/h per capita","Region: Bangladesh <br> Energy consumption: 2.83 thousands of Kw/h per capita","Region: Belgium <br> Energy consumption: 63.59 thousands of Kw/h per capita","Region: Burkina Faso <br> Energy consumption: 0.9 thousands of Kw/h per capita","Region: Bulgaria <br> Energy consumption: 32.22 thousands of Kw/h per capita","Region: Bahrain <br> Energy consumption: 161.11 thousands of Kw/h per capita","Region: Burundi <br> Energy consumption: 0.29 thousands of Kw/h per capita","Region: Benin <br> Energy consumption: 2.48 thousands of Kw/h per capita","Region: Bermuda <br> Energy consumption: 46.49 thousands of Kw/h per capita","Region: Brunei <br> Energy consumption: 103.27 thousands of Kw/h per capita","Region: Bolivia <br> Energy consumption: 7.06 thousands of Kw/h per capita","Region: Brazil <br> Energy consumption: 16.66 thousands of Kw/h per capita","Region: Bahamas <br> Energy consumption: 35.45 thousands of Kw/h per capita","Region: Bhutan <br> Energy consumption: 27.79 thousands of Kw/h per capita","Region: Botswana <br> Energy consumption: 9.39 thousands of Kw/h per capita","Region: Belarus <br> Energy consumption: 31.91 thousands of Kw/h per capita","Region: Belize <br> Energy consumption: 7.44 thousands of Kw/h per capita","Region: Canada <br> Energy consumption: 100.74 thousands of Kw/h per capita","Region: Central African Republic <br> Energy consumption: 0.29 thousands of Kw/h per capita","Region: Switzerland <br> Energy consumption: 34.37 thousands of Kw/h per capita","Region: Cook Islands <br> Energy consumption: 28.94 thousands of Kw/h per capita","Region: Chile <br> Energy consumption: 24.46 thousands of Kw/h per capita","Region: Cameroon <br> Energy consumption: 1.59 thousands of Kw/h per capita","Region: China <br> Energy consumption: 30.77 thousands of Kw/h per capita","Region: Colombia <br> Energy consumption: 11.15 thousands of Kw/h per capita","Region: Costa Rica <br> Energy consumption: 11.96 thousands of Kw/h per capita","Region: Cuba <br> Energy consumption: 9.23 thousands of Kw/h per capita","Region: Cape Verde <br> Energy consumption: 7.25 thousands of Kw/h per capita","Region: Cyprus <br> Energy consumption: 23.99 thousands of Kw/h per capita","Region: Germany <br> Energy consumption: 42.56 thousands of Kw/h per capita","Region: Djibouti <br> Energy consumption: 2.79 thousands of Kw/h per capita","Region: Denmark <br> Energy consumption: 32.15 thousands of Kw/h per capita","Region: Dominica <br> Energy consumption: 10.55 thousands of Kw/h per capita","Region: Dominican Republic <br> Energy consumption: 9.99 thousands of Kw/h per capita","Region: Algeria <br> Energy consumption: 15.91 thousands of Kw/h per capita","Region: Ecuador <br> Energy consumption: 11.92 thousands of Kw/h per capita","Region: Estonia <br> Energy consumption: 46.38 thousands of Kw/h per capita","Region: Egypt <br> Energy consumption: 9.64 thousands of Kw/h per capita","Region: Western Sahara <br> Energy consumption: 1.94 thousands of Kw/h per capita","Region: Eritrea <br> Energy consumption: 0.91 thousands of Kw/h per capita","Region: Spain <br> Energy consumption: 32.49 thousands of Kw/h per capita","Region: Ethiopia <br> Energy consumption: 0.87 thousands of Kw/h per capita","Region: Finland <br> Energy consumption: 57.77 thousands of Kw/h per capita","Region: Fiji <br> Energy consumption: 9.22 thousands of Kw/h per capita","Region: Faroe Islands <br> Energy consumption: 70.96 thousands of Kw/h per capita","Region: France <br> Energy consumption: 40.46 thousands of Kw/h per capita","Region: Gabon <br> Energy consumption: 8.01 thousands of Kw/h per capita","Region: United Kingdom <br> Energy consumption: 29.72 thousands of Kw/h per capita","Region: Grenada <br> Energy consumption: 9.43 thousands of Kw/h per capita","Region: Georgia <br> Energy consumption: 20.83 thousands of Kw/h per capita","Region: French Guiana <br> Energy consumption: 0 thousands of Kw/h per capita","Region: Ghana <br> Energy consumption: 3.48 thousands of Kw/h per capita","Region: Greenland <br> Energy consumption: 63.52 thousands of Kw/h per capita","Region: Gambia <br> Energy consumption: 0.93 thousands of Kw/h per capita","Region: Guinea <br> Energy consumption: 1.28 thousands of Kw/h per capita","Region: Guadeloupe <br> Energy consumption: 0 thousands of Kw/h per capita","Region: Equatorial Guinea <br> Energy consumption: 12.4 thousands of Kw/h per capita","Region: Greece <br> Energy consumption: 28.96 thousands of Kw/h per capita","Region: Guatemala <br> Energy consumption: 5.71 thousands of Kw/h per capita","Region: Guam <br> Energy consumption: 44.19 thousands of Kw/h per capita","Region: Guinea-Bissau <br> Energy consumption: 0.68 thousands of Kw/h per capita","Region: Guyana <br> Energy consumption: 13.69 thousands of Kw/h per capita","Region: Hong Kong <br> Energy consumption: 32.47 thousands of Kw/h per capita","Region: Honduras <br> Energy consumption: 5.09 thousands of Kw/h per capita","Region: Croatia <br> Energy consumption: 24.21 thousands of Kw/h per capita","Region: Haiti <br> Energy consumption: 1.03 thousands of Kw/h per capita","Region: Hungary <br> Energy consumption: 29.25 thousands of Kw/h per capita","Region: Indonesia <br> Energy consumption: 7.87 thousands of Kw/h per capita","Region: Ireland <br> Energy consumption: 35.99 thousands of Kw/h per capita","Region: Israel <br> Energy consumption: 32.59 thousands of Kw/h per capita","Region: India <br> Energy consumption: 6.81 thousands of Kw/h per capita","Region: Iraq <br> Energy consumption: 13.27 thousands of Kw/h per capita","Region: Iran <br> Energy consumption: 38.23 thousands of Kw/h per capita","Region: Iceland <br> Energy consumption: 156.92 thousands of Kw/h per capita","Region: Italy <br> Energy consumption: 29.72 thousands of Kw/h per capita","Region: Jamaica <br> Energy consumption: 12.24 thousands of Kw/h per capita","Region: Jordan <br> Energy consumption: 9.18 thousands of Kw/h per capita","Region: Japan <br> Energy consumption: 40 thousands of Kw/h per capita","Region: Kenya <br> Energy consumption: 1.95 thousands of Kw/h per capita","Region: Kyrgyzstan <br> Energy consumption: 9.27 thousands of Kw/h per capita","Region: Cambodia <br> Energy consumption: 4.04 thousands of Kw/h per capita","Region: Kiribati <br> Energy consumption: 2.45 thousands of Kw/h per capita","Region: Comoros <br> Energy consumption: 1.63 thousands of Kw/h per capita","Region: Saint Kitts and Nevis <br> Energy consumption: 20.9 thousands of Kw/h per capita","Region: North Korea <br> Energy consumption: 3.83 thousands of Kw/h per capita","Region: South Korea <br> Energy consumption: 67.33 thousands of Kw/h per capita","Region: Kuwait <br> Energy consumption: 98.07 thousands of Kw/h per capita","Region: Cayman Islands <br> Energy consumption: 44.17 thousands of Kw/h per capita","Region: Kazakhstan <br> Energy consumption: 42.44 thousands of Kw/h per capita","Region: Laos <br> Energy consumption: 18.85 thousands of Kw/h per capita","Region: Lebanon <br> Energy consumption: 18.83 thousands of Kw/h per capita","Region: Saint Lucia <br> Energy consumption: 13.6 thousands of Kw/h per capita","Region: Sri Lanka <br> Energy consumption: 4.88 thousands of Kw/h per capita","Region: Liberia <br> Energy consumption: 1.06 thousands of Kw/h per capita","Region: Lesotho <br> Energy consumption: 2.13 thousands of Kw/h per capita","Region: Lithuania <br> Energy consumption: 25.17 thousands of Kw/h per capita","Region: Luxembourg <br> Energy consumption: 67.69 thousands of Kw/h per capita","Region: Latvia <br> Energy consumption: 22.63 thousands of Kw/h per capita","Region: Libya <br> Energy consumption: 28.27 thousands of Kw/h per capita","Region: Morocco <br> Energy consumption: 7.24 thousands of Kw/h per capita","Region: Moldova <br> Energy consumption: 16.01 thousands of Kw/h per capita","Region: Montenegro <br> Energy consumption: 18.94 thousands of Kw/h per capita","Region: Madagascar <br> Energy consumption: 0.51 thousands of Kw/h per capita","Region: Mali <br> Energy consumption: 1.17 thousands of Kw/h per capita","Region: Mongolia <br> Energy consumption: 22.41 thousands of Kw/h per capita","Region: Northern Mariana Islands <br> Energy consumption: 0 thousands of Kw/h per capita","Region: Martinique <br> Energy consumption: 24.37 thousands of Kw/h per capita","Region: Mauritania <br> Energy consumption: 3.99 thousands of Kw/h per capita","Region: Montserrat <br> Energy consumption: 27.58 thousands of Kw/h per capita","Region: Malta <br> Energy consumption: 74.32 thousands of Kw/h per capita","Region: Mauritius <br> Energy consumption: 19.72 thousands of Kw/h per capita","Region: Maldives <br> Energy consumption: 17.67 thousands of Kw/h per capita","Region: Malawi <br> Energy consumption: 0.46 thousands of Kw/h per capita","Region: Mexico <br> Energy consumption: 17.52 thousands of Kw/h per capita","Region: Malaysia <br> Energy consumption: 37.9 thousands of Kw/h per capita","Region: Mozambique <br> Energy consumption: 2.24 thousands of Kw/h per capita","Region: Namibia <br> Energy consumption: 8.75 thousands of Kw/h per capita","Region: New Caledonia <br> Energy consumption: 70 thousands of Kw/h per capita","Region: Niger <br> Energy consumption: 0.41 thousands of Kw/h per capita","Region: Nigeria <br> Energy consumption: 2.55 thousands of Kw/h per capita","Region: Nicaragua <br> Energy consumption: 4.27 thousands of Kw/h per capita","Region: Netherlands <br> Energy consumption: 58.01 thousands of Kw/h per capita","Region: Norway <br> Energy consumption: 105.33 thousands of Kw/h per capita","Region: Nepal <br> Energy consumption: 1.61 thousands of Kw/h per capita","Region: Nauru <br> Energy consumption: 21.61 thousands of Kw/h per capita","Region: Niue <br> Energy consumption: 16.12 thousands of Kw/h per capita","Region: New Zealand <br> Energy consumption: 45.91 thousands of Kw/h per capita","Region: Oman <br> Energy consumption: 87.16 thousands of Kw/h per capita","Region: Panama <br> Energy consumption: 27.07 thousands of Kw/h per capita","Region: Peru <br> Energy consumption: 9.41 thousands of Kw/h per capita","Region: French Polynesia <br> Energy consumption: 15.24 thousands of Kw/h per capita","Region: Papua New Guinea <br> Energy consumption: 2.12 thousands of Kw/h per capita","Region: Philippines <br> Energy consumption: 4.79 thousands of Kw/h per capita","Region: Pakistan <br> Energy consumption: 4.68 thousands of Kw/h per capita","Region: Poland <br> Energy consumption: 32 thousands of Kw/h per capita","Region: Saint Pierre and Miquelon <br> Energy consumption: 58.39 thousands of Kw/h per capita","Region: Puerto Rico <br> Energy consumption: 24.18 thousands of Kw/h per capita","Region: Portugal <br> Energy consumption: 25.88 thousands of Kw/h per capita","Region: Paraguay <br> Energy consumption: 15.78 thousands of Kw/h per capita","Region: Qatar <br> Energy consumption: 199.42 thousands of Kw/h per capita","Region: Romania <br> Energy consumption: 20.04 thousands of Kw/h per capita","Region: Serbia <br> Energy consumption: 27.64 thousands of Kw/h per capita","Region: Russia <br> Energy consumption: 60.27 thousands of Kw/h per capita","Region: Rwanda <br> Energy consumption: 0.47 thousands of Kw/h per capita","Region: Saudi Arabia <br> Energy consumption: 83.1 thousands of Kw/h per capita","Region: Solomon Islands <br> Energy consumption: 1.89 thousands of Kw/h per capita","Region: Seychelles <br> Energy consumption: 45.93 thousands of Kw/h per capita","Region: Sudan <br> Energy consumption: 2.32 thousands of Kw/h per capita","Region: Sweden <br> Energy consumption: 60.19 thousands of Kw/h per capita","Region: Singapore <br> Energy consumption: 153.3 thousands of Kw/h per capita","Region: Saint Helena <br> Energy consumption: 9.98 thousands of Kw/h per capita","Region: Slovenia <br> Energy consumption: 36.18 thousands of Kw/h per capita","Region: Slovakia <br> Energy consumption: 35.84 thousands of Kw/h per capita","Region: Sierra Leone <br> Energy consumption: 0.49 thousands of Kw/h per capita","Region: Senegal <br> Energy consumption: 2.51 thousands of Kw/h per capita","Region: Somalia <br> Energy consumption: 0.22 thousands of Kw/h per capita","Region: Suriname <br> Energy consumption: 20.28 thousands of Kw/h per capita","Region: El Salvador <br> Energy consumption: 7.08 thousands of Kw/h per capita","Region: Syria <br> Energy consumption: 5.51 thousands of Kw/h per capita","Region: Turks and Caicos Islands <br> Energy consumption: 19.62 thousands of Kw/h per capita","Region: Chad <br> Energy consumption: 0.36 thousands of Kw/h per capita","Region: Togo <br> Energy consumption: 1.12 thousands of Kw/h per capita","Region: Thailand <br> Energy consumption: 19.43 thousands of Kw/h per capita","Region: Tajikistan <br> Energy consumption: 7.67 thousands of Kw/h per capita","Region: Turkmenistan <br> Energy consumption: 70.87 thousands of Kw/h per capita","Region: Tunisia <br> Energy consumption: 9.52 thousands of Kw/h per capita","Region: Tonga <br> Energy consumption: 6.7 thousands of Kw/h per capita","Region: Turkey <br> Energy consumption: 22.82 thousands of Kw/h per capita","Region: Trinidad and Tobago <br> Energy consumption: 111.05 thousands of Kw/h per capita","Region: Tuvalu <br> Energy consumption: 0 thousands of Kw/h per capita","Region: Taiwan <br> Energy consumption: 57.99 thousands of Kw/h per capita","Region: Tanzania <br> Energy consumption: 0.91 thousands of Kw/h per capita","Region: Ukraine <br> Energy consumption: 21.46 thousands of Kw/h per capita","Region: Uganda <br> Energy consumption: 0.77 thousands of Kw/h per capita","Region: United States <br> Energy consumption: 76.99 thousands of Kw/h per capita","Region: Uruguay <br> Energy consumption: 18.32 thousands of Kw/h per capita","Region: Uzbekistan <br> Energy consumption: 16.55 thousands of Kw/h per capita","Region: Saint Vincent and the Grenadines <br> Energy consumption: 8.25 thousands of Kw/h per capita","Region: Venezuela <br> Energy consumption: 20.69 thousands of Kw/h per capita","Region: British Virgin Islands <br> Energy consumption: 20.32 thousands of Kw/h per capita","Region: Vietnam <br> Energy consumption: 12.38 thousands of Kw/h per capita","Region: Vanuatu <br> Energy consumption: 2.96 thousands of Kw/h per capita","Region: Samoa <br> Energy consumption: 7.3 thousands of Kw/h per capita","Region: Kosovo <br> Energy consumption: 16.78 thousands of Kw/h per capita","Region: Yemen <br> Energy consumption: 1.08 thousands of Kw/h per capita","Region: South Africa <br> Energy consumption: 23.39 thousands of Kw/h per capita","Region: Zambia <br> Energy consumption: 3.42 thousands of Kw/h per capita","Region: Zimbabwe <br> Energy consumption: 2.64 thousands of Kw/h per capita"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-40.900557,71.706936],"lng":[-175.198242,179.414413]}},"evals":[],"jsHooks":[]}</script>
+<p>This is the same map as the first one, difference is the style and
+formatting. I prefer the first one, but both have their pros.</p>
+<p><br></p>
+</div>
+<div id="u.s.-most-dense-cities" class="section level2">
+<h2>U.S. Most Dense Cities</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">library</span>(USAboundaries)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">library</span>(USAboundariesData)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>idahoc <span class="ot">&lt;-</span> <span class="fu">us_counties</span>(<span class="at">states =</span> <span class="st">&quot;Idaho&quot;</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>cities <span class="ot">&lt;-</span> <span class="fu">us_cities</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  </span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>    </span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>    state_name <span class="sc">!=</span> <span class="st">&quot;Alaska&quot;</span>, </span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>    </span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    state_name <span class="sc">!=</span> <span class="st">&quot;Hawaii&quot;</span>, </span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>    </span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>    state_name <span class="sc">!=</span> <span class="st">&quot;District of Columbia&quot;</span>, </span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>    </span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>    state_name <span class="sc">!=</span> <span class="st">&quot;Puerto Rico&quot;</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>contstate <span class="ot">&lt;-</span> <span class="fu">us_states</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>  </span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">!=</span> <span class="st">&quot;Alaska&quot;</span>, </span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>         </span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>         name <span class="sc">!=</span> <span class="st">&quot;Hawaii&quot;</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>         </span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>         name <span class="sc">!=</span> <span class="st">&quot;District of Columbia&quot;</span>, </span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>         </span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>         name <span class="sc">!=</span> <span class="st">&quot;Puerto Rico&quot;</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>tops <span class="ot">&lt;-</span> cities <span class="sc">%&gt;%</span> </span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>  </span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>  <span class="fu">group_by</span>(state_name) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>  </span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">round</span>(<span class="fu">dense_rank</span>(<span class="fu">desc</span>(population)))) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>  </span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>  </span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>  <span class="fu">filter</span>(rank <span class="sc">&lt;=</span> <span class="dv">3</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a>top1 <span class="ot">&lt;-</span> tops <span class="sc">%&gt;%</span> </span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a>  </span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a>  <span class="fu">filter</span>(rank <span class="sc">==</span><span class="dv">1</span>) </span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a></span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> contstate, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;grey50&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> tops, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">size =</span> population, <span class="at">color =</span> rank), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span>  </span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a>  </span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">subset</span>(tops, rank <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">label =</span> city, <span class="at">geometry =</span> geometry),</span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;sf_coordinates&quot;</span>,</span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;darkblue&quot;</span>,</span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">5</span>,</span>
+<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a>    <span class="at">max.overlaps =</span> <span class="dv">50</span>,</span>
+<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a>    <span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>  </span>
+<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a></span>
+<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a>  <span class="fu">guides</span>(</span>
+<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">&quot;Population (Thousands)&quot;</span>, </span>
+<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a>                        <span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">&quot;grey50&quot;</span>)), </span>
+<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">&quot;City Rank&quot;</span>, </span>
+<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a>                         <span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">5</span>))  </span>
+<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-72"><a href="#cb3-72" tabindex="-1"></a></span>
+<span id="cb3-73"><a href="#cb3-73" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="#cb3-74" tabindex="-1"></a>  <span class="fu">scale_color_continuous</span>(</span>
+<span id="cb3-75"><a href="#cb3-75" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),  </span>
+<span id="cb3-76"><a href="#cb3-76" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)      </span>
+<span id="cb3-77"><a href="#cb3-77" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-78"><a href="#cb3-78" tabindex="-1"></a>  </span>
+<span id="cb3-79"><a href="#cb3-79" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(</span>
+<span id="cb3-80"><a href="#cb3-80" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">20000</span>, <span class="dv">800000</span>, <span class="at">by=</span><span class="dv">200000</span>), </span>
+<span id="cb3-81"><a href="#cb3-81" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;200k&quot;</span>,<span class="st">&quot;400k&quot;</span>,<span class="st">&quot;600k&quot;</span>, <span class="st">&quot;800k&quot;</span> ), </span>
+<span id="cb3-82"><a href="#cb3-82" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">200000</span>, <span class="dv">800000</span>)      </span>
+<span id="cb3-83"><a href="#cb3-83" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-84"><a href="#cb3-84" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" tabindex="-1"></a></span>
+<span id="cb3-86"><a href="#cb3-86" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-87"><a href="#cb3-87" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Most Densely Populated Cities in the U.S.&quot;</span>,</span>
+<span id="cb3-88"><a href="#cb3-88" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Population sizes represented by point size | Population density rank by color (1 most dense)&quot;</span>,</span>
+<span id="cb3-89"><a href="#cb3-89" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,  </span>
+<span id="cb3-90"><a href="#cb3-90" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>   </span>
+<span id="cb3-91"><a href="#cb3-91" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-92"><a href="#cb3-92" tabindex="-1"></a>  </span>
+<span id="cb3-93"><a href="#cb3-93" tabindex="-1"></a></span>
+<span id="cb3-94"><a href="#cb3-94" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-95"><a href="#cb3-95" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-96"><a href="#cb3-96" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),   </span>
+<span id="cb3-97"><a href="#cb3-97" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb3-98"><a href="#cb3-98" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),   </span>
+<span id="cb3-99"><a href="#cb3-99" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,     </span>
+<span id="cb3-100"><a href="#cb3-100" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">color =</span> <span class="st">&quot;grey5&quot;</span>),</span>
+<span id="cb3-101"><a href="#cb3-101" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">16</span>, <span class="at">color =</span> <span class="st">&quot;grey30&quot;</span>),</span>
+<span id="cb3-102"><a href="#cb3-102" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">&quot;grey15&quot;</span>),</span>
+<span id="cb3-103"><a href="#cb3-103" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>, <span class="at">color =</span> <span class="st">&quot;grey25&quot;</span>),</span>
+<span id="cb3-104"><a href="#cb3-104" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="Maps_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<p>What cities in the U.S. have the highest population density
+overall?</p>
+<p><br></p>
+</div>
+<div id="idahos-water-system" class="section level2">
+<h2>Idaho’s Water System</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="fu">library</span>(USAboundaries)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co"># Read in all four of the necessary SHP file datasets.</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(downloader, sf, fs, tidyverse)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>wellspath <span class="ot">&lt;-</span> <span class="st">&quot;https://byuistats.github.io/M335/data/Wells.zip&quot;</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(); uf <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="fu">download</span>(wellspath, df, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="fu">unzip</span>(df, <span class="at">exdir =</span> uf)</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>wells <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(uf)</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="fu">file_delete</span>(df); <span class="fu">dir_delete</span>(uf)</span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>damspath <span class="ot">&lt;-</span> <span class="st">&quot;https://byuistats.github.io/M335/data/Idaho_Dams.zip&quot;</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(); uf2 <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="fu">download</span>(damspath, df2, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="fu">unzip</span>(df2, <span class="at">exdir =</span> uf2)</span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>dams <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(uf2)</span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="fu">file_delete</span>(df2); <span class="fu">dir_delete</span>(uf2)</span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a>waterpath <span class="ot">&lt;-</span> <span class="st">&quot;https://byuistats.github.io/M335/data/water.zip&quot;</span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(); uf3 <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="fu">download</span>(waterpath, df3, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="fu">unzip</span>(df3, <span class="at">exdir =</span> uf3)</span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a>water <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(uf3)</span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a><span class="fu">file_delete</span>(df3); <span class="fu">dir_delete</span>(uf3)</span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a>stateshapepath <span class="ot">&lt;-</span> <span class="st">&quot;https://byuistats.github.io/M335/data/shp.zip&quot;</span></span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a>df4 <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(); uf4 <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a><span class="fu">download</span>(stateshapepath, df4, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a></span>
+<span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a><span class="fu">unzip</span>(df4, <span class="at">exdir =</span> uf4)</span>
+<span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a></span>
+<span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a>stateshape <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(uf4)</span>
+<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a><span class="fu">file_delete</span>(df4); <span class="fu">dir_delete</span>(uf4)</span>
+<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a></span>
+<span id="cb4-61"><a href="#cb4-61" tabindex="-1"></a></span>
+<span id="cb4-62"><a href="#cb4-62" tabindex="-1"></a>ID_counties <span class="ot">&lt;-</span> USAboundaries<span class="sc">::</span><span class="fu">us_counties</span>(<span class="at">states =</span> <span class="st">&quot;ID&quot;</span>)</span>
+<span id="cb4-63"><a href="#cb4-63" tabindex="-1"></a></span>
+<span id="cb4-64"><a href="#cb4-64" tabindex="-1"></a>wellsfiltered <span class="ot">&lt;-</span> wells <span class="sc">|&gt;</span> </span>
+<span id="cb4-65"><a href="#cb4-65" tabindex="-1"></a></span>
+<span id="cb4-66"><a href="#cb4-66" tabindex="-1"></a><span class="fu">group_by</span>(WellID) <span class="sc">|&gt;</span> </span>
+<span id="cb4-67"><a href="#cb4-67" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" tabindex="-1"></a><span class="fu">filter</span>(Production <span class="sc">&gt;=</span> <span class="dv">5000</span>)</span>
+<span id="cb4-69"><a href="#cb4-69" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" tabindex="-1"></a>damsfiltered <span class="ot">&lt;-</span> dams <span class="sc">|&gt;</span></span>
+<span id="cb4-71"><a href="#cb4-71" tabindex="-1"></a></span>
+<span id="cb4-72"><a href="#cb4-72" tabindex="-1"></a><span class="fu">filter</span>(SurfaceAre <span class="sc">&gt;=</span> <span class="dv">50</span>)</span>
+<span id="cb4-73"><a href="#cb4-73" tabindex="-1"></a></span>
+<span id="cb4-74"><a href="#cb4-74" tabindex="-1"></a>waterfiltered <span class="ot">&lt;-</span> water <span class="sc">|&gt;</span></span>
+<span id="cb4-75"><a href="#cb4-75" tabindex="-1"></a></span>
+<span id="cb4-76"><a href="#cb4-76" tabindex="-1"></a><span class="fu">filter</span>(FEAT_NAME <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;Snake River&#39;</span>, <span class="st">&#39;Henrys Fork&#39;</span>))</span>
+<span id="cb4-77"><a href="#cb4-77" tabindex="-1"></a></span>
+<span id="cb4-78"><a href="#cb4-78" tabindex="-1"></a></span>
+<span id="cb4-79"><a href="#cb4-79" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-80"><a href="#cb4-80" tabindex="-1"></a></span>
+<span id="cb4-81"><a href="#cb4-81" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> ID_counties, </span>
+<span id="cb4-82"><a href="#cb4-82" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;grey99&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-83"><a href="#cb4-83" tabindex="-1"></a>  </span>
+<span id="cb4-84"><a href="#cb4-84" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> damsfiltered, </span>
+<span id="cb4-85"><a href="#cb4-85" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;Dams&quot;</span>), </span>
+<span id="cb4-86"><a href="#cb4-86" tabindex="-1"></a>          <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb4-87"><a href="#cb4-87" tabindex="-1"></a>  </span>
+<span id="cb4-88"><a href="#cb4-88" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> waterfiltered, </span>
+<span id="cb4-89"><a href="#cb4-89" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;Rivers&quot;</span>), </span>
+<span id="cb4-90"><a href="#cb4-90" tabindex="-1"></a>          <span class="at">linewidth =</span> <span class="dv">1</span>, </span>
+<span id="cb4-91"><a href="#cb4-91" tabindex="-1"></a>          <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb4-92"><a href="#cb4-92" tabindex="-1"></a>  </span>
+<span id="cb4-93"><a href="#cb4-93" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wellsfiltered, </span>
+<span id="cb4-94"><a href="#cb4-94" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;Wells&quot;</span>), </span>
+<span id="cb4-95"><a href="#cb4-95" tabindex="-1"></a>          <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb4-96"><a href="#cb4-96" tabindex="-1"></a>  </span>
+<span id="cb4-97"><a href="#cb4-97" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb4-98"><a href="#cb4-98" tabindex="-1"></a>  </span>
+<span id="cb4-99"><a href="#cb4-99" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="fu">st_crs</span>(<span class="dv">4267</span>)) <span class="sc">+</span></span>
+<span id="cb4-100"><a href="#cb4-100" tabindex="-1"></a>  </span>
+<span id="cb4-101"><a href="#cb4-101" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb4-102"><a href="#cb4-102" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Features&quot;</span>,</span>
+<span id="cb4-103"><a href="#cb4-103" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb4-104"><a href="#cb4-104" tabindex="-1"></a>      <span class="st">&quot;Rivers&quot;</span> <span class="ot">=</span> <span class="st">&quot;steelblue1&quot;</span>, </span>
+<span id="cb4-105"><a href="#cb4-105" tabindex="-1"></a>      <span class="st">&quot;Dams&quot;</span> <span class="ot">=</span> <span class="st">&quot;chocolate&quot;</span>, </span>
+<span id="cb4-106"><a href="#cb4-106" tabindex="-1"></a>      <span class="st">&quot;Wells&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkseagreen4&quot;</span>),</span>
+<span id="cb4-107"><a href="#cb4-107" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Rivers&quot;</span>, </span>
+<span id="cb4-108"><a href="#cb4-108" tabindex="-1"></a>               <span class="st">&quot;Dams&quot;</span>, </span>
+<span id="cb4-109"><a href="#cb4-109" tabindex="-1"></a>               <span class="st">&quot;Wells&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb4-110"><a href="#cb4-110" tabindex="-1"></a>  </span>
+<span id="cb4-111"><a href="#cb4-111" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-112"><a href="#cb4-112" tabindex="-1"></a>  </span>
+<span id="cb4-113"><a href="#cb4-113" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-114"><a href="#cb4-114" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Idaho&#39;s Dams, Wells, and Rivers&quot;</span></span>
+<span id="cb4-115"><a href="#cb4-115" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-116"><a href="#cb4-116" tabindex="-1"></a>  </span>
+<span id="cb4-117"><a href="#cb4-117" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb4-118"><a href="#cb4-118" tabindex="-1"></a>    </span>
+<span id="cb4-119"><a href="#cb4-119" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb4-120"><a href="#cb4-120" tabindex="-1"></a>    </span>
+<span id="cb4-121"><a href="#cb4-121" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),  </span>
+<span id="cb4-122"><a href="#cb4-122" tabindex="-1"></a>    </span>
+<span id="cb4-123"><a href="#cb4-123" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),  </span>
+<span id="cb4-124"><a href="#cb4-124" tabindex="-1"></a>    </span>
+<span id="cb4-125"><a href="#cb4-125" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>,  </span>
+<span id="cb4-126"><a href="#cb4-126" tabindex="-1"></a>    </span>
+<span id="cb4-127"><a href="#cb4-127" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, </span>
+<span id="cb4-128"><a href="#cb4-128" tabindex="-1"></a>                              <span class="at">size =</span> <span class="dv">18</span>, </span>
+<span id="cb4-129"><a href="#cb4-129" tabindex="-1"></a>                              <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, </span>
+<span id="cb4-130"><a href="#cb4-130" tabindex="-1"></a>                              <span class="at">color =</span> <span class="st">&quot;grey5&quot;</span>),</span>
+<span id="cb4-131"><a href="#cb4-131" tabindex="-1"></a>    </span>
+<span id="cb4-132"><a href="#cb4-132" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, </span>
+<span id="cb4-133"><a href="#cb4-133" tabindex="-1"></a>                                 <span class="at">size =</span> <span class="dv">16</span>, </span>
+<span id="cb4-134"><a href="#cb4-134" tabindex="-1"></a>                                 <span class="at">color =</span> <span class="st">&quot;grey30&quot;</span>),</span>
+<span id="cb4-135"><a href="#cb4-135" tabindex="-1"></a>    </span>
+<span id="cb4-136"><a href="#cb4-136" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, </span>
+<span id="cb4-137"><a href="#cb4-137" tabindex="-1"></a>                                <span class="at">color =</span> <span class="st">&quot;grey15&quot;</span>),</span>
+<span id="cb4-138"><a href="#cb4-138" tabindex="-1"></a>    </span>
+<span id="cb4-139"><a href="#cb4-139" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, </span>
+<span id="cb4-140"><a href="#cb4-140" tabindex="-1"></a>                               <span class="at">color =</span> <span class="st">&quot;grey25&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb4-141"><a href="#cb4-141" tabindex="-1"></a>  </span>
+<span id="cb4-142"><a href="#cb4-142" tabindex="-1"></a>  <span class="fu">guides</span>(</span>
+<span id="cb4-143"><a href="#cb4-143" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">4</span>, </span>
+<span id="cb4-144"><a href="#cb4-144" tabindex="-1"></a>                                             <span class="at">shape =</span> <span class="dv">16</span>, </span>
+<span id="cb4-145"><a href="#cb4-145" tabindex="-1"></a>                                             <span class="at">linetype =</span> <span class="cn">NA</span>)))</span></code></pre></div>
+<p><img src="Maps_files/figure-html/unnamed-chunk-4-1.png" width="960" /></p>
+<p>A summary of Idaho’s key rivers, dams, and wells. Overall Idaho’s
+water system portrayed in a map visualization.</p>
+<p><br></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

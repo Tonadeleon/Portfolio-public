@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Tonatiuh De Leon" />
+
+
+<title>Who uses More Internet, Boys or Girls?</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.33/datatables.js"></script>
+<link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Tonatiuh de Leon</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Regression Models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="DecibelRegression.html">Song Decibel Levels</a>
+    </li>
+    <li>
+      <a href="SpotifyRegression.html">Spotify Regression</a>
+    </li>
+    <li>
+      <a href="CarAnalysis.html">Selling my Car Regression</a>
+    </li>
+    <li>
+      <a href="HousePriceRegression.html">House Prices Predictions</a>
+    </li>
+    <li>
+      <a href="LogisticRegression325.html">Who's Getting Good Grades?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Modeling &amp; Simulations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Whale.html">Recreated the Milky Way, or a Whale?</a>
+    </li>
+    <li>
+      <a href="Temple.html">Modeled a Beatiful Building</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferential Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="StephApartment.html">Finding an Apartment</a>
+    </li>
+    <li>
+      <a href="TtestInternet.html">Boys or Girls; Who Uses More Internet?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Visualizations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="TimeSeries.html">Correlation</a>
+    </li>
+    <li>
+      <a href="Distributions.html">Distribution</a>
+    </li>
+    <li>
+      <a href="Maps.html">Spatial</a>
+    </li>
+    <li>
+      <a href="BarGraphs.html">Quick Comparison</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Machine Learning
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Time Series
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Who uses More Internet, Boys or Girls?</h1>
+<h4 class="author">Tonatiuh De Leon</h4>
+
+</div>
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>HSS <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;HighSchoolSeniors.csv&quot;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#Remember: select &quot;Session, Set Working Directory, To Source File Location&quot;, and then play this R-chunk into your console to read the HSS data into R. </span></span></code></pre></div>
+<div id="section"
+class="section level1 tabset tabset-fade tabset-pills">
+<h1 class="tabset tabset-fade tabset-pills"></h1>
+<div id="hypothesis" class="section level2">
+<h2>Hypothesis</h2>
+<p><br></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="do">##what I would do now</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>HSS1 <span class="ot">&lt;-</span> HSS <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="fu">select</span>(Gender, Importance_Internet_access) <span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="fu">filter</span>(Importance_Internet_access <span class="sc">&lt;=</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="fu">ggplot</span>(HSS1, <span class="fu">aes</span>(<span class="at">x =</span> Importance_Internet_access, <span class="at">y =</span> Gender, <span class="at">fill =</span> Gender)) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="dv">2</span>, <span class="at">rel_min_height =</span> <span class="fl">0.01</span>) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Importance Given To the Internet Use Comparison By Gender&quot;</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Internet Importance Score&quot;</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Gender&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>, <span class="st">&quot;skyblue2&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  <span class="fu">theme_ridges</span>()</span></code></pre></div>
+<p><img src="TtestInternet_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p>An experiment was conducted to determine if a Gender gives more
+importance to internet access than the other (Male &amp; Female). A
+sample of 449 High School Seniors was studied. They were asked in a
+scale of 0 to 1000 The level of importance they gave to their daily
+internet usage. ’ <br> The data is contained in the <code>HSS</code>
+data set in R. (See last tab) <br> It is assumed that the Internet
+Access importance mean level by gender is not different from each other.
+Symbolically represented by <span
+class="math inline">\(\mu_\text{Female} \ = \mu_\text{Male}\)</span>.
+And graphically represented by the graph above.</p>
+<p><br></p>
+<p>Thus, the question being do one gender gives more importance to
+internet use than the other?</p>
+<p>Formally, the null and alternative hypotheses are written as:</p>
+<p><br></p>
+<p><span class="math display">\[
+  H_0: \mu_\text{Importance Given To Internet Use by Females} -
+\mu_\text{Importance Given To Internet Use by Males} = 0
+\]</span> <span class="math display">\[
+  H_a: \mu_\text{Importance Given To Internet Use by Females} -
+\mu_\text{Importance Given To Internet Use by Males} \neq 0
+\]</span></p>
+<p><br></p>
+<p>The significance level for this study will be set at: <span
+class="math display">\[
+  \alpha = 0.05
+\]</span></p>
+<p><br></p>
+<p>An independent sample t test is used to test the previously stated
+null hypothesis. This allows us to decide if the pattern in the sample
+data can be assumed to hold for the full population.</p>
+<p><br></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">pander</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    Importance_Internet_access <span class="sc">~</span> Gender, </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="at">data=</span>HSS1, </span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="at">mu=</span><span class="dv">0</span>, </span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">alternative=</span><span class="st">&quot;two.sided&quot;</span>, </span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="at">conf.level =</span> <span class="fl">0.95</span>), </span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Independent Samples t Test of Internet Use for Males and Females&quot;</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="at">split.table=</span><span class="cn">Inf</span>)</span></code></pre></div>
+<table style="width:100%;">
+<caption>Independent Samples t Test of Internet Use for Males and
+Females</caption>
+<colgroup>
+<col width="16%" />
+<col width="7%" />
+<col width="9%" />
+<col width="23%" />
+<col width="21%" />
+<col width="21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Test statistic</th>
+<th align="center">df</th>
+<th align="center">P value</th>
+<th align="center">Alternative hypothesis</th>
+<th align="center">mean in group Female</th>
+<th align="center">mean in group Male</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">-0.9365</td>
+<td align="center">438.7</td>
+<td align="center">0.3495</td>
+<td align="center">two.sided</td>
+<td align="center">682</td>
+<td align="center">710</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>The results of the T-test show that there is insufficient evidence to
+reject the null hypothesis (<span class="math inline">\(p = 0.4351 &gt;
+\alpha\)</span>). Thus concluding that importance to internet access is
+indifferent of gender in this population sample. <br> The data from the
+experiment showed a higher mean level of importance given to internet
+access in the female vs. the male grouyp. However, as demonstrated by
+the T-test results. There is insufficient evidence to claim that this
+pattern will remain true for the general population, or even for
+repeated versions of this study (p = 0.4351). <br> It is recommended for
+more iterations of this test to be taken with different samples, this
+may reveal further insights or confirm what was found in this test.</p>
+<p><br><br><br><br></p>
+</div>
+<div id="analysis" class="section level2">
+<h2>Analysis</h2>
+<p><br></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">qqPlot</span>(Importance_Internet_access <span class="sc">~</span> Gender, </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>       <span class="at">data=</span>HSS1, </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>       <span class="at">ylab=</span><span class="st">&quot;Importance on Internet Use&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>       <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">900</span>))</span></code></pre></div>
+<p><img src="TtestInternet_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p>The assumptions of the test must be shown to explain the
+considerations taken before conducting this analysis. It is difficult to
+verify if the sampling distribution of <span
+class="math inline">\(\bar{x}_1 - \bar{x}_2\)</span> is normal. However,
+it is true that if the separate sampling distributions of <span
+class="math inline">\(\bar{x}_1\)</span> and <span
+class="math inline">\(\bar{x}_2\)</span> are normally distributed, then
+it follows that the sampling distribution of <span
+class="math inline">\(\bar{x}_1 - \bar{x}_2\)</span> will be normally
+distributed. As long as the population data is normal, it follows that
+the sampling distribution of the sample mean is normal.</p>
+<p>Based on the Q-Q Plots above, it appears that the Internet Use data
+can be considered normal for each gender, which implies it is okay to
+assume that <span class="math inline">\(\bar{x}_1 - \bar{x}_2\)</span>
+is normally distributed. Even if the Q-Q Plots were considered not
+normal we could say that based on the central limit theorem we could
+have a normal distribution of the sample means. Therefore the
+independent samples t test is appropriate for these data.</p>
+<p><br><br><br><br></p>
+</div>
+<div id="data-used" class="section level2">
+<h2>Data Used</h2>
+<p><br></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">datatable</span>(HSS1)</span></code></pre></div>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-6c5174055d1e9bf80c22" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6c5174055d1e9bf80c22">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","300","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","443","444","445","446","447","448","449"],["Male","Male","Female","Male","Female","Female","Male","Male","Male","Male","Male","Female","Male","Female","Female","Male","Male","Male","Female","Female","Female","Female","Female","Male","Female","Female","Male","Female","Female","Male","Male","Male","Male","Female","Male","Male","Female","Male","Male","Male","Female","Male","Female","Female","Female","Male","Female","Female","Female","Female","Female","Female","Female","Male","Female","Male","Female","Male","Female","Female","Female","Female","Male","Female","Male","Female","Male","Male","Female","Male","Female","Female","Male","Male","Male","Female","Female","Female","Male","Female","Male","Female","Female","Male","Male","Female","Male","Female","Male","Male","Male","Female","Male","Male","Male","Female","Male","Female","Female","Male","Female","Male","Female","Male","Male","Male","Female","Male","Female","Female","Male","Female","Male","Male","Female","Female","Female","Male","Female","Male","Female","Male","Female","Male","Male","Female","Male","Female","Female","Female","Female","Female","Male","Female","Female","Male","Male","Female","Female","Female","Female","Female","Male","Female","Male","Female","Female","Male","Female","Male","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Male","Male","Male","Male","Female","Male","Male","Female","Male","Female","Female","Female","Female","Female","Female","Male","Male","Female","Female","Female","Male","Male","Female","Male","Male","Male","Male","Female","Male","Male","Female","Male","Male","Female","Male","Male","Female","Male","Female","Male","Male","Male","Female","Female","Male","Female","Male","Male","Female","Male","Female","Male","Female","Female","Male","Female","Male","Female","Male","Male","Male","Female","Female","Male","Female","Male","Female","Female","Male","Female","Female","Female","Male","Female","Male","Male","Male","Male","Male","Male","Male","Female","Female","Male","Female","Male","Female","Male","Male","Male","Male","Male","Male","Female","Male","Male","Male","Male","Female","Male","Male","Male","Female","Male","Female","Female","Male","Male","Male","Female","Male","Male","Female","Male","Female","Male","Female","Female","Male","Male","Male","Male","Female","Male","Female","Male","Female","Male","Female","Female","Female","Male","Male","Male","Female","Female","Male","Female","Female","Male","Female","Female","Female","Male","Male","Female","Female","Male","Male","Male","Male","Male","Female","Male","Female","Female","Female","Male","Female","Female","Male","Male","Female","Female","Male","Male","Male","Male","Male","Female","Male","Male","Female","Male","Female","Male","Male","Female","Female","Female","Male","Female","Female","Female","Male","Female","Male","Female","Male","Male","Male","Male","Male","Female","Female","Female","Male","Female","Male","Male","Female","Male","Female","Male","Female","Female","Male","Male","Male","Female","Female","Male","Male","Female","Male","Male","Male","Male","Female","Male","Female","Female","Male","Male","Female","Male","Male","Male","Male","Female","Female","Female","Male","Female","Female","Male","Male","Male","Female","Male","Male","Male","Male","Female","Male","Male","Female","Male","Female","Male","Male","Female","Female","Male","Male","Male","Male","Male","Female","Male","Male","Male","Female","Female","Male","Female","Female","Male","Male","Female","Male","Female","Female","Female","Female","Male","Male","Female","Female","Male","Male","Female","Male","Male","Female","Male","Male","Male","Female"],[850,500,1000,700,749,123,900,9,951,759,100,1000,700,112,900,300,5,700,900,16,1000,1000,588,1000,500,1000,898,1000,155,850,400,1000,900,750,10,775,3,369,800,500,481,535,1000,1000,1000,1000,332,300,134,668,289,818,1000,1000,866,1000,973,1000,717,1000,818,1000,1000,754,1000,636,1000,950,1000,0,1000,100,1000,900,1000,500,1000,100,999,930,5,150,986,1000,5,695,529,400,1000,750,727,750,1000,230,700,1000,818,80,1000,1000,647,700,401,1000,600,1000,0,700,476,10,727,900,1000,1000,600,960,1000,748,1000,636,86,950,636,99,262,900,1000,872,1000,900,700,999,353,1000,193,690,1000,636,1000,556,1000,561,390,497,1000,636,1000,777,800,449,900,500,1000,80,900,500,1000,947,1000,444,99,100,740,775,775,834,950,727,999,1000,337,545,332,900,0,788,481,984,909,984,1000,1000,540,380,900,433,1000,775,300,300,640,800,1000,1000,1000,1000,791,990,1000,500,900,824,2,503,1000,1000,50,807,1000,503,401,900,503,503,1000,444,1000,900,813,183,706,500,807,900,214,750,700,1000,957,700,0,1000,100,900,1000,9,856,100,503,200,1000,900,700,950,556,250,999,750,647,1000,1000,650,941,1000,1000,220,300,600,1000,877,1000,700,1000,750,487,647,1000,900,777,1000,900,900,1000,100,1000,813,417,100,0,1000,1000,840,144,1000,503,840,850,795,1000,700,1000,968,600,1000,781,750,700,0,1000,90,700,950,1000,500,999,615,428,1000,900,1000,365,900,1000,968,1000,824,679,1000,1000,10,500,500,1000,460,385,900,700,900,250,1000,100,1000,0,1000,500,1000,824,200,702,800,1000,1000,150,100,0,399,750,900,690,481,700,1000,800,1000,636,877,900,497,1000,900,1000,700,717,700,400,1000,588,650,700,850,1000,300,770,700,1000,400,1000,550,658,500,1000,210,1000,500,990,1000,750,1000,584,1000,800,9,60,968,1000,500,1000,100,500,1000,861,1000,888,1000,27,877,950,900,209,1000,1000,300,500,260,326,503,400,829,503,700,802,700,856,353,1000,700,523,869,1000,572,200,476,749,166,1000,802,797,0,1000,1000,220,1000,1000,1000,500,1000,600,535,1000]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Gender<\/th>\n      <th>Importance_Internet_access<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Gender","targets":1},{"name":"Importance_Internet_access","targets":2}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p><br><br><br><br></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

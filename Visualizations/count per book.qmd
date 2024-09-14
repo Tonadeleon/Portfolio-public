@@ -1,0 +1,115 @@
+---
+title: "case study"
+date: "March 20, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+---
+
+
+```{r libs}
+library(tidyverse)
+library(httr)
+library(stringr)
+library(ggrepel)
+library(scales)
+library(gridExtra)
+library(grid)
+library(png)
+```
+
+
+```{r read}
+
+url <- "https://byuistats.github.io/M335/data/BoM_SaviorNames.rds"
+temp_file <- tempfile()
+GET(url, write_disk(temp_file))
+
+snm <- readRDS(temp_file)|> 
+  as_tibble()
+
+unlink(temp_file)
+
+dt <- rio::import("http://scriptures.nephi.org/downloads/lds-scriptures.csv.zip") |> 
+  as_tibble()|> 
+  rename( title = volume_title,
+          text = scripture_text,
+          book = book_title,
+          reference = verse_title )|> 
+  filter(title == "Book of Mormon")
+
+#Counts
+
+text <- paste(dt$text, collapse = " ")
+
+names <- snm$name
+
+pattern <- paste(names, collapse = "|")
+
+divs <- str_split(text, pattern)[[1]] |> 
+  trimws()
+
+counts <- tibble(text = divs) |> 
+  mutate(
+    text = str_replace(text, "^[[:punct:]]+", ""),
+    count = str_count(text, "\\S+")) |> 
+  filter(count != 0)
+
+avg <- mean(counts$count)
+
+```
+
+
+#principal
+
+```{r make plot, fig.width=10, fig.height=6}
+
+largest_x <- max(counts$count)
+
+f1 <- ggplot(counts, aes(count)) +
+  geom_histogram(bins = 500, col = "steelblue") +
+  theme_minimal() +
+  labs(
+    title = "Full Book of Mormon",
+    subtitle = "Distribution of words between each mention of Jesus Christ B.O.M.",
+    x = "",
+    y = "") +
+  theme(
+    plot.title = element_text(size = 12),
+    plot.subtitle = element_text(size = 10, color = "grey25")) +
+  geom_text_repel(aes(label = ifelse(count == largest_x, paste(
+      "Largest observation of", comma(largest_x), "words"), ""),y = 0),
+    nudge_x = 10, nudge_y = 50)
+
+f2 <- ggplot(counts, aes(count)) +
+  geom_histogram(data = subset(counts, count < 400), bins = 50, fill = "steelblue", color = "black") + 
+  geom_text(aes(x = avg, y = 200, label = paste("Mean:", round(avg))), 
+            color = "black", hjust = -.5, vjust = -2) +
+  geom_vline(xintercept = avg, color = "orange", linetype = "dashed")+
+  theme_minimal() +
+  labs(
+    title = "Zoomed In Book of Mormon",
+    subtitle = "Outliers filtered out\nDistribution of words between each mention of Jesus Christ in B.O.M.",
+    x = "",
+    y = "" ) +
+  theme(plot.title = element_text(size = 12),
+        plot.subtitle = element_text(size = 10, color = "grey25"))
+
+plot <- grid.arrange(f1, f2,
+             ncol = 2,
+             top = textGrob("", gp = gpar(fontsize = 12, col = "black")),
+             left = textGrob("Frequency", rot = 90, gp = gpar(fontsize = 12)),
+             bottom = textGrob("Words Between Each Mention of Christ", gp = gpar(fontsize = 12))
+             )
+
+
+```
+
+
+
+We see that the lengths between the savior's titles don't follow a normal distribution, it's more of a heavy tailed, left skewed distribution. But overall, the mean between each instance of one of the savior's title's is of 65 words. It's interesting that they're not very far away from each other. Even disregarding a large outlier where the distance is of around 4,000 words in Alma, the overall book mean distance is still small of 65 words between each savior's title, which is around 1 or 2 verses.
+
+

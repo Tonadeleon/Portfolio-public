@@ -1,0 +1,110 @@
+---
+title: ""
+output: html_document
+---
+
+# {.tabset .tabset-pills .tabset-fade}
+
+## Welcome! 
+
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #f5f5f5; border-radius: 10px; max-width: 1200px; margin: auto;">
+
+<div style="flex: 1; padding-right: 30px; font-family: Arial, sans-serif; animation: fadeIn 0.5s ease-in-out;">
+**Use the navigation bar on the top** to explore my portfolio. Each section contains examples of my work and the code used to create them. Anytime you see a "show" button, feel free to click on it to see my code.
+
+This portfolio is a showcase of my work quality, standards, and the passion I bring to every project.
+
+<br>
+
+#### **What You Can Find Here:**
+
+<ul style="list-style-type: none; padding: 0; animation: fadeIn 0.8s ease-in-out;">
+    <li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="This is what I enjoy doing the most. This aspect of my work is spread throughout all the tabs in my portfolio except for the Visualizations tab. Some projects are longer than others in the portfolio's different tabs." onclick="alert('This is what I enjoy doing the most. This aspect of my work is spread throughout all the tabs in my portfolio except for the Visualizations tab. Some projects are longer than others in the portfolio\'s different tabs.');">
+        <img src="_site/images/statsicon.png" alt="Machine Learning Icon" style="width: 24px; margin-right: 10px;">
+        <span style="color: #404040;">**Statistical Analysis**:<span> <span style="color: grey;">Reports with applied statistics to solve real-world problems and practice projects to enhance my analytical skills.</span>
+    </li>
+    <li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="I enjoy creating visualizations to portray my thoughts about the data I work with. It's one of my favorite activities!" onclick="alert('I enjoy creating visualizations to portray my thoughts about the data I work with. It\'s one of my favorite activities! Click on the Visualizations tab to check out my work.');">
+        <img src="_site/images/vizicon.png" alt="Visualizations Icon" style="width: 24px; margin-right: 10px;">
+        <span style="color: #404040;">**Visualizations**:<span> <span style="color: grey;">User-focused, insight-driven visualizations I've created over the years. Click on the Visualizations tab to see examples of my work.</span>
+    </li>
+    <li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Data wrangling is a key aspect of all the work I've done. Although my professional projects are private, you can see similar standards here." onclick="alert('Data wrangling is a key aspect of all the work I\'ve done. Although my professional projects are private, you can see similar standards here.');">
+        <img src="_site/images/wrangle.png" alt="Data Wrangling Icon" style="width: 24px; margin-right: 10px;">
+        <span style="color: #404040;">**Data Wrangling**:<span> <span style="color: grey;">I have extensive experience working with big data in both private and public projects. You can see similar work throughout my portfolio.</span>
+    </li>
+    <li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="I enjoy designing dashboards to showcase insights effectively. See this portfolio as an example of my skills." onclick="alert('I enjoy designing dashboards to showcase insights effectively. See this portfolio as an example of my skills.');">
+        <img src="_site/images/dashboard.png" alt="Dashboards Icon" style="width: 24px; margin-right: 10px;">
+        <span style="color: #404040;">**Dashboard Design**:<span> <span style="color: grey;">Most of my professional dashboards can't be shared publicly, but this portfolio demonstrates my skills in user-focused design.</span>
+    </li>
+</ul>
+
+<p style="margin-top: 20px; font-size: 14px; color: #404040;">
+    I hope you enjoy going through my portfolio! Thank you for taking the time to get to know me a little better :)
+</p>
+
+</div>
+
+<div style="flex: 1; text-align: center; margin-left: 30px; animation: fadeIn 0.7s ease-in-out;">
+
+<img src="_site/images/family1.jpeg" alt="Profile Image" style="max-width: 100%; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); margin-bottom: 20px; cursor: pointer;" title="I love my family! They are my biggest motivation. My wife and I have been married for three years, and our little one is 1 year and a half!" onclick="alert('I love my family! They are my biggest motivation. My wife and I have been married for three years, and our little one is 1 year and a half!');"/>
+
+</div>
+
+</div>
+
+<br>
+<br>
+
+## My Resume
+
+<div style="display: flex; justify-content: center; align-items: center; background-color: #f5f5f5; border: 2px solid #e0e0e0; border-radius: 10px; padding: 20px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); max-width: 1000px; margin: auto; animation: fadeIn 0.5s ease-in-out;">
+
+<div style="width: 100%; text-align: center;">
+
+<p style="font-size: 18px; font-family: Arial, sans-serif; color: #333;">Explore my resume to learn more about my professional journey, experience, and skills.</p>
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE, echo=FALSE, fig.align='center'}
+
+library(htmltools)
+
+pdf_path <- "_site/Images/Resume.pdf"
+
+tags$iframe(src = pdf_path, width = "100%", height = "600px", style="border: 1px solid #e0e0e0; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);")
+```
+
+</div> </div> <br> <br>
+
+## About Me
+
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #f5f5f5; border: 2px solid #e0e0e0; border-radius: 10px; max-width: 1000px; margin: auto; animation: fadeIn 0.5s ease-in-out;"> <div style="flex: 1; padding-right: 20px; font-family: Arial, sans-serif;">
+
+#### **Who Am I?**
+
+**Professionally:**
+
+
+<div style="margin-bottom: 20px;">
+   <span class="pill" title="My major being Statistics..." onclick="alert('My major being Statistics...');">Statistician</span>
+   <span class="pill" title="2 years of experience..." onclick="alert('2 years of experience...');">Data Analyst</span>
+   <span class="pill" title="I love Data Science..." onclick="alert('I love Data Science...');">Data Scientist</span>
+</div>
+
+
+<br>
+
+**Personally:**
+
+<ul style="list-style-type: none; padding: 0;"> <li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Family parent for 3 years!" onclick="alert('Family parent for 3 years!');"> <img src="_site/images/love.png" alt="Family Icon" style="width: 24px; margin-right: 10px;"> <span style="color: #404040;">**Family**: <span> <span style="color: grey;">Parent for 3 years!</span> </li> <li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Originally from Mexico" onclick="alert('Originally from Mexico');"> <img src="_site/images/mexico.png" alt="Mexico Icon" style="width: 24px; margin-right: 10px;"> <span style="color: #404040;">**Origin**:<span> <span style="color: grey;">Originally from Mexico</span> </li> <li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Bilingual: English & Spanish, moderate Haitian Creole" onclick="alert('Bilingual: English & Spanish, moderate Haitian Creole');"> <img src="_site/images/languages.png" alt="Language Icon" style="width: 24px; margin-right: 10px;"> <span style="color: #404040;">**Languages**:<span> <span style="color: grey;">English, Spanish, moderate Haitian Creole</span> </li> <li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Traveled to 16 countries, lived in 3 for over a year" onclick="alert('Traveled to 16 countries, lived in 3 for over a year');"> <img src="_site/images/world.png" alt="World Icon" style="width: 24px; margin-right: 10px;"> <span style="color: #404040;">**Travel**:<span> <span style="color: grey;">Visited 16 countries, lived in 3 for over a year</span> </li> <li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Missionary in Chile" onclick="alert('Missionary in Chile');"> <img src="_site/images/chile.png" alt="Chile Icon" style="width: 24px; margin-right: 10px;"> <span style="color: #404040;">**Mission**:<span> <span style="color: grey;">Served as a missionary in Chile</span> </li> </ul>
+
+<br>
+
+In my free time, I love learning about the universe's mysteries—higher dimensions, quantum mechanics, and other scientific wonders. I'm always curious! I also enjoy spending time with my family at home or outdoors.
+
+</div> <div style="flex: 1; text-align: center;"> <img src="_site/images/family2.jpeg" alt="About Me Image" style="max-width: 80%; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); margin-bottom: 20px; animation: fadeIn 0.7s ease-in-out; cursor: pointer;" title="I love my family" onclick="alert('I love my family!');"/> </div> </div> <br> <br>
+
+## Hire Me
+
+<div style="text-align: center; padding: 40px; background-color: #f5f5f5; border-radius: 10px; max-width: 800px; margin: auto; animation: fadeIn 0.5s ease-in-out;"> <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px; font-family: Arial, sans-serif; color: #333;"> You see? You do want to hire me! :) </div> <div style="font-size: 16px; font-family: Arial, sans-serif; margin-bottom: 20px;"> Please check out this link: </div> <iframe src="https://r.mtdv.me/videos/NZR9kpYbDb" width="560" height="315" style="margin-top: 20px; border: none; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); border-radius: 5px;"></iframe> </div>
+
+<br> <br> <style> @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } } </style>
+
+<br><br>

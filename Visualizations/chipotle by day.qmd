@@ -1,0 +1,147 @@
+---
+title: "task 2"
+date: "March 26, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+---
+
+
+```{r}
+library(tidyverse)
+library(ggrepel)
+
+dt1 <- read_csv("https://byuistats.github.io/M335/data/chipotle_reduced.csv")
+```
+
+```{r}
+
+## Popularity frequency by day wrangle, 
+##like how many times each day came out to be the most popular day for each observation (row)
+
+string_to_dataframe <- function(input_string) {
+  days <- str_match_all(input_string, '"(\\w+)":(\\d+)')[[1]][, 2]
+  visits <- as.numeric(str_match_all(input_string, '"(\\w+)":(\\d+)')[[1]][, 3])
+  
+  df <- tibble(day = days, visits = visits)
+  return(df)
+}
+
+find_most_popular_day <- function(input_string) {
+  df <- string_to_dataframe(input_string)
+  
+  max_visits <- max(df$visits)
+  popular_days <- df$day[df$visits == max_visits]
+  
+  if (length(popular_days) == 1) {
+    return(popular_days)
+  } else {
+    return(paste(popular_days, collapse = ", "))
+  }
+}
+
+dt1$popularity_by_day <- paste("'", dt1$popularity_by_day, "'", sep = "")
+
+dt <- dt1 |> 
+  rowwise() |> 
+  mutate(most_popular_day = find_most_popular_day(popularity_by_day)) |> 
+  separate(most_popular_day, into = c("most_popular_day_1", "most_popular_day_2"), sep = ", ", fill = "right") 
+
+day1 <- dt |> 
+  group_by(most_popular_day_1) |> 
+  summarise( days_count = n() ) |> 
+  rename( day = most_popular_day_1 )
+
+
+day2 <- dt |> 
+  group_by(most_popular_day_2) |> 
+  summarise( days_count = n() ) |> 
+  rename( day = most_popular_day_2 )
+
+popularity_by_day <- rbind(day1, day2) |> 
+  group_by(day) |> 
+  summarise(days_count = sum(days_count)) |> 
+  drop_na() |> 
+  filter(day != "") |> 
+  mutate(
+    day = factor(day, levels = c(
+    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')),
+    "color" = ifelse(day %in% c('Thursday', 'Friday', 'Saturday'), 1, 0))
+
+```
+
+```{r}
+
+## Overall Visit Frequency per day
+#didn't get this one, will do in class
+
+nesteddt <- dt1 |>
+  dplyr::select(placekey, popularity_by_day) |> 
+ # filter(!is.na(popularity_by_day)) |> 
+  group_by(placekey) |>
+  nest() |>
+   mutate(popularity_count = map(data, ~string_to_dataframe(.x$popularity_by_day))) |> 
+  dplyr::select(-data) |> 
+  unnest(cols = popularity_count) |> 
+  group_by(day) |> 
+  summarise( total = sum(visits))
+
+nesteddt$day <- factor(nesteddt$day, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+
+ggplot(nesteddt, aes(day,total,fill=total))+
+  geom_col(show.legend = F, col="black")+
+  theme_minimal()+
+  scale_y_continuous(breaks = seq(0,200000,by=50000), labels = c("0","50k","100k","150k","200k")) +
+  #scale_fill_manual(values = c("0" = "skyblue", "1" = "orange")) +
+  # geom_label_repel(
+  #   aes(label = ifelse(day %in% c("Thursday", "Friday", "Saturday"), days_count, "")),
+  #   box.padding = unit(0.35, "lines"),
+  #   point.padding = unit(0.5, "lines"),
+  #   fill="white",
+  #   nudge_x = 0,
+  #   nudge_y = 100
+  # ) +
+  labs(y="Thousand visits",
+       x="",
+       title="Chipotle's total visits by day",
+       subtitle = "Total sum of visits per day of the week")+
+  theme(
+    plot.title = element_text(color = "grey15", size=12),
+    plot.subtitle = element_text(color = "grey40", size=10),
+    axis.title.y = element_text(color = "grey15", size=10, vjust = 4) )
+
+
+```
+
+This is the total amount of visits by day for all this data set. The quantity  is higher on the weekends, even though they are very similar if we exclude Sunday. Let's go in a little deeper and see the count of what days of the week were the most popular for each instance.
+
+```{r}
+
+ggplot(popularity_by_day, aes(day,days_count, fill=as.factor(color)))+
+  geom_col(show.legend = F, col="black")+
+  theme_minimal()+
+  scale_fill_manual(values = c("0" = "steelblue4", "1" = "orange")) +
+  geom_label_repel(
+    aes(label = ifelse(day %in% c("Thursday", "Friday", "Saturday"), days_count, "")),
+    box.padding = unit(0.35, "lines"),
+    point.padding = unit(0.5, "lines"),
+    fill="white",
+    nudge_x = 0,
+    nudge_y = 100
+  ) +
+  labs(y="Frequency",
+       x="",
+       title="Chipotle's popularity by day",
+       subtitle = "Each day was the most popular in some weeks.\nThese are their respective distributions")+
+  theme(
+    plot.title = element_text(color = "grey15", size=12),
+    plot.subtitle = element_text(color = "grey40", size=10),
+    axis.title.y = element_text(color = "grey15", size=10, vjust = 4) )
+
+```
+
+
+We can see that after sampling the frequency of each day in which they were the most visited; we can state something that could have been probably obvious but is now not only obvious, but proven. Weekends are the most popular days for Chipotle Restaurant. This is is necessary because Chipotle Might think of hiring for specific days to cut costs, or offer some discounts the rest of the days to get sales higher. But many insights can be taken out from this graph.

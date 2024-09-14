@@ -1,0 +1,194 @@
+---
+title: "Data Search"
+date: "March 18, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+---
+
+```{r}
+library(tidyverse)
+library(gridExtra)
+library(grid)
+
+dt <- read_csv("train.csv") |> 
+  rename(bsm = "TotalBsmtSF",
+         `1s` = "1stFlrSF",
+         `2n` = "2ndFlrSF",
+         oq = "OverallQual",
+         sp = "SalePrice",
+         oc = "OverallCond",
+         rm ="TotRmsAbvGrd",
+         bld ="BldgType",
+         exq = "ExterQual",
+         exc = "ExterCond",
+         bdr = "BedroomAbvGr") |> 
+  mutate(tsf = `1s` + `2n` + bsm,
+         nbd = case_when(Neighborhood %in% c("StoneBr", "NridgHt", "NoRidge") ~ 1, TRUE ~ 0), 
+         tsf1 = ifelse(tsf>7500, 2567, tsf),
+         bld1 = case_when(bld %in% c("TwnhsE", "1Fam") ~ 1, TRUE ~ 0),
+         exq = as.character(exq),
+         exq = case_when(exq == "Ex" ~ 10, exq == "Gd" ~ 8, 
+                         exq == "TA" ~ 6, exq == "Fa" ~ 4, 
+                         exq == "Po" ~ 2, TRUE ~ NA_integer_),
+         exq = as.numeric(exq), 
+         exc = as.character(exc),
+         exc = case_when(exc == "Ex" ~ 10, exc == "Gd" ~ 8, 
+                                exc == "TA" ~ 6, exc == "Fa" ~ 4, 
+                                exc == "Po" ~ 2, TRUE ~ NA_integer_), 
+         exc = as.numeric(exc),
+         oq1 = case_when(oq %in% c(1,2,3, 4) ~ 4, TRUE ~ oq),
+         bdr1 = case_when(bdr > 3 ~ 1, TRUE ~ 0),
+         occ = oq+exq+exc+oc,
+         oc1 = ceiling((oq+exq+exc+oc)/4),
+         oc2 = case_when(oc1 > 6 ~ 1, TRUE ~ 0),
+         kq = as.character(KitchenQual),
+         kq = case_when(kq == "Ex" ~ 1, kq == "Gd" ~ 2, 
+                         kq == "TA" ~ 3, kq == "Fa" ~ 4, 
+                         kq == "Po" ~ 5, TRUE ~ NA_integer_),
+         kq = as.numeric(kq),
+         kq1 = case_when(kq < 3 ~ 1, TRUE ~ 0),
+         bth = BsmtFullBath+BsmtHalfBath+FullBath+HalfBath,
+         sc = case_when(SaleCondition %in% c("Partial","Alloca","Normal") ~ 1, TRUE ~ 0),
+         ht = case_when(HeatingQC == "Ex" ~ 1, HeatingQC == "Gd" ~ 2, 
+                         HeatingQC == "TA" ~ 3, HeatingQC == "Fa" ~ 4, 
+                         HeatingQC == "Po" ~ 5, TRUE ~ NA_integer_),
+         Alley = as.character(Alley),
+         al = replace_na(Alley, "no"),
+         al = case_when(al == "no" ~ 0, TRUE ~ 1),
+         al = as.numeric(al),
+         Utilities = as.character(Utilities),
+         ut = case_when(Utilities == c("AllPub","NoSewr") ~ 1, TRUE ~ 0), 
+         ut = as.numeric(ut),
+         fp = case_when(Fireplaces > 0 ~ 1, TRUE ~ 0),
+         GarageFinish = as.character(GarageFinish),
+         gr = replace_na(GarageFinish, "no"),
+         gr = case_when(gr == "no" ~ 0, TRUE ~ 1),
+         gr = as.numeric(gr),
+         PoolQC = as.character(PoolQC),
+         pl = replace_na(PoolQC, "no"),
+         pl = case_when(pl == "no" ~ 0, TRUE ~ 1),
+         pl = as.numeric(pl),
+         Fence = as.character(Fence),
+         fnc = replace_na(Fence, "no"),
+         fnc = case_when(fnc == "no" ~ 0, TRUE ~ 1),
+         fnc = as.numeric(fnc))
+
+library(ggridges)
+library(viridis)
+
+ggplot(dt, aes(x = sp, y = as.factor(kq), fill = as.factor(kq))) +
+  geom_density_ridges(scale = 1, rel_min_height = 0.01, show.legend = FALSE) +
+  theme_bw() +
+  scale_fill_viridis_d(option = "D", direction = -1) +  # Use viridis for color scale
+  scale_x_continuous(
+    breaks = c(0, 200000, 400000, 600000),
+    labels = c("$0", "$200k", "$400k", "$600k")
+  ) +
+  scale_y_discrete(
+    labels = c("Excellent", "Good", "Average", "Poor")
+  ) +
+  labs(
+    x = "Selling Price",
+    y = "Kitchen Quality",
+    title = "Is Selling Price Affected by the Kitchen Quality of a House"
+  ) +
+  theme_ridges()+
+  theme(axis.text.x = element_text(angle = 0, size = 10))
+
+
+```
+
+Selling Prices distributions grouped by the quality of kitchen of the house. We can see that more expensive houses tend to have better kitchens. That may be a factor of price difference vs other house. We could try to see if the kitchen quality is indeed a variable that helps determining the final selling price of the house.
+
+# Graph two
+
+```{r}
+dt1 <- dt |> 
+  group_by(YearBuilt) |> 
+  summarise(sp=mean(sp))
+
+ggplot(dt1, aes(YearBuilt, sp))+
+  geom_line(show.legend = F, col="orange4") +
+  theme_classic() +
+  # scale_x_continuous(breaks=c(1,2,3,4),labels = c("Excellent","Good","Average","Poor"))+
+  scale_y_continuous(breaks=c(100000,200000,300000,400000),labels = c("$100k","$200k","$300k","$400k"))+
+  labs(
+    x="year",
+    y="Selling Price",
+    title = "Average Selling Price per Construction Year"
+  ) +
+  theme(axis.text.x = element_text(angle = 0, size=8),
+        axis.text.y= element_text(angle = 0, size=8),
+        axis.title = element_text(size = 10))
+dt1 <- dt |> 
+  group_by(YearBuilt) |> 
+  summarise(sp=mean(sp))
+
+g1 <- ggplot(dt1, aes(YearBuilt, sp))+
+  geom_line(show.legend = F, col="orange4") +
+  theme_classic() +
+  # scale_x_continuous(breaks=c(1,2,3,4),labels = c("Excellent","Good","Average","Poor"))+
+  scale_y_continuous(breaks=c(100000,200000,300000,400000),labels = c("$100k","$200k","$300k","$400k"))+
+  labs(
+    x=" ",
+    y=" ",
+    title = "Construction"
+  ) +
+  theme(axis.text.x = element_text(angle = 0, size=8),
+        axis.text.y= element_text(angle = 0, size=8),
+        axis.title = element_text(size = 10))
+```
+
+Over the years, houses have been following an upward trend in selling prices. This may be due to multiple factors such as, economic cycles, better quality homes, seasonal tendencies among others.
+
+#Graph 3
+
+```{r}
+dt2 <- dt |> 
+  group_by(YearRemodAdd) |> 
+  summarise(sp=mean(sp))
+
+ggplot(dt2, aes(YearRemodAdd, sp))+
+  geom_line(show.legend = F, col="steelblue4") +
+  theme_classic() +
+  scale_y_continuous(breaks=seq(100000,300000,by=50000),labels = c("$100k","$150k","$200k","$250k","$300k"))+
+  #scale_y_continuous(breaks=c(100000,200000,300000,400000),labels = c("$100k","$200k","$300k","$400k"))+
+  labs(
+    x="year",
+    y="Selling Price",
+    title = "Average Selling Price per Remodeling Year"
+  ) +
+  theme(axis.text.x = element_text(angle = 0, size=8),
+        axis.text.y= element_text(angle = 0, size=8),
+        axis.title = element_text(size = 10))
+
+g2 <- ggplot(dt2, aes(YearRemodAdd, sp))+
+  geom_line(show.legend = F, col="steelblue4") +
+  theme_classic() +
+  scale_y_continuous(breaks=seq(100000,300000,by=50000),labels = c("$100k","$150k","$200k","$250k","$300k"))+
+  #scale_y_continuous(breaks=c(100000,200000,300000,400000),labels = c("$100k","$200k","$300k","$400k"))+
+  labs(
+    x=" ",
+    y=" ",
+    title = "Remodeling"
+  ) +
+  theme(axis.text.x = element_text(angle = 0, size=8),
+        axis.text.y= element_text(angle = 0, size=8),
+        axis.title = element_text(size = 10))
+```
+
+We can see the same trend for houses remodeled in those years. It's also a more stable trend as compared to the construction per year graph. Buth what if we compared them?
+
+#Comparisson
+
+```{r, fig.width=10}
+grid.arrange(g1,g2, ncol=2,
+                        left = textGrob("Selling Prices (Thousands)", rot = 90, gp = gpar(fontsize = 12)),
+                        bottom = textGrob("Year", gp = gpar(fontsize = 12)))
+```
+
+We can use either of these to get a better look at the uptrending housing market; both show upward trends and could be a factor of final selling pricing for houses sold in those years.

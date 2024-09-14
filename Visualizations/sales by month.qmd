@@ -1,0 +1,109 @@
+---
+title: "Week 8 Task 1"
+date: "Feb 26, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+---
+
+
+```{r, fig.width=10}
+
+library(tidyverse)
+library(lubridate)
+library(riem)
+
+carw <- read_csv("https://byuistats.github.io/M335/data/carwash.csv") %>% 
+  
+  mutate(valid = ceiling_date(with_tz(time, tz = "MST"), "hour" )) %>% 
+  
+  group_by(valid) %>% 
+  
+  summarise(hsale = sum(amount))
+
+
+
+temps <- riem_measures(
+  
+  station = "RXE", 
+  
+  date_start = "2016-05-13", 
+  
+  date_end = "2016-07-17" ) %>% 
+  
+  select(valid, tmpf)%>% 
+  
+  mutate(valid = ceiling_date(with_tz(valid, tz = "MST"), "hour" ))
+
+
+
+carw1 <- carw %>% 
+  
+  inner_join(temps, by="valid") %>% 
+  
+  mutate(valid = ceiling_date(valid, "month" )) %>% 
+  
+  mutate(month = format(valid, "%B"))
+
+carw1$month <- factor(carw1$month, levels = month.name)
+
+
+carmonth <- carw1 %>% 
+  
+  mutate(valid = ceiling_date(valid, "month" )) %>% 
+  
+  mutate(month = format(valid, "%B"))
+
+carmonth$month <- factor(carmonth$month, levels = month.name)
+
+p1<-ggplot(carw1, aes(month, tmpf, fill=month))+
+  
+  geom_boxplot(show.legend = F) +
+  
+  theme_minimal()+
+  
+  labs(
+    
+    x="",
+    
+    y="Temperature in F",
+    
+    title = "Distribution of temperatures by month",
+    
+    subtitle = "This graph shows temps by month for 2016")+
+  
+  theme(
+    
+    plot.subtitle = element_text(colour = "grey50"),
+    
+    axis.title.y = element_text(vjust = 2.7))
+
+p2<-ggplot(carmonth, aes(month, hsale, fill=month)) +
+  
+  geom_boxplot(show.legend = F) +
+  
+  theme_minimal()+
+  
+  labs(
+    
+    x="",
+    
+    y="Sale amount in dollars",
+    
+    title = "Distribution of sales by month",
+    
+    subtitle = "This graph shows sales by month for 2016 including losses")+
+  
+  theme(
+    
+    plot.subtitle = element_text(colour = "grey50"),
+    
+    axis.title.y = element_text(vjust = 2.7))
+
+gridExtra::grid.arrange(p1,p2, ncol=2)
+```
+
+I can tell that temperatures don't necessarily have an impact on sales in this business. We can see that even when temperatures are different, the quantiles don't move much per month.

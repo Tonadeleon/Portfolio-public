@@ -1,0 +1,120 @@
+---
+title: "Tidy Quant"
+date: "March 3, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+---
+
+```{r}
+library(tidyverse)
+library(tidyquant)
+
+top_port <- c("NVDA","TSLA", "AMZN")
+
+price_data <- tq_get(top_port,
+                     get = "stock.prices",
+                     from = "2023-10-01") 
+
+return_data <- price_data %>% 
+  group_by(symbol) %>% 
+  tq_transmute(select = adjusted,
+               mutate_fun = periodReturn,
+               period = "daily",
+               type = "log") 
+
+tona <- return_data %>% 
+  tq_portfolio(assets_col=symbol,
+               returns_col=daily.returns,
+               weights = tibble(asset.names = c("NVDA","TSLA", "AMZN"), 
+                                weight = c(0.333, 0.333, 0.334)),
+               wealth.index = T) %>% 
+  mutate(Portfolio = "Tona")
+
+
+
+top_port1 <- c("META","AAPL", "MSFT")
+
+price_data <- tq_get(top_port1,
+                     get = "stock.prices",
+                     from = "2023-10-01") 
+
+return_data1 <- price_data %>% 
+  group_by(symbol) %>% 
+  tq_transmute(select = adjusted,
+               mutate_fun = periodReturn, 
+               period = "daily",
+               type = "log") 
+
+ammon <- return_data1 %>% 
+  tq_portfolio(assets_col=symbol,
+               returns_col=daily.returns,
+               weights = tibble(asset.names = c("META","AAPL", "MSFT"), 
+                                weight = c(0.333, 0.333, 0.334)),
+               wealth.index = T) %>% 
+  mutate(Portfolio = "Ammon")
+
+
+combined_data <- rbind(tona, ammon)
+
+ggplot(combined_data, aes(x = date, y = portfolio.wealthindex, color = Portfolio)) +
+          geom_line() + 
+          geom_point() +  
+          labs(title = "Comparison of Portfolios",
+               x = "Time Period",
+               y = "Wealth Index",
+               color = "Portfolio") +
+          theme_minimal() +
+          theme(plot.title = element_text(hjust = 0.5))
+```
+
+Ammon's picks were better overall. We can see that the graphics are showing a constant gap between both portfolios. however, in the end they both match. So, in other words no one won! :D
+
+
+```{r}
+overall_returns <- return_data %>%
+  group_by(symbol) %>%
+  summarise(overall_return = sum(daily.returns, na.rm = TRUE))
+
+
+p1 <- ggplot(overall_returns, aes(x = symbol, y = overall_return, fill = symbol)) +
+  geom_bar(stat = "identity", show.legend = F) +
+  labs(title = "Tona's picks", x = "", y = "Overall Return")+
+  theme_classic()+
+  theme(
+    title = element_text(family = "serif" ,size = 10),
+    axis.text = element_text(size=7),
+    axis.title.x = element_text(margin = margin(t = 12)),
+    axis.title.y = element_text(margin = margin(r = 12)),
+    plot.title = element_text(margin = margin(b=15)))
+
+overall_returns1 <- return_data1 %>%
+  group_by(symbol) %>%
+  summarise(overall_return = sum(daily.returns, na.rm = TRUE))
+
+
+p2 <- ggplot(overall_returns1, aes(x = symbol, y = overall_return, fill = symbol)) +
+  geom_bar(stat = "identity", show.legend = F) +
+  labs(title = "Ammon's picks", x = "", y = "Overall Return")+
+  theme_classic()+
+  theme(
+    title = element_text(family = "serif" ,size = 10),
+    axis.text = element_text(size=7),
+    axis.title.x = element_text(margin = margin(t = 12)),
+    axis.title.y = element_text(margin = margin(r = 12)),
+    plot.title = element_text(margin = margin(b=15)))
+
+```
+
+```{r}
+gridExtra::grid.arrange(p1,p2,ncol=2)
+
+```
+
+
+My picks were good, but TSLA was driving my portfolio down the whole time.
+If Ammon picked something better perfoming than apple, he probabbly would've averaged higher in the last month.
+

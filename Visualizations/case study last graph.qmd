@@ -1,0 +1,173 @@
+---
+title: "Week 6 Case Study"
+date: "Feb 17, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+---
+
+##let us visualize
+
+```{r}
+library(tidyverse)
+library(Lahman)
+library(ggrepel)
+library(MASS)
+library(priceR)
+library(viridis)
+```
+
+
+
+```{r}
+
+pl.info <- People %>% 
+  
+  inner_join(CollegePlaying, 
+             by = "playerID") %>% 
+  
+  inner_join(Schools, 
+             by="schoolID") %>% 
+  
+  filter(state == "UT") %>% 
+  
+  dplyr::select(playerID, 
+         birthYear, 
+         nameGiven, 
+         weight, 
+         height, 
+         name_full) %>% 
+  
+  inner_join(Salaries, by="playerID") %>% 
+  
+  rename("year" = yearID) %>% 
+  
+  mutate(group = case_when(
+    year <= 2000 ~ 0,
+    year > 2000 & year <= max(year) ~ 1
+  )) %>% 
+  
+  mutate(inflation = adjust_for_inflation(
+      price = salary, from_date = year, 
+      country = "US", 
+      to_date = 2021))
+
+pl2 <- pl.info %>% 
+  filter(group == 1)
+
+median_salaries <- pl.info %>%
+  group_by(name_full) %>%
+  summarise(median_salary = median(salary)) %>%
+  arrange(desc(median_salary))
+
+pl.info$name_full <- factor(pl.info$name_full, levels = median_salaries$name_full)
+
+player_highest_salary <- pl.info %>%
+  filter(inflation == max(inflation)) %>%
+  dplyr::select(playerID, name_full, inflation, year)
+
+label_data <- pl.info %>%
+  filter(name_full != player_highest_salary$name_full)
+
+overallmn <- median(pl.info$salary)
+
+gro <- pl.info %>% 
+  group_by(nameGiven, name_full, year, salary, inflation) %>% 
+  summarise()
+```
+
+```{r, fig.width=10}
+
+
+ggplot(pl.info, aes(y = name_full, x = inflation, fill=name_full))+
+  
+    geom_vline(xintercept = overallmn, linetype = "dashed", color = "orange", size=.8) +  
+  
+  annotate("text", x = overallmn, y = Inf, label = "$675,000\nOverall Median Salary", vjust = 3, hjust=-.1, color = "black") + 
+  
+    geom_label_repel(data = player_highest_salary, aes(label = "Let's ask this guy for a tuition donation"), direction = "y", nudge_y = 1.5, segment.size = 0.4,size=4.5, col="black", fill="white")+
+  
+  geom_boxplot(outlier.colour = "black", outlier.shape = 7, outlier.size = 1) +  
+  
+  scale_fill_manual(aesthetics = "fill", values = rev(c("lightblue1","lightblue2","skyblue","skyblue2", "steelblue", "steelblue2", "steelblue3", "steelblue4")))+
+  
+  scale_x_continuous( breaks = seq(500000,10500000, by=2000000), labels = c(".5", "2.5", "4.5", "6.5", "8.5","10.5"))+
+  
+  theme_classic() +
+  labs(
+    y = "College",
+    x = "Salary in $ Millions (adjusted for 2021)",
+    title = "Baseball Stars Salaries After College by Alma Mater"
+  ) +
+  
+  
+  theme(
+    legend.position = "none",
+    legend.key = element_blank(),
+    legend.title = element_blank(),
+    axis.text = element_text(size = 14,color="grey30"),
+    axis.title.x = element_text(margin = margin(t = 12),color="grey20", size=18),
+    axis.title.y = element_text(margin = margin(r = 12),color="grey20", size=18),
+    plot.title = element_text(margin = margin(b = 15), hjust = .3, color="grey5", size=20)
+  )
+```
+
+Given that here are only very few players per university we wouldn't be able to say if the school in which they studied really had a big impact in their salary. Some of those schools are probably not competitive in baseball, so it would make sense that they don't have high ranking players.
+
+However if we only focus on Dixie and BYU (both schools having a large sample size) then we see that their salaries more evenly distributed if we consider Dixie having a lot less baseball stars.
+
+The only assumption I would take here based on these graphs, is that Dixie and BYU are big baseball competitors and have had great baseball players throughout the years. Their baseball program should be good. It would be cool to compare the best colleges in baseball to see their distributions across country or world.
+
+
+```{r, fig.width=14, fig.height=6.5}
+#custom_labels <- c("0-10 Years", "11-20 Years", "21-30 Years", ">30 Years")
+#custom_labeller <- function(variable, value) {
+  #return(custom_labels[value])
+#}
+
+ggplot(gro, aes(year, inflation, col=inflation, size=inflation)) + 
+  geom_point(show.legend = F)+
+  facet_wrap(vars(name_full), nrow = 1)+
+#, labeller = labeller(ages = custom_labeller))+
+
+  scale_color_viridis(option = "cividis", direction = 1)+
+  
+  scale_y_continuous( breaks = seq(500000,10500000, by=2000000), labels = c(".5", "2.5", "4.5", "6.5", "8.5","10.5"))+
+  
+  geom_label_repel(data = player_highest_salary, aes(label = "Let's ask this guy\n for a tuition donation"), direction = "x", nudge_x = -50,size=3, col="black", fill="white")+
+  
+  theme_bw()+
+  labs(
+    y="Salary in $ Millions (adjusted for 2021)",
+    x="Year",
+    title = "Baseball Stars Salaries After College by Alma Mater"
+  )+
+  
+   
+    theme(
+    title = element_text(family = "serif"),
+    axis.text.y = element_text(size=8.8),
+    axis.text.x = element_text(angle = 30, size=8.8),
+    axis.ticks = element_blank(),
+    plot.title = element_text(size=15, hjust = .5),
+    panel.grid.major = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    strip.text = element_text(size = 9, angle = 0, colour = "white"),
+    strip.background = element_rect(colour = "steelblue", fill = "steelblue"))
+
+```
+
+
+```{r}
+mylm <-lm(salary ~ year*group, data = pl.info)
+b <- coef(mylm)
+
+ggplot(pl.info, aes(year,salary, col=as.factor(group))) +
+         geom_point()
+  #facet_wrap(~nameGiven)
+
+```
+

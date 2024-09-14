@@ -1,0 +1,78 @@
+---
+title: "Week 9 Task 1"
+date: "March 5, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(USAboundaries)
+library(dplyr)
+library(sf)
+library(USAboundariesData)
+library(ggrepel)
+
+idahoc <- us_counties(states = "Idaho")
+
+
+cities <- us_cities() %>% 
+  
+  filter(
+    
+    state_name != "Alaska", 
+    
+    state_name != "Hawaii", 
+    
+    state_name != "District of Columbia", 
+    
+    state_name != "Puerto Rico")
+
+
+contstate <- us_states() %>% 
+  
+  filter(name != "Alaska", 
+         
+         name != "Hawaii",
+         
+         name != "District of Columbia", 
+         
+         name != "Puerto Rico")
+
+
+tops <- cities %>% 
+  
+  group_by(state_name) %>% 
+  
+  mutate(rank = dense_rank(desc(population))) %>% 
+  
+  ungroup() %>% 
+  
+  filter(rank <= 3)
+
+
+top1 <- tops %>% 
+  
+  filter(rank ==1) 
+
+ggplot() +
+  geom_sf(data = contstate, fill = NA) +
+  geom_sf(data = idahoc, fill = NA) +
+  geom_sf(tops, mapping = aes(size = (population/1000), col = rank)) +
+  
+  geom_label_repel(data = subset(tops, rank == 1), mapping=aes(label = city, geometry = geometry), stat = "sf_coordinates",color = "darkblue", size=3,  max.overlaps = 50) +
+
+  guides(size = guide_legend(title = "Population (1,000)"), color = F, fill = F) +
+  
+  labs(x="",
+       y="") +
+  
+  theme_bw() 
+
+```

@@ -1,0 +1,32 @@
+---
+title: "Untitled"
+author: "Tona"
+date: "2024-03-11"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+library(tidyquant)
+library(tidyverse)
+library(dygraphs)
+library(timetk)
+
+stocks <- tq_get(c("AAPL", "GOOGL", "TSLA"), from = "2014-01-01") |> 
+  pivot_wider(names_from = symbol, 
+              values_from = adjusted,
+              id_cols = date) |> 
+  tk_xts(date = date)
+
+dygraph(stocks) |> 
+  dyRangeSelector() |> 
+  dyHighlight(
+    hideOnMouseOut = T, 
+    highlightSeriesOpts=list(
+      stringWidth = 3, strokeBorderWidth=2))
+```
+
+I like dyGraphs, I wonder if instead of using a bar on the bottom we could use our mouse wheel and zoom in that way. Many time series graphs disregarding if its a line or boxplots per time period have this feature, like they do on [TradingView](https://www.tradingview.com/chart/?symbol=NASDAQ%3AAAPL) for example.
+
+Now about the graph itself, It looks like Tesla had a crazy rise above all others, and despite its volatility whoever bought Tesla in 2020 would still be in a major gain even as compared to others and even disregarding the drops it's had these last couple of years.

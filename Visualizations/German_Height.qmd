@@ -1,0 +1,112 @@
+---
+title: "Untitled"
+date: "January 30, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## German Heights vs World Heights
+
+For this task I'm comparing in my graph the German height median per decade to the world population median height per decade (Including Germany). It's easy to notice that from 1850 forward we can see a big upward slope in German Heights surpassing by much the world's median.
+
+```{r, fig.width=10.5}
+library(tidyverse)
+library(readxl)
+library(downloader)
+
+WorldHeight <- read_excel("height.xlsx", skip=2)
+
+## wrangle
+WHClean <- WorldHeight |>
+  pivot_longer(cols = 3:ncol(WorldHeight), 
+               names_to = "year_decade", 
+               values_to = "height") |>
+  drop_na()
+
+WHMed <- WHClean |> 
+    group_by(year_decade ) |> 
+  summarise(
+    decadeMedian = median(height))
+
+GermH <- WHClean |>
+  filter(`Continent, 
+          Region, 
+          Country` %in% c(
+            "Federal Republic of Germany (until 1990)",
+            "Germany")) |>
+  group_by(year_decade ) |> 
+  summarise(
+    decadeMedian = median(height))
+
+ggplot() +
+  
+  geom_line(data = WHMed, 
+            aes(x = year_decade, 
+                y = decadeMedian, 
+                group = "WHMed"), 
+            color = "grey", 
+            size = 0.7, 
+            show.legend = TRUE) +
+  
+  geom_point(data = WHMed, 
+             aes(x = year_decade, 
+                 y = decadeMedian, 
+                 color = "World"), 
+             size = 3, 
+             show.legend = TRUE) +
+  
+  geom_line(data = GermH, 
+            aes(x = year_decade, 
+                y = decadeMedian, 
+                group = "GermH"), 
+            color = "grey85", 
+            linewidth = 1.2, 
+            show.legend = TRUE) +
+  
+  geom_point(data = GermH, 
+             aes(x = year_decade, 
+                 y = decadeMedian, 
+                 color = "German"), 
+             size = 4, 
+             show.legend = TRUE) +
+  
+  labs(
+    x = "Decade",
+    y = "Height in Cm",
+    title = "German Height Compared to the World's Height (medians)") +
+  
+  scale_color_manual(values = 
+                       c("World" = "grey65", 
+                         "German" = "red"), 
+                     name = "Population") +
+  
+  theme_classic() +
+  
+  theme(
+    legend.position = "right",
+    plot.title = 
+      element_text(size=14,
+                   face="bold",
+                   color="grey5",
+                   hjust=.5),
+    axis.title = 
+      element_text(size=12,
+                   color="grey15"),
+    axis.text = 
+      element_text(size=11,
+                   color="grey25"),
+    legend.title = 
+      element_text(size=12,
+                   color="grey15"),
+    legend.text = 
+      element_text(size=11,
+                   color="grey25")
+    )
+
+```

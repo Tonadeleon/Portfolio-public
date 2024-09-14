@@ -1,0 +1,146 @@
+---
+title: "Week 9 Case study"
+date: "March 9, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+```{r, fig.width=12, fig.height=8}
+
+library(USAboundaries)
+library(tidyverse)
+library(sf)
+library(geofacet)
+
+us <- us_states()
+ny <- us_counties(state="NY")
+permits <- buildings::permits
+
+sing_fam_stat <- permits |> 
+  filter(variable == "Single Family") |> 
+  group_by(state, year) |> 
+  summarise(permits=sum(value))
+
+nyp <- permits |> 
+  filter(variable == "Single Family",
+         StateAbbr == "NY") |> 
+  group_by(county, year) |> 
+  summarise(permits=sum(value))
+
+
+all_states <- us |> 
+  mutate(state=as.numeric(statefp)) |> 
+  inner_join(sing_fam_stat, by="state")
+
+nyc <- ny |> 
+  select(!state_name) |> 
+  mutate(county=as.numeric(countyfp)) |> 
+  inner_join(nyp, by="county")
+
+ggplot(all_states, aes(x=year, y=permits/1000)) +
+  
+  geom_line(color='black', linewidth=1.1) +
+  
+  labs(
+    title="Single Family Building Permits in the US",
+    
+    x="Year (1980 - 2010) ",
+    
+    y="Thousand Number of Permits") +
+  
+  theme_minimal() +
+  
+  facet_geo(
+    
+    ~state_abbr,
+    
+    grid="us_state_grid2", 
+    
+    strip.position="bottom") +
+  
+  theme(
+    
+    strip.text = element_text(
+      
+      size = 12, angle = 0, colour = "black"),
+    
+    strip.background = element_rect(
+      
+      colour = "white", fill = "white"),
+    
+    panel.grid.major = element_blank(),
+    
+    panel.grid.minor = element_blank(),
+    
+    axis.text.x = element_blank(), 
+    
+    plot.margin = margin(1, 1, 1, 1, "cm"),
+    
+    axis.title.y = element_text(vjust = 8),
+    
+    plot.title = element_text(hjust = .5))
+
+```
+
+
+```{r, fig.width=12, fig.height=15}
+
+ggplot(nyc, aes(x=year, y=permits)) +
+  
+  geom_line(color='black', linewidth=1.1) +
+  
+  labs(
+    
+    title="Single Family Building Permits in New York",
+    
+    x="Year (1980 - 2010) ",
+    
+    y="Number of Permits") +
+  
+  theme_minimal() +
+  
+  facet_geo(
+    
+    ~name,
+    
+    grid="us_ny_counties_grid1",
+    
+    strip.position = "bottom") +
+  
+  theme(
+    
+    strip.text = element_text(
+      
+      size = 8, angle = 0, colour = "black"),
+    
+    strip.background = element_rect(
+      
+      colour = "white", fill = "white"),
+    
+    panel.grid.major = element_blank(),
+    
+    panel.grid.minor = element_blank(),
+    
+    axis.text.x = element_blank(), 
+    
+    plot.margin = margin(1, 1, 1, 1, "cm"),
+    
+    axis.title.y = element_text(vjust = 8),
+    
+    plot.title = element_text(hjust = .5)
+  )
+```
+
+
+I begin to start liking geom_sf, it's really cool what you can do. The first time I used it was on a graph recreation from our world in data, they use a ton of world maps as heat maps for many different variables. I got the idea of taking out the y axis text and putting the names on the bottom from stack overflow. I chose all black to not lose focus on the data, I was trying to make the american flag in the US all states graph. But it may be unprofessional for this specific task.
+
+Texas and Florida seem to be big builders in their areas for the last decades. New york seems average, I chose it because facet geo doesn't have all states yet so, I thought of new york. There are a couple counties in new york like saratoga that seem to be big in the construction industry
+

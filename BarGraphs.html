@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Tonatiuh De Leon" />
+
+
+<title>Bar Graphs</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Tonatiuh de Leon</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Regression Models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="DecibelRegression.html">Song Decibel Levels</a>
+    </li>
+    <li>
+      <a href="SpotifyRegression.html">Spotify Regression</a>
+    </li>
+    <li>
+      <a href="CarAnalysis.html">Selling my Car Regression</a>
+    </li>
+    <li>
+      <a href="HousePriceRegression.html">House Prices Predictions</a>
+    </li>
+    <li>
+      <a href="LogisticRegression325.html">Who's Getting Good Grades?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Modeling &amp; Simulations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Whale.html">Recreated the Milky Way, or a Whale?</a>
+    </li>
+    <li>
+      <a href="Temple.html">Modeled a Beatiful Building</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferential Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="StephApartment.html">Finding an Apartment</a>
+    </li>
+    <li>
+      <a href="TtestInternet.html">Boys or Girls; Who Uses More Internet?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Visualizations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="TimeSeries.html">Correlation</a>
+    </li>
+    <li>
+      <a href="Distributions.html">Distribution</a>
+    </li>
+    <li>
+      <a href="Maps.html">Spatial</a>
+    </li>
+    <li>
+      <a href="BarGraphs.html">Quick Comparison</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Machine Learning
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Time Series
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Bar Graphs</h1>
+<h4 class="author">Tonatiuh De Leon</h4>
+
+</div>
+
+
+<p>This section of my portfolio contains <strong>Bar Graphs</strong>
+I’ve created throughout the years. Take a look at them! I created each
+graph from scratch in R, check out the code with the <code>show</code>
+buttons to the top right of each graph.</p>
+<div id="section"
+class="section level1 tabset tabset-fade tabset-pills">
+<h1 class="tabset tabset-fade tabset-pills"></h1>
+<div id="words-per-book" class="section level2">
+<h2>Words per Book</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>dt <span class="ot">&lt;-</span> rio<span class="sc">::</span><span class="fu">import</span>(<span class="st">&quot;http://scriptures.nephi.org/downloads/lds-scriptures.csv.zip&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="fu">rename</span>( <span class="at">title =</span> volume_title,</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>          <span class="at">text =</span> scripture_text,</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>          <span class="at">book =</span> book_title ) <span class="sc">|&gt;</span> </span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count =</span> <span class="fu">str_count</span>(text, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">S+&quot;</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>nt <span class="ot">&lt;-</span> dt <span class="sc">|&gt;</span> </span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="fu">filter</span>(title <span class="sc">==</span> <span class="st">&quot;New Testament&quot;</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>bm <span class="ot">&lt;-</span> dt <span class="sc">|&gt;</span> </span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  <span class="fu">filter</span>(title <span class="sc">==</span> <span class="st">&quot;Book of Mormon&quot;</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>bm1 <span class="ot">&lt;-</span> bm <span class="sc">|&gt;</span> </span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>  <span class="fu">group_by</span>(book) <span class="sc">|&gt;</span> </span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">count =</span> <span class="fu">sum</span>(count)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">highbar =</span> <span class="fu">case_when</span>(book <span class="sc">==</span> <span class="st">&quot;Alma&quot;</span> <span class="sc">~</span> <span class="dv">1</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span>))</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>max_count <span class="ot">&lt;-</span> <span class="fu">max</span>(bm1<span class="sc">$</span>count)</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>min_count <span class="ot">&lt;-</span> <span class="fu">min</span>(bm1<span class="sc">$</span>count)</span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>mean_count <span class="ot">&lt;-</span> <span class="fu">mean</span>(bm1<span class="sc">$</span>count)</span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="fu">ggplot</span>(bm1, <span class="fu">aes</span>(<span class="fu">reorder</span>(book, <span class="sc">-</span>count), count, <span class="at">fill =</span> highbar)) <span class="sc">+</span> </span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">comma_format</span>(<span class="at">accuracy =</span> <span class="dv">1</span>)) <span class="sc">+</span>  <span class="co"># Remove decimals from y-axis</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">subset</span>(bm1, count <span class="sc">==</span> max_count), </span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">&quot;Max Word Count:&quot;</span>, <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>))),  <span class="co"># Corrected formatting</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">4.5</span>, <span class="at">box.padding =</span> <span class="fl">0.5</span>, </span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="at">nudge_x =</span> <span class="dv">3</span></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">subset</span>(bm1, count <span class="sc">==</span> min_count), </span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">&quot;Min Word Count:&quot;</span>, <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>))),  <span class="co"># Corrected formatting</span></span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">4.5</span>, <span class="at">box.padding =</span> <span class="fl">0.5</span>, </span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="at">nudge_y =</span> <span class="dv">3000</span> </span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a>  <span class="co"># Add horizontal mean line</span></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> mean_count, <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>, <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a>  <span class="co"># Add annotation for the mean line</span></span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb1-46"><a href="#cb1-46" tabindex="-1"></a>    <span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="cn">Inf</span>, <span class="at">y =</span> mean_count, <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">&quot;Average Word Count&quot;</span>, <span class="fu">formatC</span>(mean_count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>) ), </span>
+<span id="cb1-47"><a href="#cb1-47" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">vjust =</span> <span class="sc">-</span>.<span class="dv">75</span>, <span class="at">color =</span> <span class="st">&quot;grey25&quot;</span>, <span class="at">size =</span> <span class="dv">4</span></span>
+<span id="cb1-48"><a href="#cb1-48" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-49"><a href="#cb1-49" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-50"><a href="#cb1-50" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Word Count per Book in The Book of Mormon&quot;</span>,</span>
+<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Book&quot;</span>,</span>
+<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Word Count (Thousands)&quot;</span></span>
+<span id="cb1-54"><a href="#cb1-54" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-55"><a href="#cb1-55" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-56"><a href="#cb1-56" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(.<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">0</span>, .<span class="dv">5</span>, <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb1-57"><a href="#cb1-57" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">colour =</span> <span class="st">&quot;grey5&quot;</span>),</span>
+<span id="cb1-58"><a href="#cb1-58" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">colour =</span> <span class="st">&quot;grey15&quot;</span>),</span>
+<span id="cb1-59"><a href="#cb1-59" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">angle =</span> <span class="dv">35</span>),</span>
+<span id="cb1-60"><a href="#cb1-60" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)</span>
+<span id="cb1-61"><a href="#cb1-61" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="BarGraphs_files/figure-html/unnamed-chunk-1-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>The Book of Mormon is a compilation of 15 different books. We see
+that Alma being the longest book in The Book of Mormon (around 60
+chapters) has the largest count.</p>
+<p>The book of Jarom being the shortest book in length (1 chapter), has
+the fewest words. So this makes sense</p>
+<p>As an extra, here is a comparison of both the New Testament and The
+Book of Mormon. Two interesting aspects are the verse length comparison
+of each book, with The New Testament having more, but shorter verses per
+Chapter; And the mentioning of the word “Jesus” in both books.</p>
+<p>This makes sense since The Book of Mormon is known for using other
+adjectives to reffer to Christ, such as “Christ” and “Lamb of God”,
+etc.</p>
+<p>The analysis is for educative purposes only, both books are read by
+Church members, and worldwide, and are equally important.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>ntmn <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">nchar</span>(nt<span class="sc">$</span>text))</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>bmmn <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">nchar</span>(bm<span class="sc">$</span>text))</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>ntcnt <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">grepl</span>(<span class="st">&quot;Jesus&quot;</span>, nt<span class="sc">$</span>text))</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>bmcnt <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">grepl</span>(<span class="st">&quot;Jesus&quot;</span>, bm<span class="sc">$</span>text))</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>dt2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">round</span>(ntmn), <span class="fu">round</span>(ntcnt), <span class="fu">round</span>(bmmn), <span class="fu">round</span>(bmcnt)),</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;Mean Verse Length&quot;</span>, <span class="st">&quot;Jesus Word Count&quot;</span>), <span class="fu">c</span>(<span class="st">&quot;New Testament&quot;</span>, <span class="st">&quot;Book of Mormon&quot;</span>))</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>)</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(dt2, <span class="at">caption =</span> <span class="st">&quot;This is the word count and averages per book&quot;</span>)</span></code></pre></div>
+<table style="width:79%;">
+<caption>This is the word count and averages per book</caption>
+<colgroup>
+<col width="33%" />
+<col width="22%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">New Testament</th>
+<th align="center">Book of Mormon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Mean Verse Length</strong></td>
+<td align="center">118</td>
+<td align="center">213</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Jesus Word Count</strong></td>
+<td align="center">935</td>
+<td align="center">161</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="chipotle-visits-day-popularity" class="section level2">
+<h2>Chipotle Visits &amp; Day Popularity</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>dt1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://byuistats.github.io/M335/data/chipotle_reduced.csv&quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="do">## Popularity frequency by day wrangle, </span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="do">##like how many times each day came out to be the most popular day for each observation (row)</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>string_to_dataframe <span class="ot">&lt;-</span> <span class="cf">function</span>(input_string) {</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  days <span class="ot">&lt;-</span> <span class="fu">str_match_all</span>(input_string, <span class="st">&#39;&quot;(</span><span class="sc">\\</span><span class="st">w+)&quot;:(</span><span class="sc">\\</span><span class="st">d+)&#39;</span>)[[<span class="dv">1</span>]][, <span class="dv">2</span>]</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  visits <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">str_match_all</span>(input_string, <span class="st">&#39;&quot;(</span><span class="sc">\\</span><span class="st">w+)&quot;:(</span><span class="sc">\\</span><span class="st">d+)&#39;</span>)[[<span class="dv">1</span>]][, <span class="dv">3</span>])</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  </span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">day =</span> days, <span class="at">visits =</span> visits)</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>  <span class="fu">return</span>(df)</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>}</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>find_most_popular_day <span class="ot">&lt;-</span> <span class="cf">function</span>(input_string) {</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">string_to_dataframe</span>(input_string)</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>  </span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>  max_visits <span class="ot">&lt;-</span> <span class="fu">max</span>(df<span class="sc">$</span>visits)</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>  popular_days <span class="ot">&lt;-</span> df<span class="sc">$</span>day[df<span class="sc">$</span>visits <span class="sc">==</span> max_visits]</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>  </span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(popular_days) <span class="sc">==</span> <span class="dv">1</span>) {</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>    <span class="fu">return</span>(popular_days)</span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">paste</span>(popular_days, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>))</span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>  }</span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>}</span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>dt1<span class="sc">$</span>popularity_by_day <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;&#39;&quot;</span>, dt1<span class="sc">$</span>popularity_by_day, <span class="st">&quot;&#39;&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>dt <span class="ot">&lt;-</span> dt1 <span class="sc">|&gt;</span> </span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">most_popular_day =</span> <span class="fu">find_most_popular_day</span>(popularity_by_day)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>  <span class="fu">separate</span>(most_popular_day, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;most_popular_day_1&quot;</span>, <span class="st">&quot;most_popular_day_2&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;, &quot;</span>, <span class="at">fill =</span> <span class="st">&quot;right&quot;</span>) </span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>day1 <span class="ot">&lt;-</span> dt <span class="sc">|&gt;</span> </span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>  <span class="fu">group_by</span>(most_popular_day_1) <span class="sc">|&gt;</span> </span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">days_count =</span> <span class="fu">n</span>() ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>  <span class="fu">rename</span>( <span class="at">day =</span> most_popular_day_1 )</span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>day2 <span class="ot">&lt;-</span> dt <span class="sc">|&gt;</span> </span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a>  <span class="fu">group_by</span>(most_popular_day_2) <span class="sc">|&gt;</span> </span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">days_count =</span> <span class="fu">n</span>() ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a>  <span class="fu">rename</span>( <span class="at">day =</span> most_popular_day_2 )</span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a>popularity_by_day <span class="ot">&lt;-</span> <span class="fu">rbind</span>(day1, day2) <span class="sc">|&gt;</span> </span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a>  <span class="fu">group_by</span>(day) <span class="sc">|&gt;</span> </span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">days_count =</span> <span class="fu">sum</span>(days_count)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a>  <span class="fu">filter</span>(day <span class="sc">!=</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a>    <span class="at">day =</span> <span class="fu">factor</span>(day, <span class="at">levels =</span> <span class="fu">c</span>(</span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a>    <span class="st">&#39;Monday&#39;</span>, <span class="st">&#39;Tuesday&#39;</span>, <span class="st">&#39;Wednesday&#39;</span>, <span class="st">&#39;Thursday&#39;</span>, <span class="st">&#39;Friday&#39;</span>, <span class="st">&#39;Saturday&#39;</span>, <span class="st">&#39;Sunday&#39;</span>)),</span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a>    <span class="st">&quot;color&quot;</span> <span class="ot">=</span> <span class="fu">ifelse</span>(day <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;Thursday&#39;</span>, <span class="st">&#39;Friday&#39;</span>, <span class="st">&#39;Saturday&#39;</span>), <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a></span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a><span class="do">## Overall Visit Frequency per day</span></span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a><span class="co">#didn&#39;t get this one, will do in class</span></span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a></span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a>nesteddt <span class="ot">&lt;-</span> dt1 <span class="sc">|&gt;</span></span>
+<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(placekey, popularity_by_day) <span class="sc">|&gt;</span> </span>
+<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a> <span class="co"># filter(!is.na(popularity_by_day)) |&gt; </span></span>
+<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a>  <span class="fu">group_by</span>(placekey) <span class="sc">|&gt;</span></span>
+<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">popularity_count =</span> <span class="fu">map</span>(data, <span class="sc">~</span><span class="fu">string_to_dataframe</span>(.x<span class="sc">$</span>popularity_by_day))) <span class="sc">|&gt;</span> </span>
+<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>data) <span class="sc">|&gt;</span> </span>
+<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> popularity_count) <span class="sc">|&gt;</span> </span>
+<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a>  <span class="fu">group_by</span>(day) <span class="sc">|&gt;</span> </span>
+<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">total =</span> <span class="fu">sum</span>(visits))</span>
+<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a></span>
+<span id="cb3-72"><a href="#cb3-72" tabindex="-1"></a>nesteddt<span class="sc">$</span>day <span class="ot">&lt;-</span> <span class="fu">factor</span>(nesteddt<span class="sc">$</span>day, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Monday&quot;</span>, <span class="st">&quot;Tuesday&quot;</span>, <span class="st">&quot;Wednesday&quot;</span>, <span class="st">&quot;Thursday&quot;</span>, <span class="st">&quot;Friday&quot;</span>, <span class="st">&quot;Saturday&quot;</span>, <span class="st">&quot;Sunday&quot;</span>))</span>
+<span id="cb3-73"><a href="#cb3-73" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="#cb3-74" tabindex="-1"></a><span class="fu">ggplot</span>(nesteddt, <span class="fu">aes</span>(day,total,<span class="at">fill=</span>total))<span class="sc">+</span></span>
+<span id="cb3-75"><a href="#cb3-75" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> F, <span class="at">col=</span><span class="st">&quot;black&quot;</span>)<span class="sc">+</span></span>
+<span id="cb3-76"><a href="#cb3-76" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb3-77"><a href="#cb3-77" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">200000</span>,<span class="at">by=</span><span class="dv">50000</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>,<span class="st">&quot;50k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;150k&quot;</span>,<span class="st">&quot;200k&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb3-78"><a href="#cb3-78" tabindex="-1"></a>  <span class="co">#scale_fill_manual(values = c(&quot;0&quot; = &quot;skyblue&quot;, &quot;1&quot; = &quot;orange&quot;)) +</span></span>
+<span id="cb3-79"><a href="#cb3-79" tabindex="-1"></a>  <span class="co"># geom_label_repel(</span></span>
+<span id="cb3-80"><a href="#cb3-80" tabindex="-1"></a>  <span class="co">#   aes(label = ifelse(day %in% c(&quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;), days_count, &quot;&quot;)),</span></span>
+<span id="cb3-81"><a href="#cb3-81" tabindex="-1"></a>  <span class="co">#   box.padding = unit(0.35, &quot;lines&quot;),</span></span>
+<span id="cb3-82"><a href="#cb3-82" tabindex="-1"></a>  <span class="co">#   point.padding = unit(0.5, &quot;lines&quot;),</span></span>
+<span id="cb3-83"><a href="#cb3-83" tabindex="-1"></a>  <span class="co">#   fill=&quot;white&quot;,</span></span>
+<span id="cb3-84"><a href="#cb3-84" tabindex="-1"></a>  <span class="co">#   nudge_x = 0,</span></span>
+<span id="cb3-85"><a href="#cb3-85" tabindex="-1"></a>  <span class="co">#   nudge_y = 100</span></span>
+<span id="cb3-86"><a href="#cb3-86" tabindex="-1"></a>  <span class="co"># ) +</span></span>
+<span id="cb3-87"><a href="#cb3-87" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;Thousand visits&quot;</span>,</span>
+<span id="cb3-88"><a href="#cb3-88" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb3-89"><a href="#cb3-89" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Chipotle&#39;s total visits by day&quot;</span>,</span>
+<span id="cb3-90"><a href="#cb3-90" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Total sum of visits per day of the week&quot;</span>)<span class="sc">+</span></span>
+<span id="cb3-91"><a href="#cb3-91" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-92"><a href="#cb3-92" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">&quot;grey15&quot;</span>, <span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb3-93"><a href="#cb3-93" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">&quot;grey30&quot;</span>, <span class="at">size=</span><span class="dv">11</span>),</span>
+<span id="cb3-94"><a href="#cb3-94" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">&quot;grey15&quot;</span>, <span class="at">size=</span><span class="dv">12</span>, <span class="at">vjust =</span> <span class="dv">3</span>),</span>
+<span id="cb3-95"><a href="#cb3-95" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">&quot;grey30&quot;</span>, <span class="at">size=</span><span class="dv">11</span>))</span></code></pre></div>
+<p><img src="BarGraphs_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>I got Data for visits at Chipotle in a couple states in the U.S. for
+September 2021. First I’ll check if there is a pattern in daily visits.
+In other words, what day was the more visited overall.</p>
+<p>Above is the total amount of visits by day for September 2021. Visits
+are higher on the weekends excluding Sundays, which makes sense.</p>
+<p>Let’s go a little deeper. Since I have data for 2,844 restaurants, I
+checked what day was the most popular for each restaurant. Some of them
+had two more popular days so those are double counted being equally as
+important. This is what I got:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">ggplot</span>(popularity_by_day, <span class="fu">aes</span>(day,days_count, <span class="at">fill=</span><span class="fu">as.factor</span>(color)))<span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> F, <span class="at">col=</span><span class="st">&quot;black&quot;</span>)<span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span> <span class="ot">=</span> <span class="st">&quot;steelblue4&quot;</span>, <span class="st">&quot;1&quot;</span> <span class="ot">=</span> <span class="st">&quot;orange&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(day <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Thursday&quot;</span>, <span class="st">&quot;Friday&quot;</span>, <span class="st">&quot;Saturday&quot;</span>), days_count, <span class="st">&quot;&quot;</span>)),</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="at">box.padding =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">&quot;lines&quot;</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>    <span class="at">point.padding =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">&quot;lines&quot;</span>),</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>    <span class="at">fill=</span><span class="st">&quot;white&quot;</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>    <span class="at">nudge_x =</span> <span class="dv">0</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>    <span class="at">nudge_y =</span> <span class="dv">100</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;Frequency&quot;</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Chipotle&#39;s popularity by day&quot;</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Each day was the most popular in some weeks.</span><span class="sc">\n</span><span class="st">These are their respective distributions&quot;</span>)<span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">&quot;grey15&quot;</span>, <span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">&quot;grey30&quot;</span>, <span class="at">size=</span><span class="dv">11</span>),</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">&quot;grey15&quot;</span>, <span class="at">size=</span><span class="dv">12</span>, <span class="at">vjust =</span> <span class="dv">3</span>),</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">&quot;grey30&quot;</span>, <span class="at">size=</span><span class="dv">11</span>))</span></code></pre></div>
+<p><img src="BarGraphs_files/figure-html/unnamed-chunk-4-1.png" width="960" /></p>
+<p>We can see that after sampling the frequency of each day in which
+each restaurant was visited the most; we can state something that
+Weekends are the most popular days for Chipotle Restaurant, including
+Thursdays and not Sundays.</p>
+<p>Even when this may have been not too illogical to conclude without
+data, it is necessary to check our statistics because Chipotle might
+think of hiring for specific days to cut costs, or offer some discounts
+the rest of the days to get sales higher. But many insights can be taken
+out from this graph.</p>
+<p><br></p>
+</div>
+<div id="stock-picks" class="section level2">
+<h2>Stock Picks</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">library</span>(tidyquant)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>top_port <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;NVDA&quot;</span>,<span class="st">&quot;TSLA&quot;</span>, <span class="st">&quot;AMZN&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>price_data <span class="ot">&lt;-</span> <span class="fu">tq_get</span>(top_port,</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>                     <span class="at">get =</span> <span class="st">&quot;stock.prices&quot;</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>                     <span class="at">from =</span> <span class="st">&quot;2023-10-01&quot;</span>) </span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>return_data <span class="ot">&lt;-</span> price_data <span class="sc">%&gt;%</span> </span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>  <span class="fu">tq_transmute</span>(<span class="at">select =</span> adjusted,</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>               <span class="at">mutate_fun =</span> periodReturn,</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>               <span class="at">period =</span> <span class="st">&quot;daily&quot;</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>               <span class="at">type =</span> <span class="st">&quot;log&quot;</span>) </span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>tona <span class="ot">&lt;-</span> return_data <span class="sc">%&gt;%</span> </span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>  <span class="fu">tq_portfolio</span>(<span class="at">assets_col=</span>symbol,</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>               <span class="at">returns_col=</span>daily.returns,</span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>               <span class="at">weights =</span> <span class="fu">tibble</span>(<span class="at">asset.names =</span> <span class="fu">c</span>(<span class="st">&quot;NVDA&quot;</span>,<span class="st">&quot;TSLA&quot;</span>, <span class="st">&quot;AMZN&quot;</span>), </span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>                                <span class="at">weight =</span> <span class="fu">c</span>(<span class="fl">0.333</span>, <span class="fl">0.333</span>, <span class="fl">0.334</span>)),</span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>               <span class="at">wealth.index =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Portfolio =</span> <span class="st">&quot;Tona&quot;</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>top_port1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;META&quot;</span>,<span class="st">&quot;AAPL&quot;</span>, <span class="st">&quot;MSFT&quot;</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>price_data <span class="ot">&lt;-</span> <span class="fu">tq_get</span>(top_port1,</span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a>                     <span class="at">get =</span> <span class="st">&quot;stock.prices&quot;</span>,</span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a>                     <span class="at">from =</span> <span class="st">&quot;2023-10-01&quot;</span>) </span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a>return_data1 <span class="ot">&lt;-</span> price_data <span class="sc">%&gt;%</span> </span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a>  <span class="fu">tq_transmute</span>(<span class="at">select =</span> adjusted,</span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a>               <span class="at">mutate_fun =</span> periodReturn, </span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a>               <span class="at">period =</span> <span class="st">&quot;daily&quot;</span>,</span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a>               <span class="at">type =</span> <span class="st">&quot;log&quot;</span>) </span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a></span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a>ammon <span class="ot">&lt;-</span> return_data1 <span class="sc">%&gt;%</span> </span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a>  <span class="fu">tq_portfolio</span>(<span class="at">assets_col=</span>symbol,</span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a>               <span class="at">returns_col=</span>daily.returns,</span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a>               <span class="at">weights =</span> <span class="fu">tibble</span>(<span class="at">asset.names =</span> <span class="fu">c</span>(<span class="st">&quot;META&quot;</span>,<span class="st">&quot;AAPL&quot;</span>, <span class="st">&quot;MSFT&quot;</span>), </span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a>                                <span class="at">weight =</span> <span class="fu">c</span>(<span class="fl">0.333</span>, <span class="fl">0.333</span>, <span class="fl">0.334</span>)),</span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a>               <span class="at">wealth.index =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Portfolio =</span> <span class="st">&quot;Friend&quot;</span>)</span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a></span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(tona, ammon)</span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a></span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a>top_port <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;NVDA&quot;</span>,<span class="st">&quot;TSLA&quot;</span>, <span class="st">&quot;AMZN&quot;</span>)</span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="#cb5-54" tabindex="-1"></a>price_data <span class="ot">&lt;-</span> <span class="fu">tq_get</span>(top_port,</span>
+<span id="cb5-55"><a href="#cb5-55" tabindex="-1"></a>                     <span class="at">get =</span> <span class="st">&quot;stock.prices&quot;</span>,</span>
+<span id="cb5-56"><a href="#cb5-56" tabindex="-1"></a>                     <span class="at">from =</span> <span class="st">&quot;2023-10-01&quot;</span>) </span>
+<span id="cb5-57"><a href="#cb5-57" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" tabindex="-1"></a>return_data <span class="ot">&lt;-</span> price_data <span class="sc">%&gt;%</span> </span>
+<span id="cb5-59"><a href="#cb5-59" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-60"><a href="#cb5-60" tabindex="-1"></a>  <span class="fu">tq_transmute</span>(<span class="at">select =</span> adjusted,</span>
+<span id="cb5-61"><a href="#cb5-61" tabindex="-1"></a>               <span class="at">mutate_fun =</span> periodReturn,</span>
+<span id="cb5-62"><a href="#cb5-62" tabindex="-1"></a>               <span class="at">period =</span> <span class="st">&quot;daily&quot;</span>,</span>
+<span id="cb5-63"><a href="#cb5-63" tabindex="-1"></a>               <span class="at">type =</span> <span class="st">&quot;log&quot;</span>) </span>
+<span id="cb5-64"><a href="#cb5-64" tabindex="-1"></a></span>
+<span id="cb5-65"><a href="#cb5-65" tabindex="-1"></a>overall_returns <span class="ot">&lt;-</span> return_data <span class="sc">%&gt;%</span></span>
+<span id="cb5-66"><a href="#cb5-66" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span></span>
+<span id="cb5-67"><a href="#cb5-67" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">overall_return =</span> <span class="fu">sum</span>(daily.returns, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb5-68"><a href="#cb5-68" tabindex="-1"></a></span>
+<span id="cb5-69"><a href="#cb5-69" tabindex="-1"></a>overall_returns1 <span class="ot">&lt;-</span> return_data1 <span class="sc">%&gt;%</span></span>
+<span id="cb5-70"><a href="#cb5-70" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span></span>
+<span id="cb5-71"><a href="#cb5-71" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">overall_return =</span> <span class="fu">sum</span>(daily.returns, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb5-72"><a href="#cb5-72" tabindex="-1"></a></span>
+<span id="cb5-73"><a href="#cb5-73" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(overall_returns, <span class="fu">aes</span>(<span class="at">x =</span> symbol, <span class="at">y =</span> overall_return, <span class="at">fill =</span> symbol)) <span class="sc">+</span></span>
+<span id="cb5-74"><a href="#cb5-74" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill=</span><span class="st">&quot;orange&quot;</span>, <span class="at">color=</span><span class="st">&quot;grey75&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-75"><a href="#cb5-75" tabindex="-1"></a>  </span>
+<span id="cb5-76"><a href="#cb5-76" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,</span>
+<span id="cb5-77"><a href="#cb5-77" tabindex="-1"></a>                                  <span class="dv">1</span>,</span>
+<span id="cb5-78"><a href="#cb5-78" tabindex="-1"></a>                                  <span class="at">by=</span>.<span class="dv">25</span>),</span>
+<span id="cb5-79"><a href="#cb5-79" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0%&quot;</span>,</span>
+<span id="cb5-80"><a href="#cb5-80" tabindex="-1"></a>                                <span class="st">&quot;.25%&quot;</span>,</span>
+<span id="cb5-81"><a href="#cb5-81" tabindex="-1"></a>                                <span class="st">&quot;.5%&quot;</span>,</span>
+<span id="cb5-82"><a href="#cb5-82" tabindex="-1"></a>                                <span class="st">&quot;.75%&quot;</span>,</span>
+<span id="cb5-83"><a href="#cb5-83" tabindex="-1"></a>                                <span class="st">&quot;1%&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb5-84"><a href="#cb5-84" tabindex="-1"></a></span>
+<span id="cb5-85"><a href="#cb5-85" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-86"><a href="#cb5-86" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Tona&quot;</span>,</span>
+<span id="cb5-87"><a href="#cb5-87" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb5-88"><a href="#cb5-88" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Overall Return&quot;</span>,</span>
+<span id="cb5-89"><a href="#cb5-89" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Data source: Yahoo Finance&quot;</span></span>
+<span id="cb5-90"><a href="#cb5-90" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-91"><a href="#cb5-91" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb5-92"><a href="#cb5-92" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb5-93"><a href="#cb5-93" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb5-94"><a href="#cb5-94" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb5-95"><a href="#cb5-95" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r =</span> <span class="dv">12</span>)),</span>
+<span id="cb5-96"><a href="#cb5-96" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">hjust =</span> <span class="dv">0</span>)</span>
+<span id="cb5-97"><a href="#cb5-97" tabindex="-1"></a>  )</span>
+<span id="cb5-98"><a href="#cb5-98" tabindex="-1"></a></span>
+<span id="cb5-99"><a href="#cb5-99" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(overall_returns1, <span class="fu">aes</span>(<span class="at">x =</span> symbol, <span class="at">y =</span> overall_return, <span class="at">fill =</span> symbol)) <span class="sc">+</span></span>
+<span id="cb5-100"><a href="#cb5-100" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill=</span><span class="st">&quot;steelblue&quot;</span>, <span class="at">color=</span><span class="st">&quot;grey75&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-101"><a href="#cb5-101" tabindex="-1"></a>  </span>
+<span id="cb5-102"><a href="#cb5-102" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,</span>
+<span id="cb5-103"><a href="#cb5-103" tabindex="-1"></a>                                  <span class="dv">1</span>,</span>
+<span id="cb5-104"><a href="#cb5-104" tabindex="-1"></a>                                  <span class="at">by=</span>.<span class="dv">25</span>),</span>
+<span id="cb5-105"><a href="#cb5-105" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0%&quot;</span>,</span>
+<span id="cb5-106"><a href="#cb5-106" tabindex="-1"></a>                                <span class="st">&quot;.25%&quot;</span>,</span>
+<span id="cb5-107"><a href="#cb5-107" tabindex="-1"></a>                                <span class="st">&quot;.5%&quot;</span>,</span>
+<span id="cb5-108"><a href="#cb5-108" tabindex="-1"></a>                                <span class="st">&quot;.75%&quot;</span>,</span>
+<span id="cb5-109"><a href="#cb5-109" tabindex="-1"></a>                                <span class="st">&quot;1%&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb5-110"><a href="#cb5-110" tabindex="-1"></a></span>
+<span id="cb5-111"><a href="#cb5-111" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-112"><a href="#cb5-112" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Friend&quot;</span>,</span>
+<span id="cb5-113"><a href="#cb5-113" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb5-114"><a href="#cb5-114" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Overall Return&quot;</span>,</span>
+<span id="cb5-115"><a href="#cb5-115" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Data source: Yahoo Finance&quot;</span></span>
+<span id="cb5-116"><a href="#cb5-116" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-117"><a href="#cb5-117" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb5-118"><a href="#cb5-118" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb5-119"><a href="#cb5-119" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb5-120"><a href="#cb5-120" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb5-121"><a href="#cb5-121" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r =</span> <span class="dv">12</span>)),</span>
+<span id="cb5-122"><a href="#cb5-122" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">hjust =</span> <span class="dv">0</span>)</span>
+<span id="cb5-123"><a href="#cb5-123" tabindex="-1"></a>  )</span>
+<span id="cb5-124"><a href="#cb5-124" tabindex="-1"></a></span>
+<span id="cb5-125"><a href="#cb5-125" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb5-126"><a href="#cb5-126" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb5-127"><a href="#cb5-127" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Returns Comparison Tona Vs Friend&quot;</span>,</span>
+<span id="cb5-128"><a href="#cb5-128" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">theme</span>(</span>
+<span id="cb5-129"><a href="#cb5-129" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb5-130"><a href="#cb5-130" tabindex="-1"></a>      <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">&quot;grey30&quot;</span>)</span>
+<span id="cb5-131"><a href="#cb5-131" tabindex="-1"></a>    )</span>
+<span id="cb5-132"><a href="#cb5-132" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="BarGraphs_files/figure-html/unnamed-chunk-5-1.png" width="960" /></p>
+<p>A Friend and I picked stuff just for fun, followed their performance
+over a month, and then compared returns to see who would’ve earned the
+most.</p>
+<p>Here is the conclusion:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>tona <span class="ot">&lt;-</span> <span class="fu">sum</span>(overall_returns<span class="sc">$</span>overall_return)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>friend <span class="ot">&lt;-</span> <span class="fu">sum</span>(overall_returns1<span class="sc">$</span>overall_return)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>dt2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="fu">c</span>((tona), (friend)),</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">1</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>( <span class="fu">c</span>(<span class="st">&quot;Total Return (Percent)&quot;</span>),<span class="fu">c</span>(<span class="st">&quot;Tona&quot;</span>, <span class="st">&quot;Friend&quot;</span>))</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>)</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(dt2, <span class="at">caption =</span> <span class="st">&quot;This was the final result of the stock picking game&quot;</span>)</span></code></pre></div>
+<table style="width:64%;">
+<caption>This was the final result of the stock picking game</caption>
+<colgroup>
+<col width="40%" />
+<col width="11%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Tona</th>
+<th align="center">Friend</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Total Return (Percent)</strong></td>
+<td align="center">1.256</td>
+<td align="center">1.084</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

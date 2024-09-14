@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>index.knit</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Tonatiuh de Leon</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Regression Models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="DecibelRegression.html">Song Decibel Levels</a>
+    </li>
+    <li>
+      <a href="SpotifyRegression.html">Spotify Regression</a>
+    </li>
+    <li>
+      <a href="CarAnalysis.html">Selling my Car Regression</a>
+    </li>
+    <li>
+      <a href="HousePriceRegression.html">House Prices Predictions</a>
+    </li>
+    <li>
+      <a href="LogisticRegression325.html">Who's Getting Good Grades?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Modeling &amp; Simulations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Whale.html">Recreated the Milky Way, or a Whale?</a>
+    </li>
+    <li>
+      <a href="Temple.html">Modeled a Beatiful Building</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferential Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="StephApartment.html">Finding an Apartment</a>
+    </li>
+    <li>
+      <a href="TtestInternet.html">Boys or Girls; Who Uses More Internet?</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Visualizations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="TimeSeries.html">Correlation</a>
+    </li>
+    <li>
+      <a href="Distributions.html">Distribution</a>
+    </li>
+    <li>
+      <a href="Maps.html">Spatial</a>
+    </li>
+    <li>
+      <a href="BarGraphs.html">Quick Comparison</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Machine Learning
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Time Series
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Coming Soon</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<div id="section"
+class="section level1 tabset tabset-pills tabset-fade">
+<h1 class="tabset tabset-pills tabset-fade"></h1>
+<div id="welcome" class="section level2">
+<h2>Welcome!</h2>
+<div
+style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #f5f5f5; border-radius: 10px; max-width: 1200px; margin: auto;">
+<div
+style="flex: 1; padding-right: 30px; font-family: Arial, sans-serif; animation: fadeIn 0.5s ease-in-out;">
+<p><strong>Use the navigation bar on the top</strong> to explore my
+portfolio. Each section contains examples of my work and the code used
+to create them. Anytime you see a “show” button, feel free to click on
+it to see my code.</p>
+<p>This portfolio is a showcase of my work quality, standards, and the
+passion I bring to every project.</p>
+<p><br></p>
+<div id="what-you-can-find-here" class="section level4">
+<h4><strong>What You Can Find Here:</strong></h4>
+<ul style="list-style-type: none; padding: 0; animation: fadeIn 0.8s ease-in-out;">
+<li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="This is what I enjoy doing the most. This aspect of my work is spread throughout all the tabs in my portfolio except for the Visualizations tab. Some projects are longer than others in the portfolio&#39;s different tabs." onclick="alert(&#39;This is what I enjoy doing the most. This aspect of my work is spread throughout all the tabs in my portfolio except for the Visualizations tab. Some projects are longer than others in the portfolio\&#39;s different tabs.&#39;);">
+<img src="_site/Images/statsicon.png" alt="Machine Learning Icon" style="width: 24px; margin-right: 10px;">
+<span style="color: #404040;"><strong>Statistical
+Analysis</strong>:<span> <span style="color: grey;">Reports with applied
+statistics to solve real-world problems and practice projects to enhance
+my analytical skills.</span>
+</li>
+<li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="I enjoy creating visualizations to portray my thoughts about the data I work with. It&#39;s one of my favorite activities!" onclick="alert(&#39;I enjoy creating visualizations to portray my thoughts about the data I work with. It\&#39;s one of my favorite activities! Click on the Visualizations tab to check out my work.&#39;);">
+<img src="_site/Images/vizicon.png" alt="Visualizations Icon" style="width: 24px; margin-right: 10px;">
+<span style="color: #404040;"><strong>Visualizations</strong>:<span>
+<span style="color: grey;">User-focused, insight-driven visualizations
+I’ve created over the years. Click on the Visualizations tab to see
+examples of my work.</span>
+</li>
+<li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Data wrangling is a key aspect of all the work I&#39;ve done. Although my professional projects are private, you can see similar standards here." onclick="alert(&#39;Data wrangling is a key aspect of all the work I\&#39;ve done. Although my professional projects are private, you can see similar standards here.&#39;);">
+<img src="_site/Images/wrangle.png" alt="Data Wrangling Icon" style="width: 24px; margin-right: 10px;">
+<span style="color: #404040;"><strong>Data Wrangling</strong>:<span>
+<span style="color: grey;">I have extensive experience working with big
+data in both private and public projects. You can see similar work
+throughout my portfolio.</span>
+</li>
+<li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="I enjoy designing dashboards to showcase insights effectively. See this portfolio as an example of my skills." onclick="alert(&#39;I enjoy designing dashboards to showcase insights effectively. See this portfolio as an example of my skills.&#39;);">
+<img src="_site/Images/dashboard.png" alt="Dashboards Icon" style="width: 24px; margin-right: 10px;">
+<span style="color: #404040;"><strong>Dashboard Design</strong>:<span>
+<span style="color: grey;">Most of my professional dashboards can’t be
+shared publicly, but this portfolio demonstrates my skills in
+user-focused design.</span>
+</li>
+</ul>
+<p style="margin-top: 20px; font-size: 14px; color: #404040;">
+I hope you enjoy going through my portfolio! Thank you for taking the
+time to get to know me a little better :)
+</p>
+</div>
+</div>
+<div
+style="flex: 1; text-align: center; margin-left: 30px; animation: fadeIn 0.7s ease-in-out;">
+<p><img src="_site/Images/family1.jpeg" alt="Profile Image" style="max-width: 100%; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); margin-bottom: 20px; cursor: pointer;" title="I love my family! They are my biggest motivation. My wife and I have been married for three years, and our little one is 1 year and a half!" onclick="alert('I love my family! They are my biggest motivation. My wife and I have been married for three years, and our little one is 1 year and a half!');"/></p>
+</div>
+</div>
+<p><br> <br></p>
+</div>
+<div id="my-resume" class="section level2">
+<h2>My Resume</h2>
+<div
+style="display: flex; justify-content: center; align-items: center; background-color: #f5f5f5; border: 2px solid #e0e0e0; border-radius: 10px; padding: 20px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); max-width: 1000px; margin: auto; animation: fadeIn 0.5s ease-in-out;">
+<div style="width: 100%; text-align: center;">
+<p style="font-size: 18px; font-family: Arial, sans-serif; color: #333;">
+<strong>Explore my resume to learn more about my professional journey,
+experience, and skills.</strong>
+</p>
+<iframe src="_site/Images/Resume.pdf" width="100%" height="600px" style="border: 1px solid #e0e0e0; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"></iframe>
+</div>
+</div>
+<p><br> <br></p>
+</div>
+<div id="about-me" class="section level2">
+<h2>About Me</h2>
+<div
+style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #f5f5f5; border: 2px solid #e0e0e0; border-radius: 10px; max-width: 1000px; margin: auto; animation: fadeIn 0.5s ease-in-out;">
+<div id="who-am-i" class="section level4"
+style="flex: 1; padding-right: 20px; font-family: Arial, sans-serif;">
+<h4><strong>Who Am I?</strong></h4>
+<p><strong>Professionally:</strong></p>
+<div style="margin-bottom: 20px;">
+<p><span class="pill"
+title="By emphasizing my major in Statistics, I&#39;ve been able to go a lot in depth in math &amp; stats theory. I&#39;ve developed strong experience in applied math and analytical skills that differentiate me from more general data analysts"
+onclick="alert(&#39;By emphasizing my major in Statistics, I&#39;ve been able to go a lot in depth in math &amp; stats theory. I&#39;ve developed strong experience in applied math and analytical skills that differentiate me from more general data analysts&#39;);">Statistician</span>
+<span class="pill"
+title="2 years of experience as a data analyst/scientist"
+onclick="alert(&#39;2 years of experience as a data analyst/scientist&#39;);">Data
+Analyst</span> <span class="pill"
+title="I love Data Science since it&#39;s a combination of my passion for math, and the enjoyment of data analysis"
+onclick="alert(&#39;I love Data Science since it&#39;s a combination of my passion for math, and the enjoyment of data analysis&#39;);">Data
+Scientist</span></p>
+</div>
+<p><br></p>
+<p><strong>Personally:</strong></p>
+<ul style="list-style-type: none; padding: 0;">
+<li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="3 years of being a proud husband, and now proud dad" onclick="alert(&#39;3 years of being a proud husband, and now proud dad&#39;);">
+<img src="_site/Images/love.png" alt="Family Icon" style="width: 24px; margin-right: 10px;">
+<span style="color: #404040;"><strong>Family</strong>: <span
+style="color: grey;">3 years of being a proud husband, and now proud
+dad</span> </span>
+</li>
+<li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Originally from Mexico" onclick="alert(&#39;I miss Tacos&#39;);">
+<img src="_site/Images/mexico.png" alt="Mexico Icon" style="width: 24px; margin-right: 10px;">
+<span style="color: #404040;"><strong>Origin</strong>: <span
+style="color: grey;">Originally from Mexico</span> </span>
+</li>
+<li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Bilingual: English &amp; Spanish, moderate Haitian Creole" onclick="alert(&#39;Bilingual: English &amp; Spanish, moderate Haitian Creole&#39;);">
+<img src="_site/Images/languages.png" alt="Language Icon" style="width: 24px; margin-right: 10px;">
+<span style="color: #404040;"><strong>Languages</strong>: <span
+style="color: grey;">English, Spanish, moderate Haitian Creole</span>
+</span>
+</li>
+<li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Been to 12 countries, I got used to sharing with different cultures. Lived in 3 of them for over a year" onclick="alert(&#39;Been to 12 countries, I got used to sharing with different cultures. Lived in 3 of them for over a year&#39;);">
+<img src="_site/Images/world.png" alt="World Icon" style="width: 24px; margin-right: 10px;">
+<span style="color: #404040;"><strong>Culture</strong>: <span
+style="color: grey;">Been to 12 countries, I got used to sharing with
+different cultures. Lived in 3 of them for over a year. Even at my
+hometown there are &gt; 100 unique indigenous groups.</span> </span>
+</li>
+<li style="margin-bottom: 10px; cursor: pointer; display: flex; align-items: center;" title="Missionary in Chile" onclick="alert(&#39;wena hermano!&#39;);">
+<img src="_site/Images/chile.png" alt="Chile Icon" style="width: 24px; margin-right: 10px;">
+<span style="color: #404040;"><strong>Missionary</strong>: <span
+style="color: grey;">Served as a missionary teaching the gospel in
+Chile</span> </span>
+</li>
+</ul>
+<p><br></p>
+<p>In my free time, I love learning about the universe’s
+mysteries—higher dimensions, quantum mechanics, black holes, and other
+scientific wonders. My wife may be getting tired of me talking about it
+all day haha. I’m always curious! I also enjoy spending time with my
+family at home and outdoors.</p>
+</div>
+<div style="flex: 1; text-align: center;">
+<img src="_site/Images/family2.jpeg" alt="About Me Image" style="max-width: 80%; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); margin-bottom: 20px; animation: fadeIn 0.7s ease-in-out; cursor: pointer;" title="My reason for!" onclick="alert('My reason for!');"/>
+</div>
+</div>
+<p><br> <br></p>
+</div>
+<div id="hire-me" class="section level2">
+<h2>Hire Me</h2>
+<div
+style="text-align: center; padding: 40px; background-color: #f5f5f5; border-radius: 10px; max-width: 800px; margin: auto; animation: fadeIn 0.5s ease-in-out;">
+<div
+style="font-size: 24px; font-weight: bold; margin-bottom: 20px; font-family: Arial, sans-serif; color: #333;">
+You see? You do want to hire me! :)
+</div>
+<p>Here i’d put my linkedin profile with a link, my email, and my phone
+number in a way that highlights them.</p>
+<br>
+<div
+style="font-size: 16px; font-family: Arial, sans-serif; margin-bottom: 20px;">
+<strong>Check out the window below. Scroll through it.</strong>
+</div>
+<iframe src="https://r.mtdv.me/videos/NZR9kpYbDb" width="560" height="315" style="margin-top: 20px; border: none; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); border-radius: 5px;">
+</iframe>
+</div>
+<br> <br>
+<style> @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } } </style>
+<p><br><br></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

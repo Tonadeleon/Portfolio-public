@@ -1,0 +1,106 @@
+---
+title: "Heights Combined"
+date: "January 30, 2024"
+gfm:
+  code_fold: true
+  code_tools: true
+  code-line-numbers: true
+execute:
+  keep-md: true
+---
+
+Fun Stuff
+
+```{r}
+library(tidyverse)
+library(downloader)
+library(rio)
+library(foreign)
+library(haven)
+library(ggforce)
+library(ggridges)
+#library(hrbrthemes)
+library(viridis)
+
+GerCon <- import("https://byuistats.github.io/M335/data/heights/germanconscr.dta")
+
+
+GerPr <- import("https://byuistats.github.io/M335/data/heights/germanprison.dta")
+
+
+bob <- tempfile()
+bobdir <- tempdir()
+download.file("https://byuistats.github.io/M335/data/heights/Heights_south-east.zip", destfile = bob, mode = "wb")
+unzip(bob, exdir = bobdir)
+Germany18 <- read.dbf(paste(bobdir, "B6090.dbf", sep="/"))
+
+
+BLSH <- read_csv("https://raw.githubusercontent.com/hadley/r4ds/main/data/heights.csv")
+
+
+SPSS <- read_sav("http://www.ssc.wisc.edu/nsfh/wave3/NSFH3%20Apr%202005%20release/main05022005.sav")
+
+
+GerConC <- GerCon %>%
+  select(bdec, height) %>%
+  mutate(height_inches = height * 0.393701, study = "GerCon") %>% 
+  rename(birth_year = bdec, height = height)
+
+GerPrC <- GerPr %>%
+  select(bdec, height) %>%
+  mutate(height_inches = height * 0.393701, study = "GerPr") %>% 
+  rename(birth_year = bdec, height = height)
+
+Ger18C <- Germany18 %>%
+  select(GEBJ, CMETER) %>%
+  mutate(height_inches = CMETER * 0.393701, study = "Ger18") %>% 
+  rename(birth_year = GEBJ, height = CMETER)
+
+BLC <- BLSH %>% 
+  filter(sex == "male") %>% 
+  mutate(birth_year = 1950, height = height * 2.54, height_inches = height / 2.54, study = "BLSH") %>%
+  select(birth_year, height, height_inches, study)
+  
+SPC <- SPSS %>% 
+  filter(RT216F > 0) %>% 
+  filter(RT216I >= 0, RT216I < 12) %>% 
+  filter(DOBY >= 0) %>% 
+  mutate(birth_year = DOBY + 1900, height_inches=(RT216F*12)+RT216I, height = height_inches*2.54, study = "WNS") %>%
+  select(birth_year,height,height_inches,study)
+
+AllH <- rbind(GerConC, GerPrC, Ger18C, BLC, SPC)
+AllH$height_inches <- round(AllH$height_inches, 0)
+AllH$height <- round(AllH$height, 0)
+AllH$birth_year <- round(AllH$birth_year / 100) * 100
+
+
+AllHMed <- AllH %>% 
+  group_by(birth_year) %>% 
+  summarise(
+    height_inchesM = median(height_inches), height_inchesSD = sd(height_inches)
+  )
+
+ggplot(AllH, aes(x = height_inches, y = as.character(birth_year), fill= ..x..)) +
+  
+  geom_density_ridges_gradient( rel_min_height = 0.005) +
+  scale_fill_viridis(name = "Height", option = "cividis") +
+  
+  scale_y_discrete(expand = c(0.01, 0)) +
+  scale_x_continuous(expand = c(0.01, 0)) +
+  
+  labs(
+    x="Height (In)",
+    y="Century",
+    title= "Population height distribution per Century"
+  )+
+  theme_ridges()
+```
+
+
+The story from this dataset and the one with the German heights is a little different. The previous task shows a somehow steady growth in the world's population for the last 2 centuries.
+
+However this dataset shows that, more than growing taller per century, heights are getting a little more scattered towards higher heights. This is probably because we had more data points in this data set in the 1900s and 2000s. However, we can see that the frequency in higher heights grows a little larger each century (see the right tails trending for each century). We also see a big density of heights in the 65-70 inches range through the centuries.
+
+Saying that all mankind is getting taller on these two tasks would be a real long shot to me. They look good and trending, but I wouldn't think that's enough to say mankind is getting taller. What I'm trying to say is that, to really state that mankind is getting taller I'd need a little more background on how we are getting the data for these plots. (more centuries covered, if not more countries height's, different ages, other factors like nutrition, wars, economic state of the world can impact too.)
+
+So to me, these graphs (for both tasks) would be useful to make comparisons from the world's heights, probably show this in a report of some kind. I don't think it's far from the truth though, I'm just not 100% sold on the idea :D 
